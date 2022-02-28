@@ -1,0 +1,48 @@
+.navbar{
+    background: #333;
+    color: aliceblue;
+    display: flex;
+}
+
+.navbar__brand a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.navbar__links-container{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+}
+
+.navbar__links-container li{
+    padding: 2px;
+}
+
+.navbar__links-container li a{
+    text-decoration: none;
+}
+
+.navbar__toggle-button{
+    justify-self: end;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 25px;
+}
+
+
+
+
+.navbar__toggle-items{
+    display: flex;
+
+}
+
+
+
+.navbar .hide{
+    display: none;
+}
+
