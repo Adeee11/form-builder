@@ -1,8 +1,8 @@
 import { Dropdown } from "../Dropdown";
 import { LoginModal } from "../LoginModal";
 import { SignUpModal } from "../SignUpModal";
-import { FaBars } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineClose } from "react-icons/ai";
 import "./Navbar.css";
 import { useState } from "react";
 import clsx from "clsx";
@@ -13,52 +13,43 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   return (
     <nav className="navbar">
-      {/* Navbar brand  */}
-      <div className="navbar__brand">
-        <a href="#">
-          <h1>{navbarBrand}</h1>
-        </a>
-      </div>
+      {/* NavBar Brand  */}
+      <a href="" className="navbar__brand  ">
+        <h1>{navbarBrand}</h1>
+      </a>
+      {/* Toggle Button  */}
+      <span
+        className={clsx("navbar__toggle-button", { "navbar--hide": toggle })}
+        onClick={() => setToggle(!toggle)}
+      >
+        <GiHamburgerMenu />
+      </span>
 
       <span
-        className={clsx("navbar__toggle-button", { hide: toggle })}
+        className={clsx("navbar__toggle-button", { "navbar--hide": !toggle })}
         onClick={() => setToggle(!toggle)}
       >
-        <FaBars />
+        <AiOutlineClose />
       </span>
-      <span
-        className={clsx("navbar__toggle-button", { hide: !toggle })}
-        onClick={() => setToggle(!toggle)}
-      >
-        <IoClose />
-      </span>
-      <div className={clsx("navbar__toggle-items", { hide: !toggle })}>
-        <ul className="navbar__links-container">
-          <li>
-            {" "}
-            <a href="">
-              <Dropdown />
-            </a>
-          </li>
-          <li>
-            {" "}
-            <a href="">
-              <Dropdown />
-            </a>
-          </li>
-          <li>
-            {" "}
-            <a href="">Nav Link 1</a>
-          </li>
-          <li>
-            {" "}
-            <a href="">Nav Link 2</a>
-          </li>
-        </ul>
-        <div className="navbar__signup-login">
-          <SignUpModal />
-          <LoginModal />
-        </div>
+
+      {/* Nav Links  */}
+      <ul className={clsx("navbar__nav-links", { "navbar--show": toggle })}>
+        <li>
+          <a href="">Link1</a>
+        </li>
+        <li>
+          <a href="">Link2</a>
+        </li>
+        <li>
+          {/* <a href=""> */}
+            <Dropdown options={['Menu 1', 'Menu 2', 'Menu 3']}/>
+          {/* </a> */}
+        </li>
+      </ul>
+
+      <div className={clsx("navbar__signup-login", { "navbar--show": toggle })}>
+        <SignUpModal />
+        <LoginModal />
       </div>
     </nav>
   );

@@ -8,9 +8,9 @@ function App() {
       <header>
         <Navbar/>
       </header>
-      <section>
+      <main>
         <HeroSection />
-      </section>
+      </main>
     </div>
   );
 }

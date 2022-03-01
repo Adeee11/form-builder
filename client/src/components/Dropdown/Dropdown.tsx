@@ -1,11 +1,21 @@
-import React from 'react'
+import { useState } from 'react';
+import clsx from 'clsx';
+import './Dropdown.css'
 
-const Dropdown = () => {
+const Dropdown = (props: { options: string[] }) => {
+  const options = props.options;
+  const [show, setShow] = useState(false)
   return (
-    <div>
-      Dropdown
-    </div>
-  )
-}
+    <>
+      <span onClick={()=>setShow(!show)}>Dropdown &#8964;</span>
 
-export default Dropdown
+      <ul className={clsx("dropdown", {"dropdown--show":show}) }>
+        {options.map((option) => (
+          <li key={option}>{option}</li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
+export default Dropdown;
