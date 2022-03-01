@@ -8,12 +8,55 @@
     background: rgba(0, 0, 0);
 }
 
+.signup-modal button{
+    background: #333;
+    color: white;
+    padding: 10px 10px;
+    font-size: 14px;
+
+}
+
 .signup-modal__content form{
     min-width: 60vw;
     min-height: 50vh;
     margin-top: 150px;
     background: #FDF7F2;
+    padding: 20px 10px;
+    text-align: center;
 }
+
+.signup-modal__content form .signup-modal__cross-button{
+    margin-left: 90vw;
+    background: transparent;
+    font-size: 25px;
+    border: transparent;
+    color: black;
+}
+
+.signup-modal__content form input[type='submit']{
+    background: rgb(51, 51, 51);
+    color: white;
+    padding: 10px 40px;
+    font-size: 16px;
+}
+
+.signup-modal__form-field{
+    padding: 10px 20px;
+    text-align: center;
+    margin: 20px 30px;
+}
+
+.signup-modal__form-field input{
+    font-size: 20px;
+    padding: 10px 5px;
+}
+
+.signup-modal__form-field label{
+    font-size: 20px;
+    padding: 10px 5px;
+}
+
+
 .signup-modal__content h1{
     text-align: center;
 }
