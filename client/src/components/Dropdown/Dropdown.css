@@ -1,0 +1,13 @@
+span{
+    cursor: pointer;
+}
+.dropdown{
+    list-style: none;
+    padding-left: 10px;
+    display: none;
+    cursor: pointer;
+}
+
+.dropdown--show{
+    display: block;
+}

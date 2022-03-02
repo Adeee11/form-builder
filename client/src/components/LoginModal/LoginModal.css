@@ -1,0 +1,64 @@
+.login-modal__content{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0);
+}
+
+.login-modal button{
+    background: #333;
+    color: white;
+    padding: 10px 10px;
+    font-size: 14px;
+
+}
+
+.login-modal__content form{
+    min-width: 60vw;
+    min-height: 50vh;
+    margin-top: 150px;
+    background: #FDF7F2;
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.login-modal__content form .login-modal__cross-button{
+    background: transparent;
+    font-size: 25px;
+    border: transparent;
+    color: black;
+    margin-left: 90vw;
+}
+
+.login-modal__form-field{
+    padding: 10px 20px;
+    text-align: center;
+    margin: 20px 30px;
+}
+
+.login-modal__form-field input{
+    font-size: 20px;
+    padding: 10px 5px;
+}
+
+.login-modal__form-field label{
+    font-size: 20px;
+    padding: 10px 5px;
+}
+
+.login-modal__content form input[type='submit']{
+    background: rgb(51, 51, 51);
+    color: white;
+    padding: 10px 40px;
+    font-size: 16px;
+}
+
+.login-modal__content h1{
+    text-align: center;
+}
+.login-modal--show{
+    display: block;
+}
