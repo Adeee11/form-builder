@@ -14,7 +14,6 @@ export class GglAuthGuard extends AuthGuard('local'){
         const ctx=GqlExecutionContext.create(context);
         const request=ctx.getContext();
         request.body=ctx.getArgs().loginUserInput;
-        
         return request
     }
 

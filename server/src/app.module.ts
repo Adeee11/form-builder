@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
   }), 
-   MongooseModule.forRoot('mongodb://localhost/nest'),
+   MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0.kvw1d.mongodb.net/formBuilderDataBase?retryWrites=true&w=majority'),
    UsersModule,
    AuthModule
   ],

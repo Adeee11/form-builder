@@ -8,12 +8,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.startegy';
 
 @Module({
-  imports:[PassportModule,
-     UsersModule,
-      JwtModule.register({
-        signOptions:{expiresIn:'60s'},
-        secret:'hide-me'
-      })
+   imports:[PassportModule,
+           JwtModule.register({
+                 signOptions:{expiresIn:'1200s'},
+                 secret:'hide-me'
+                }),
+           UsersModule
     ],
    providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy]
 })

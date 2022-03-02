@@ -2,10 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""User model"""
 type User {
+  """id field"""
   id: ID!
 
-  """name field (user Name)"""
+  """username field"""
   username: String!
 }
 
@@ -16,6 +18,8 @@ type LoginResponse {
 
 type Query {
   users: [User!]!
+
+  """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
 }
 
