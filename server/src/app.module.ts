@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { FormModule } from './form/form.module';
 
 @Module({
   imports: [ GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -15,7 +16,8 @@ import { AuthModule } from './auth/auth.module';
   }), 
    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0.kvw1d.mongodb.net/formBuilderDataBase?retryWrites=true&w=majority'),
    UsersModule,
-   AuthModule
+   AuthModule,
+   FormModule
   ],
   controllers: [AppController],
   providers: [AppService],

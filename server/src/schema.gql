@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type FormID {
+  id: String!
+  title: String!
+}
+
 """User model"""
 type User {
   """id field"""
@@ -9,6 +14,27 @@ type User {
 
   """username field"""
   username: String!
+  form: [FormID!]
+}
+
+type FormDataRes {
+  fieldType: String
+  Question: String
+}
+
+type ThemeRes {
+  background: String
+  font: String
+  color: String
+}
+
+type Form {
+  """id field form"""
+  id: ID!
+  title: String!
+  owner: String!
+  theme: ThemeRes
+  formData: [FormDataRes!]
 }
 
 type LoginResponse {
@@ -21,11 +47,41 @@ type Query {
 
   """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
+  form(owner: ID!): [Form!]!
+  forms: [Form!]!
 }
 
 type Mutation {
+  createForm(createFormInput: CreateFormInput!): Form!
+  updateForm(updateFormInput: UpdateFormInput!, id: String!): Form!
+  removeForm(id: ID!): Form!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signUp(loginUserInput: LoginUserInput!): User!
+}
+
+input CreateFormInput {
+  title: String!
+  owner: String!
+  theme: Theme
+  formData: [FormData!]
+}
+
+input Theme {
+  background: String
+  font: String
+  color: String
+}
+
+input FormData {
+  fieldType: String
+  Question: String
+}
+
+input UpdateFormInput {
+  title: String
+  owner: String!
+  theme: Theme
+  formData: [FormData!]
 }
 
 input LoginUserInput {
