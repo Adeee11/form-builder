@@ -11,6 +11,12 @@ const TickList = styled(List)`
     }
 `
 
+const DashedItem= styled.li`
+    &:before{
+        content: '-'
+    }
+`
+
 const Item = styled.li`    
     padding: 5px;
 `
@@ -20,4 +26,4 @@ const TickItem = styled(Item)`
     }
 `
 
-export  {List , TickList, Item, TickItem}
+export  {List , TickList, Item, TickItem, DashedItem}

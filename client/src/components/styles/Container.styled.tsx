@@ -5,10 +5,10 @@ interface Props {
 }
 
 const Container = styled.div<Props>`
-  max-width: 90vw;
+  max-width: 90%;
   margin: 0 auto;
   padding: 10px 20px;
-  background: ${({ backgroundColor }) => backgroundColor || "red"};
+  background: ${({ backgroundColor }) => backgroundColor || "transparent"};
   border: blue solid 2px;
   @media (max-width: 900px) {
     text-align: center;
@@ -37,11 +37,23 @@ const CarouselContainer = styled(Container)`
   text-align: left;
 `;
 
+const CarouselItemContainer = styled(Container)`
+  display: grid;
+`
+const IconContainer = styled(Container)`
+  max-width: 112px;
+  max-height: 112px;
+  background: white;
+  margin: 10px 9px;
+`
+
 export {
   NavContainer,
   DescriptionContainer,
   ImageContainer,
   AboutContainer,
   CarouselContainer,
+  CarouselItemContainer,
   Container,
+  IconContainer
 };

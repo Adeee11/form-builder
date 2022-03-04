@@ -1,0 +1,1 @@
+export {default as Testinomials} from './Testinomials'

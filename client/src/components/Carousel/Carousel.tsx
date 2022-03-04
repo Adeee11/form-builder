@@ -1,10 +1,26 @@
-import { isTemplateSpan } from "typescript";
+import { isTemplateSpan, JsxElement } from "typescript";
 import { CarouselContainer, ImageContainer } from "../styles/Container.styled";
 
+enum ArrowType {
+  invisible = 0,
+  sideArrow,
+  arrowButtons,
+}
+
+interface CarouselItem {
+  topNote: {
+    heading: string;
+    text: string;
+  };
+  caption: string;
+  url: string;
+  img: string;
+}
+
 const Carousel = (props: {
-  items?: React.FC[];
+  items?: React.ReactNode[];
   imgs?: string[];
-  displayArrow?: boolean;
+  displayArrow?: ArrowType;
 }) => {
   const { items, imgs, displayArrow } = props;
   return (

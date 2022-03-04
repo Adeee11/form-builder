@@ -6,4 +6,14 @@ const Button = styled.button`
     color: #FCFAF8;
     padding: 12px 24px;
 `
-export {Button}
+const TransparentButton = styled.button`
+    font-size: 12px;
+    background: transparent;
+    border: transparent;
+    &:hover{
+        text-decoration: underline;
+    }
+`
+
+
+export {Button, TransparentButton}
