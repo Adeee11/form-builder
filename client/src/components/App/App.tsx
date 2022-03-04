@@ -1,16 +1,14 @@
-import { HeroSection } from '../HeroSection';
-import { Navbar } from '../Navbar';
-import './App.css';
+import { About } from "../About";
+import { HeroContainer } from "../HeroContainer";
+import { Navbar } from "../Navbar";
+
 
 function App() {
   return (
     <div className="App">
-      <header>
-        <Navbar/>
-      </header>
-      <main>
-        <HeroSection />
-      </main>
+      < Navbar />
+      <HeroContainer />
+      <About/>
     </div>
   );
 }

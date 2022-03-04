@@ -1,12 +1,19 @@
+import { Text } from "../styles/Text.styled";
+import { Heading } from "../styles/Heading.styled";
 
-const Description = (props: {
-  DescriptionHeading: String;
-  DescriptionText: String;
+const Description = (props:{
+    heading:string,
+    text:string,
+    headingSize:number,
+    textSize:number
 }) => {
+    const {heading, text, headingSize, textSize} = props
   return (
     <>
-      <h1>{props.DescriptionHeading}</h1>
-      <p>{props.DescriptionText}</p>
+  <Heading fontSize={headingSize}>{heading}</Heading>
+      <Text fontSize={textSize}>
+        {text}
+      </Text>
     </>
   );
 };
