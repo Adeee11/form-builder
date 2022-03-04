@@ -23,17 +23,7 @@ export class FormService {
      const m=await this.findOne(id)
      m.title=updateFormInput.title;
     
-     if(updateFormInput.theme){
-     if(updateFormInput.theme.background)
-      m.theme.background=updateFormInput.theme.background;
-     
-      if(updateFormInput.theme.color)
-      m.theme.color=updateFormInput.theme.color;
-     
-      if(updateFormInput.theme.font)
-      m.theme.font=updateFormInput.theme.font;
 
-     }
      if(updateFormInput.formData){
    
       for(let i=0; i<updateFormInput.formData.length; i++){

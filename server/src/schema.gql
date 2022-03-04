@@ -2,9 +2,30 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type FormID {
+type ThemeRes {
+  background: String
+  font: String
+  color: String
+}
+
+type FormDataRes {
+  fieldType: String
+  Question: String
+  theme: ThemeRes
+}
+
+type Form {
+  """id field form"""
+  id: ID!
+  title: String!
+  owner: String!
+  formData: [FormDataRes!]
+}
+
+type FormObj {
   id: String!
   title: String!
+  formData: [FormDataRes!]
 }
 
 """User model"""
@@ -14,27 +35,7 @@ type User {
 
   """username field"""
   username: String!
-  form: [FormID!]
-}
-
-type FormDataRes {
-  fieldType: String
-  Question: String
-}
-
-type ThemeRes {
-  background: String
-  font: String
-  color: String
-}
-
-type Form {
-  """id field form"""
-  id: ID!
-  title: String!
-  owner: String!
-  theme: ThemeRes
-  formData: [FormDataRes!]
+  form: [FormObj!]
 }
 
 type LoginResponse {
@@ -55,6 +56,7 @@ type Mutation {
   createForm(createFormInput: CreateFormInput!): Form!
   updateForm(updateFormInput: UpdateFormInput!, id: String!): Form!
   removeForm(id: ID!): Form!
+  uploadFile(file: Upload!): Boolean!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signUp(loginUserInput: LoginUserInput!): User!
 }
@@ -62,8 +64,13 @@ type Mutation {
 input CreateFormInput {
   title: String!
   owner: String!
-  theme: Theme
   formData: [FormData!]
+}
+
+input FormData {
+  fieldType: String
+  Question: String
+  theme: Theme
 }
 
 input Theme {
@@ -72,17 +79,14 @@ input Theme {
   color: String
 }
 
-input FormData {
-  fieldType: String
-  Question: String
-}
-
 input UpdateFormInput {
   title: String
   owner: String!
-  theme: Theme
   formData: [FormData!]
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input LoginUserInput {
   username: String!

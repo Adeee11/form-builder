@@ -2,20 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 
 @ObjectType()
-class FormDataRes{
-    
-  @Field({nullable:true})
-   fieldType:string;
-
-   @Field({nullable:true})
-   Question:string;
- 
-}
-
-
- 
-@ObjectType()
-class ThemeRes{
+export class ThemeRes{
 
   @Field({nullable:true})
   background?:string;
@@ -30,6 +17,22 @@ class ThemeRes{
 
 
 @ObjectType()
+export class FormDataRes{
+    
+  @Field({nullable:true})
+   fieldType:string;
+
+   @Field({nullable:true})
+   Question:string;
+
+   @Field(()=>ThemeRes,{nullable:true})
+  theme?:ThemeRes;
+ 
+}
+
+
+ 
+@ObjectType()
 export class Form {
  
   @Field(type=>ID, { description: `id field form`})
@@ -40,9 +43,6 @@ export class Form {
 
   @Field()
   owner:string;
-
-  @Field(()=>ThemeRes,{nullable:true})
-  theme?:ThemeRes;
 
   @Field(()=>[FormDataRes],{nullable:true})
   formData?:FormDataRes[];

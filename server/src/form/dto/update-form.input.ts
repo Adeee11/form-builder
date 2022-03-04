@@ -9,9 +9,7 @@ export class UpdateFormInput extends PartialType(CreateFormInput) {
   @Field()
   owner:string;
 
-  @Field({nullable:true})
-  theme?:Theme;
-
   @Field(()=>[FormData],{nullable:true})
   formData?:FormData[];
+
 }

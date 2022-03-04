@@ -1,20 +1,5 @@
 import { InputType, Int, Field, ObjectType, InterfaceType } from '@nestjs/graphql';
 
- 
-
-@InputType()
-export class FormData{
-    
-  @Field({nullable:true})
-   fieldType:string;
-
-   @Field({nullable:true})
-   Question:string;
- 
-}
-
-
- 
 @InputType()
 export class Theme{
 
@@ -27,7 +12,25 @@ export class Theme{
   @Field({nullable:true})
   color?:string;
 
+} 
+
+@InputType()
+export class FormData{
+    
+  @Field({nullable:true})
+   fieldType:string;
+
+   @Field({nullable:true})
+   Question:string;
+ 
+   @Field({nullable:true})
+   theme?:Theme;
+ 
 }
+
+
+ 
+
 
 
 @InputType()
@@ -39,9 +42,6 @@ export class CreateFormInput {
 
   @Field()
   owner:string;
-
-  @Field({nullable:true})
-  theme?:Theme;
 
   @Field(()=>[FormData],{nullable:true})
   formData?:FormData[];

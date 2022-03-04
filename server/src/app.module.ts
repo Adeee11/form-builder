@@ -13,6 +13,9 @@ import { FormModule } from './form/form.module';
   imports: [ GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    // @ts-ignore
+     uploads:false,
+     
   }), 
    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0.kvw1d.mongodb.net/formBuilderDataBase?retryWrites=true&w=majority'),
    UsersModule,

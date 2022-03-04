@@ -1,16 +1,20 @@
 import { ObjectType, Field, Int , ID } from '@nestjs/graphql';
+import { FormDataRes } from 'src/form/entities/form.entity';
 
 
 
 
 @ObjectType()
-export class FormID{
+export class FormObj{
   
   @Field()
   id: string;
 
   @Field()
   title:string;
+
+  @Field(()=>[FormDataRes],{nullable:true})
+  formData?:FormDataRes[];
 
 }
 
@@ -24,9 +28,7 @@ export class User {
   @Field( { description: 'username field' })
   username: string;
 
-
-
-  @Field(()=>[FormID],{nullable:true})
-  form?:FormID[]
+  @Field(()=>[FormObj],{nullable:true})
+  form?:FormObj[]
    
  }
