@@ -1,28 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {App} from './components/App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import GlobalStyles from './components/styles/Global';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
+import { App } from './components/App';
 import { SignUpPage } from './components/SignUpPage';
-import { LogInPage } from './components/LogInPage';
+import { LoginPage } from './components/LoginPage';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GlobalStyles />
       <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App/>}/>
-        <Route path='/signup' element={<SignUpPage/>} />
-        <Route path='/login' element={<LogInPage/>} />
+        <Route path='/' element={<App />}/>
+        <Route path='/signup' element={<SignUpPage />} />
+        <Route path='/login' element={<LoginPage />} />
       </Routes>
       </BrowserRouter>
     </Provider>

@@ -1,23 +1,23 @@
-import { About } from "../About";
-import { Footer } from "../Footer";
-import { HeroContainer } from "../HeroContainer";
-import { HowToUseSection } from "../HowToUseSection";
-import { IntegrationsSection } from "../IntegrationsSection";
+import { AboutSection } from "../AboutSection";
+import { FooterSection } from "../FooterSection";
+import { HeroSection } from "../HeroSection";
 import { Navbar } from "../Navbar";
-import { Testinomials } from "../Testimonials";
+import { Footer, Main } from "./App.styles";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Navbar />
-      <HeroContainer />
-      <About />
-      <HowToUseSection />
-      <IntegrationsSection />
-      <Testinomials />
-      <Footer />
-    </div>
+    <>
+      
+        <Navbar />
+      <Main>
+        <HeroSection />
+        <AboutSection />
+      </Main>
+      <Footer>
+        <FooterSection />
+      </Footer>
+    </>
   );
-}
+};
 
 export default App;

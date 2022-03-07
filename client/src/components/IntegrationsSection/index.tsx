@@ -1,1 +1,0 @@
-export {default as IntegrationsSection} from './IntegrationsSection'
