@@ -5,7 +5,7 @@ export type FormDocument = Form & Document;
 
 @Schema()
 export class Form {
-  
+   
 
   @Prop()
   title:string;
@@ -13,9 +13,6 @@ export class Form {
   @Prop()
   owner:string;
 
-  @Prop(raw({background:String, font:String, color:String}))
-  theme:Record<string, any>
-  
   @Prop()
   formData:[FormData]
   

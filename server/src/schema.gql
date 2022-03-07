@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Solution {
+  id: ID!
+  formId: String!
+  date: String!
+  res: [String!]
+}
+
 type ThemeRes {
   background: String
   font: String
@@ -11,6 +18,7 @@ type ThemeRes {
 type FormDataRes {
   fieldType: String
   Question: String
+  option: [String!]
   theme: ThemeRes
 }
 
@@ -20,12 +28,7 @@ type Form {
   title: String!
   owner: String!
   formData: [FormDataRes!]
-}
-
-type FormObj {
-  id: String!
-  title: String!
-  formData: [FormDataRes!]
+  solution: [Solution!]
 }
 
 """User model"""
@@ -35,7 +38,7 @@ type User {
 
   """username field"""
   username: String!
-  form: [FormObj!]
+  form: [Form!]
 }
 
 type LoginResponse {
@@ -48,15 +51,20 @@ type Query {
 
   """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
-  form(owner: ID!): [Form!]!
-  forms: [Form!]!
+  allforms: [Form!]!
+  forms(owner: ID!): [Form!]!
+  form(formId: ID!): Form!
+  solutions(formId: String!): [Solution!]!
+  solution(id: ID!): Solution!
 }
 
 type Mutation {
   createForm(createFormInput: CreateFormInput!): Form!
   updateForm(updateFormInput: UpdateFormInput!, id: String!): Form!
-  removeForm(id: ID!): Form!
+  removeForm(id: ID!): Int!
   uploadFile(file: Upload!): Boolean!
+  createSolution(createSolutionInput: CreateSolutionInput!): Solution!
+  removeSolution(id: ID!): Int!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signUp(loginUserInput: LoginUserInput!): User!
 }
@@ -70,6 +78,7 @@ input CreateFormInput {
 input FormData {
   fieldType: String
   Question: String
+  option: [String!]
   theme: Theme
 }
 
@@ -87,6 +96,12 @@ input UpdateFormInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input CreateSolutionInput {
+  formId: String!
+  date: String!
+  res: [String!]
+}
 
 input LoginUserInput {
   username: String!

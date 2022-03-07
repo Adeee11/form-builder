@@ -7,7 +7,7 @@ import { FormModule } from 'src/form/form.module';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-             FormModule 
+             FormModule  
 ],
   providers: [UsersResolver, UsersService],
   exports:[UsersService]

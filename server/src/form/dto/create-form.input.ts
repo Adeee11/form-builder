@@ -14,6 +14,7 @@ export class Theme{
 
 } 
 
+
 @InputType()
 export class FormData{
     
@@ -22,6 +23,9 @@ export class FormData{
 
    @Field({nullable:true})
    Question:string;
+
+   @Field(()=>[String],{nullable: true})
+   option?:string[];
  
    @Field({nullable:true})
    theme?:Theme;
@@ -29,13 +33,8 @@ export class FormData{
 }
 
 
- 
-
-
-
 @InputType()
 export class CreateFormInput {
-
 
   @Field()
   title: string;
@@ -44,8 +43,7 @@ export class CreateFormInput {
   owner:string;
 
   @Field(()=>[FormData],{nullable:true})
-  formData?:FormData[];
-  
+  formData?:FormData[];  
 
 }
 

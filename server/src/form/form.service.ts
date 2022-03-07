@@ -9,11 +9,7 @@ import { Model } from 'mongoose';
 export class FormService {
   constructor(@InjectModel(Form.name) private formModel: Model<FormDocument>) {}
   
- 
-
-   async create(createFormInput: CreateFormInput) {
-
-    
+  async create(createFormInput: CreateFormInput) {
     const createdForm = new this.formModel(createFormInput);
     const result=await createdForm.save(); 
     return  result 
@@ -22,16 +18,12 @@ export class FormService {
   async update( updateFormInput, id:string) {
      const m=await this.findOne(id)
      m.title=updateFormInput.title;
-    
-
      if(updateFormInput.formData){
-   
-      for(let i=0; i<updateFormInput.formData.length; i++){
-        m.formData[i]= updateFormInput.formData[i]
-      }
-     }
-    
-     return await m.save()
+         for(let i=0; i<updateFormInput.formData.length; i++){
+               m.formData[i]= updateFormInput.formData[i]
+           }
+        }
+     return await m.save();
   }
 
   async findAll() {
@@ -39,15 +31,15 @@ export class FormService {
   }
 
   async findRelatedToUser(owner: string) {
-    return  await this.formModel.find({owner}) 
+    return  await this.formModel.find({owner}); 
   }
   
   async findOne(id:string){
-    return await this.formModel.findById(id)
+    return await this.formModel.findById(id);
   }
   
-
   async remove(id: string) {
-    return  await this.formModel.deleteOne({ _id: id});;
+    const res= await this.formModel.deleteOne({ _id: id});
+    return res.deletedCount
   }
 }
