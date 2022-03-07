@@ -1,0 +1,22 @@
+Blockchain:-
+A blockchain is a globally shared, transactional database.means that everyone can read entries in the database just by participating in the network. If you want to change something in database , you have to create so called transaction which has to be accepted by all others.The word transaction implies that the change you want to make is either not done at all or completely applied.
+ A transaction is always cryptographically signed by the sender (creator). This makes it straightforward to guard access to specific modifications of the database.
+
+
+Blocks:-A globally accepted order of the transactions will be selected for you, solving the conflicts. The transactions will be bundled into blocks.and then they will be executed and distributed among all the participating nodes.
+
+EVM- The Ethereum Virtual Machine or EVM is the runtime environment for smart contracts in Ethereum. It is not only sandboxed but actually completely isolated, which means that code running inside the EVM has no access to network, filesystem or other processes. Smart contracts even have limited access to other smart contracts.
+
+Accounts-1) External Account(controled by public-private key pairs)
+              2) Contract Accounts(controled code stored together with the account)
+ 
+ address of an external account is determined from the public key while the address of a contract is determined at the time the contract is created.
+
+Regardless of whether or not the account stores code, the two types are treated equally by the EVM.
+
+Every account has a persistent key-value store mapping 256-bit words to 256-bit words called storage.
+
+Furthermore, every account has a balance in Ether (in “Wei” to be exact, 1 ether is 10**18 wei) which can be modified by sending transactions that include Ether.
+
+dding a comment containing "SPDX-License-Identifier: " to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> contracts/SimpleStorage.sol

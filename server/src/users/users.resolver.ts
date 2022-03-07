@@ -1,13 +1,25 @@
-import { Resolver, Query, Mutation, Args, Int, ID, Context } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID, Context, Parent, ResolveField } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { User } from './entities/user.entity';
+import {  User } from './entities/user.entity';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FormService } from 'src/form/form.service';
+import { Form } from 'src/form/entities/form.entity';
 
-
+ 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService,
+              private readonly formService:FormService  
+    ) {}
+
+
+    @ResolveField('form',()=>[Form])
+    async form(@Parent() form) {
+      const { username } = form;
+      return this.formService.findRelatedToUser(username);
+    }
+
 
   @Query(() => [User], { name: 'users' })
   @UseGuards(JwtAuthGuard) 
@@ -19,4 +31,6 @@ export class UsersResolver {
   findOne(@Args('username', { type: () => ID }) username: string) {
     return this.usersService.findOne(username);
   }
+
+
 }
