@@ -11,6 +11,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { SignUpPage } from './components/SignUpPage';
+import { LogInPage } from './components/LogInPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +21,8 @@ ReactDOM.render(
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<App/>}/>
+        <Route path='/signup' element={<SignUpPage/>} />
+        <Route path='/login' element={<LogInPage/>} />
       </Routes>
       </BrowserRouter>
     </Provider>

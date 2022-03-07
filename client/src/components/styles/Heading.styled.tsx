@@ -10,7 +10,7 @@ const Title = styled.h1<Props>`
 `;
 
 const Heading = styled.h2<Props>`
-  font-size: ${({ fontSize }) => fontSize};
+  font-size: ${({ fontSize }) => fontSize || 25};
   margin: 20px 0;
 `;
 
