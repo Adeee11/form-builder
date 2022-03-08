@@ -76,10 +76,24 @@ input CreateFormInput {
 }
 
 input FormData {
-  fieldType: String!
+  fieldType: AllowedfieldType!
   Question: String!
   option: [String]
   theme: Theme
+}
+
+"""The supported fieldtype."""
+enum AllowedfieldType {
+  text
+  email
+  number
+  url
+  date
+  color
+  range
+  select
+  choice
+  textArea
 }
 
 input Theme {

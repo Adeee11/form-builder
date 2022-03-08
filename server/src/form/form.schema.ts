@@ -6,13 +6,13 @@ export type FormDocument = Form & Document;
 @Schema()
 export class Theme{
 
-  @Prop()
+  @Prop({default:"#FFFFFF"})
   background:string;
 
-  @Prop()
+  @Prop({default:"20px Arial, sans-serif"})
   font:string;
 
-  @Prop()
+  @Prop({default:"#000000"})
   color:string;
 
 } 
@@ -30,7 +30,7 @@ class FormData{
   @Prop()
   option:[string];
 
-  @Prop()
+  @Prop(Theme)
   theme:Theme;
 }
 
@@ -45,7 +45,7 @@ export class Form {
   @Prop()
   owner:string;
 
-  @Prop()
+  @Prop([FormData])
   formData:[FormData]
   
 }
