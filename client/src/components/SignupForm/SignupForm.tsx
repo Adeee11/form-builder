@@ -1,16 +1,15 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputField } from "../InputField";
-import { SelectField } from "../SelectField";
-import { Form } from "./SignupForm.styles";
+import { Field, Form, Submit } from "./SignupForm.styles";
 
 type FormFields = {
   email: string;
   password: string;
-  termsAndCondition: boolean;
-  privacyPolicy: boolean;
-  emailLetter: boolean;
-  customizeTypeform: boolean;
-  shareData: boolean;
+  termsAndCondition?: boolean;
+  privacyPolicy?: boolean;
+  emailLetter?: boolean;
+  customizeTypeform?: boolean;
+  shareData?: boolean;
 };
 
 const SignupForm = () => {
@@ -36,33 +35,45 @@ const SignupForm = () => {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputField
-          type={"email"}
-          label={"Email"}
-          placeHolder={"Email"}
-          register={register}
-          registerName={"email"}
-        />
-        <InputField
-          type={"password"}
-          label={"Password"}
-          placeHolder={"Password"}
-          register={register}
-          registerName={"password"}
-        />
-        <InputField
-          type={"checkbox"}
-          label={checkboxLabels[0]}
-          register={register}
-          registerName={"termsAndCondition"}
-        />
-        <InputField
-          type={"checkbox"}
-          label={checkboxLabels[1]}
-          register={register}
-          registerName={"privacyPolicy"}
-        />
-        
+        <Field>
+          <InputField
+            type={"email"}
+            label={"Email"}
+            placeHolder={"Email"}
+            register={register}
+            registerName={"email"}
+          />
+        </Field>
+        <Field>
+          <InputField
+            type={"password"}
+            label={"Password"}
+            placeHolder={"Password"}
+            register={register}
+            registerName={"password"}
+          />
+        </Field>
+
+        <Field>
+          <InputField
+            type={"checkbox"}
+            label={checkboxLabels[0]}
+            register={register}
+            registerName={"termsAndCondition"}
+          />
+        </Field>
+
+        <Field>
+          <InputField
+            type={"checkbox"}
+            label={checkboxLabels[1]}
+            register={register}
+            registerName={"privacyPolicy"}
+          />
+        </Field>
+        <Field>
+          <Submit type={"submit"} value={"Create my free account"} />
+        </Field>
       </Form>
     </>
   );

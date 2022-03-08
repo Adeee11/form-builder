@@ -1,11 +1,15 @@
-import React from 'react'
+import { LogoButtonContainer, LogoText } from "./LogoButton.styles";
 
-const LogoButton = () => {
+const LogoButton = (props: { icon: React.ReactNode; text: string }) => {
+  const { icon, text } = props;
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <>
+      <LogoButtonContainer to={"/"}>
+        {icon}
+        <LogoText>{text}</LogoText>
+      </LogoButtonContainer>
+    </>
+  );
+};
 
-export default LogoButton
+export default LogoButton;

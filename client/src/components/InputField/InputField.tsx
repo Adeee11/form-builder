@@ -4,11 +4,11 @@ import { Input, Label } from "./InputField.styles";
 type FormFields = {
   email:string,
   password:string
-  termsAndCondition:boolean,
-  privacyPolicy:boolean,
-  emailLetter:boolean,
-  customizeTypeform:boolean,
-  shareData:boolean,
+  termsAndCondition?:boolean,
+  privacyPolicy?:boolean,
+  emailLetter?:boolean,
+  customizeTypeform?:boolean,
+  shareData?:boolean,
 }
 
 const InputField = (props: {

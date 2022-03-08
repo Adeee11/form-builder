@@ -1,11 +1,26 @@
+import { Description } from "../Description";
+import { LoginForm } from "../LoginForm";
+import { LoginHeader } from "../LoginHeader";
 
+import { Container } from "./LoginPage.styles";
 
-const LoginPage = () => {
+const SignUpPage = () => {
+  const heading = "Typeform";
+  const text = "Hello, who’s this?";
   return (
-    <div>
-      Login Page
-    </div>
-  )
-}
+    <>
+      <Container>
+        <LoginHeader />
+        <Description
+          heading={heading}
+          text={text}
+          headingSize={'30px'}
+          textSize={'20px'}
+        />
+        <LoginForm />
+      </Container>
+    </>
+  );
+};
 
-export default LoginPage
+export default SignUpPage;

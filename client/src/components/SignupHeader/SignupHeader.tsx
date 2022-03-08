@@ -1,9 +1,13 @@
+import { Container, Text, LoginButton } from "./SignupHeader.styles"
 
 
 const SignupHeader = () => {
   return (
     <>
-      Sign Up Header
+     <Container>
+          <Text>Already have an account?</Text>
+          <LoginButton to={'/login'} >Login</LoginButton>
+      </Container>
     </>
   )
 }
