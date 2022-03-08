@@ -4,6 +4,38 @@ import { Document } from 'mongoose';
 export type FormDocument = Form & Document;
 
 @Schema()
+export class Theme{
+
+  @Prop()
+  background:string;
+
+  @Prop()
+  font:string;
+
+  @Prop()
+  color:string;
+
+} 
+
+
+@Schema()
+class FormData{
+
+  @Prop()
+  fieldType:string;
+
+  @Prop()
+  Question:string;
+
+  @Prop()
+  option:[string];
+
+  @Prop()
+  theme:Theme;
+}
+
+
+@Schema()
 export class Form {
    
 

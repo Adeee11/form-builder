@@ -72,13 +72,13 @@ type Mutation {
 input CreateFormInput {
   title: String!
   owner: String!
-  formData: [FormData!]
+  formData: [FormData]
 }
 
 input FormData {
-  fieldType: String
-  Question: String
-  option: [String!]
+  fieldType: String!
+  Question: String!
+  option: [String]
   theme: Theme
 }
 
@@ -91,7 +91,7 @@ input Theme {
 input UpdateFormInput {
   title: String
   owner: String!
-  formData: [FormData!]
+  formData: [FormData]
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -99,7 +99,7 @@ scalar Upload
 
 input CreateSolutionInput {
   formId: String!
-  date: String!
+  date: String
   res: [String!]
 }
 

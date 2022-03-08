@@ -1,4 +1,5 @@
 import { InputType, Int, Field, ObjectType, InterfaceType } from '@nestjs/graphql';
+import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class Theme{
@@ -18,13 +19,13 @@ export class Theme{
 @InputType()
 export class FormData{
     
-  @Field({nullable:true})
+   @Field()
    fieldType:string;
 
-   @Field({nullable:true})
+   @Field()
    Question:string;
 
-   @Field(()=>[String],{nullable: true})
+   @Field(()=>[String],{nullable: "itemsAndList"})
    option?:string[];
  
    @Field({nullable:true})
@@ -37,12 +38,14 @@ export class FormData{
 export class CreateFormInput {
 
   @Field()
+  @IsNotEmpty()
   title: string;
 
   @Field()
+  @IsNotEmpty()
   owner:string;
 
-  @Field(()=>[FormData],{nullable:true})
+  @Field(()=>[FormData],{nullable:'itemsAndList'})
   formData?:FormData[];  
 
 }

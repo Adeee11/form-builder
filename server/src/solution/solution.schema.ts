@@ -10,7 +10,7 @@ export class Solution {
   @Prop()
   formId:string;
 
-  @Prop()
+  @Prop({default:()=>{return new Date()}})
   date:string;
 
   @Prop()

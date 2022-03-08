@@ -1,15 +1,18 @@
 import { CreateFormInput, FormData, Theme } from './create-form.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class UpdateFormInput extends PartialType(CreateFormInput) {
+  
   @Field({nullable:true})
   title?: string;
 
   @Field()
+  @IsNotEmpty()
   owner:string;
 
-  @Field(()=>[FormData],{nullable:true})
+  @Field(()=>[FormData],{nullable:'itemsAndList'})
   formData?:FormData[];
 
 }
