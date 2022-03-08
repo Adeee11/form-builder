@@ -3,8 +3,8 @@ import { Description } from "../Description";
 import { Video } from "../Video";
 import { Container } from "./HeroSection.styles";
 //@ts-ignore
-import heroVideo from '../../assets/imgs/hero-video.mp4'
-
+import heroVideo from "../../assets/imgs/hero-video.mp4";
+import { CheckedList } from "../CheckedList";
 
 const HeroSection = () => {
   const descriptionHeading = "There's a better way to ask";
@@ -19,8 +19,14 @@ const HeroSection = () => {
           headingSize={36}
           textSize={24}
         />
+
         <Button text="Get Started-it's free" />
-        <Video url={heroVideo}/>
+        {/* This video would be added in the background  */}
+
+        <Video url={heroVideo} />
+        <CheckedList
+          items={["No credit card required", "No time limit on Free plan"]}
+        />
       </Container>
     </>
   );

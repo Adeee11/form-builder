@@ -13,8 +13,8 @@ const Dropdown = (props: { heading: string; dropdownItems: Item[] }) => {
         <DownArrowHead rotate180={showItems}>&#8964;</DownArrowHead>
       </Heading>
       <List showItems={showItems}>
-        {dropdownItems.map((item) => {
-          return typeof item === typeof "" ? <Item>{item}</Item> : { item };
+        {dropdownItems.map((item,index) => {
+          return typeof item === typeof "" ? <Item key={index}>{item}</Item> : { item };
         })}
       </List>
     </>
