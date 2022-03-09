@@ -5,7 +5,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const RadioButtonContainer = styled.div``;
 
 const Field = styled.div`
   display: flex;
@@ -47,7 +46,6 @@ export {
   Container,
   Form,
   Or,
-  RadioButtonContainer,
   Field,
   Submit,
   HorizontalLine,

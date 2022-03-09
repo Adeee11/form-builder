@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputField } from "../InputField";
 import { LogoButton } from "../LogoButton";
-import {FcGoogle} from 'react-icons/fc'
-import {SiMicrosoft} from 'react-icons/si'
+import { FcGoogle } from "react-icons/fc";
+import { SiMicrosoft } from "react-icons/si";
 import {
   Container,
   Field,
@@ -12,10 +12,12 @@ import {
   Or,
   Submit,
 } from "./LoginForm.styles";
+import { useMutation } from "@apollo/client";
+import { LOG_IN } from "./queries";
 
 type FormFields = {
-  email: string;
-  password: string;
+  userName?: string;
+  password?: string;
 };
 
 const LoginForm = () => {
@@ -25,18 +27,34 @@ const LoginForm = () => {
     watch,
     formState: { errors },
   } = useForm<FormFields>();
-  const onSubmit: SubmitHandler<FormFields> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormFields> = async (formData) => {
+    const user = await logIn({
+      variables: {
+        user: {
+          username: formData.userName,
+          password: formData.password,
+        },
+      },
+    });
+
+    console.log("User Data", user.data);
+    console.log("User error", user.errors);
+  };
+
+  const [logIn, { loading, error }] = useMutation(LOG_IN);
+  if (loading) console.log("loading...", loading);
+  if (error) console.error(error);
 
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Field>
           <InputField
-            type={"email"}
-            label={"Email"}
-            placeHolder={"Email"}
+            type={"text"}
+            label={"Username"}
+            placeHolder={"Username"}
             register={register}
-            registerName={"email"}
+            registerName={"userName"}
           />
         </Field>
         <Field>
@@ -58,8 +76,8 @@ const LoginForm = () => {
           <Or>OR</Or>
           <HorizontalLine />
         </Container>
-        <LogoButton icon={<FcGoogle/>} text={'Sign in with Google'}/>
-        <LogoButton icon={<SiMicrosoft/>} text={'Sign in with Microsoft'}/>
+        <LogoButton icon={<FcGoogle />} text={"Sign in with Google"} />
+        <LogoButton icon={<SiMicrosoft />} text={"Sign in with Microsoft"} />
         <GrayLink to={"/"}>Sign in with SSO</GrayLink>
       </Form>
     </>
