@@ -20,6 +20,7 @@ type Form {
   id: ID!
   title: String!
   owner: String!
+  date: String
   formData: [FormDataRes!]
   submission: [Submission!]
 }
@@ -45,9 +46,9 @@ type Query {
   """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
   allforms: [Form!]!
-  forms(owner: ID!): [Form!]!
+  forms(owner: ID!, limit: Int, skip: Int): [Form!]!
   form(formId: ID!): Form!
-  submissions(formId: String!): [Submission!]!
+  submissions(formId: String!, limit: Int, skip: Int): [Submission!]!
   submission(id: ID!): Submission!
 }
 

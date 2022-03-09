@@ -45,6 +45,9 @@ export class Form {
   @Prop()
   owner:string;
 
+  @Prop({default:()=>{return new Date()}})
+  date:string;
+
   @Prop([FormData])
   formData:[FormData]
   

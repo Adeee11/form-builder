@@ -14,8 +14,8 @@ export class SubmissionResolver {
   }
 
   @Query(() => [Submission], { name: 'submissions' })
-  findAll(@Args('formId') formId: string) {
-    return this.solutionService.findAllRelatedToForm(formId);
+  findAll(@Args('formId') formId: string, @Args('limit',{type:()=>Int, nullable:true}, ) limit:number, @Args('skip', {type:()=>Int, nullable:true}) skip:number) {
+    return this.solutionService.findAllRelatedToForm(formId, limit, skip);
   }
 
   @Query(() => Submission, { name: 'submission' })

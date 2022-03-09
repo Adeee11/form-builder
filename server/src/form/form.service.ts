@@ -33,8 +33,23 @@ export class FormService {
     return await this.formModel.find().exec();
   }
 
-  async findRelatedToUser(owner: string) {
-    return  await this.formModel.find({owner}); 
+  async findRelatedToUser(owner: string, limit:number, skip:number) {
+    if(!skip && !limit){
+      return await this.formModel.find({owner}) 
+    }
+     else if(!skip && limit){
+      return await this.formModel.find({owner}).limit(limit)
+     }
+     else if(skip && !limit){
+       return await this.formModel.find({owner}).skip(skip)
+     }  
+    else {
+    return  await this.formModel.find({owner}).skip(skip).limit(limit);
+    } 
+  }
+
+  async findAllRelatedToUser(owner){
+    return  await this.formModel.find({owner})
   }
   
   async findOne(id:string){

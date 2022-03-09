@@ -19,19 +19,7 @@ registerEnumType(AllowedfieldType, {
   description: 'The supported fieldtype.',
 });
 
-// @InputType()
-// export class Theme{
 
-//   @Field({nullable:true})
-//   background?:string;
-
-//   @Field({nullable:true})
-//   font?:string;
-
-//   @Field({nullable:true})
-//   color?:string;
-
-// } 
 
 
 @InputType()
@@ -45,9 +33,6 @@ export class FormData{
 
    @Field(()=>[String],{nullable: "itemsAndList"})
    option?:string[];
- 
-  //  @Field({nullable:true})
-  //  theme?:Theme;
  
 }
 
@@ -65,7 +50,8 @@ export class CreateFormInput {
 
   @Field(()=>[FormData],{nullable:'itemsAndList'})
   formData?:FormData[];  
-
+  
+ 
 }
 
 

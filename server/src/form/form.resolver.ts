@@ -22,7 +22,7 @@ export class FormResolver {
   async submission(@Parent() sol) {
     const { id } = sol;
 
-    return this.submissionService.findAllRelatedToForm(id);
+    return this.submissionService.findAll(id);
   }
 
   @Query(() => [Form], { name: 'allforms' } , )
@@ -33,8 +33,8 @@ export class FormResolver {
 
   @Query(() => [Form], { name: 'forms' })
   @UseGuards(JwtAuthGuard)
-  findRelatedToUser(@Args('owner', { type: () => ID }) owner: string) {
-    return this.formService.findRelatedToUser(owner);
+  findRelatedToUser(@Args('owner', { type: () => ID }) owner: string, @Args('limit',{type:()=>Int, nullable:true}, ) limit:number, @Args('skip', {type:()=>Int, nullable:true}) skip:number) {
+    return this.formService.findRelatedToUser(owner, limit, skip);
   }
 
   @Query(() => Form, { name: 'form' })
