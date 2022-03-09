@@ -7,25 +7,25 @@ import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Solution } from 'src/solution/entities/solution.entity';
-import { SolutionService } from 'src/solution/solution.service';
+import { Submission } from 'src/submission/entities/submission.entity';
+import { SubmissionService } from 'src/submission/submission.service';
 
 
 @Resolver(()=>Form)
 export class FormResolver {
   constructor(private readonly formService: FormService,
-              private readonly solutionService: SolutionService 
+              private readonly submissionService: SubmissionService 
     ) {}
 
 
-  @ResolveField('solution',()=>[Solution])
-  async solution(@Parent() sol) {
+  @ResolveField('submission',()=>[Submission])
+  async submission(@Parent() sol) {
     const { id } = sol;
 
-    return this.solutionService.findAllRelatedToForm(id);
+    return this.submissionService.findAllRelatedToForm(id);
   }
 
-  @Query(() => [Form], { name: 'allforms' })
+  @Query(() => [Form], { name: 'allforms' } , )
   @UseGuards(JwtAuthGuard)
   findAll() {
     return this.formService.findAll();

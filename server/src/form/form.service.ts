@@ -4,10 +4,13 @@ import { CreateFormInput } from './dto/create-form.input';
 import { UpdateFormInput } from './dto/update-form.input';
 import { Form , FormDocument} from './form.schema';
 import { Model } from 'mongoose';
+import { SubmissionService } from 'src/submission/submission.service';
 
 @Injectable()
 export class FormService {
-  constructor(@InjectModel(Form.name) private formModel: Model<FormDocument>) {}
+  constructor(@InjectModel(Form.name) private formModel: Model<FormDocument>,
+              private readonly submissionService: SubmissionService  
+  ) {}
   
   async create(createFormInput: CreateFormInput) {
     const createdForm = new this.formModel(createFormInput);
@@ -40,6 +43,7 @@ export class FormService {
   
   async remove(id: string) {
     const res= await this.formModel.deleteOne({ _id: id});
+    const res1=await this.submissionService.removeAllrelatedtoForm(id)
     return res.deletedCount
   }
 }

@@ -8,7 +8,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { FormModule } from './form/form.module';
-import { SolutionModule } from './solution/solution.module';
+import { SubmissionModule } from './submission/submission.module';
 
 @Module({
   imports: [ GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -21,7 +21,7 @@ import { SolutionModule } from './solution/solution.module';
    UsersModule,
    AuthModule,
    FormModule,
-   SolutionModule
+   SubmissionModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,4 @@
-import { CreateFormInput, FormData, Theme } from './create-form.input';
+import { CreateFormInput, FormData } from './create-form.input';
 import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 

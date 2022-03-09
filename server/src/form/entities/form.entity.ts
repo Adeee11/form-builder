@@ -1,20 +1,21 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { Solution } from 'src/solution/entities/solution.entity';
+import { skip } from 'rxjs';
+import { Submission } from 'src/submission/entities/submission.entity';
 
 
-@ObjectType()
-export class ThemeRes{
+// @ObjectType()
+// export class ThemeRes{
 
-  @Field({nullable:true})
-  background?:string;
+//   @Field({nullable:true})
+//   background?:string;
 
-  @Field({nullable:true})
-  font?:string;
+//   @Field({nullable:true})
+//   font?:string;
 
-  @Field({nullable:true})
-  color?:string;
+//   @Field({nullable:true})
+//   color?:string;
 
-}
+// }
 
 
 
@@ -30,8 +31,8 @@ export class FormDataRes{
    @Field(()=>[String],{nullable: true})
    option?:string[];
 
-   @Field(()=>ThemeRes,{nullable:true})
-   theme?:ThemeRes;
+  //  @Field(()=>ThemeRes,{nullable:true})
+  //  theme?:ThemeRes;
  
 }
 
@@ -52,8 +53,8 @@ export class Form {
   @Field(()=>[FormDataRes],{nullable:true})
   formData?:FormDataRes[];
 
-  @Field(()=>[Solution],{nullable:true})
-  solution?:Solution[]
-
+  @Field(()=>[Submission],{nullable:true})
+  submission?:Submission[]
+  
   
 }

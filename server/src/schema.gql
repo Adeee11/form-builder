@@ -2,24 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Solution {
+type Submission {
   id: ID!
   formId: String!
   date: String!
   res: [String!]
 }
 
-type ThemeRes {
-  background: String
-  font: String
-  color: String
-}
-
 type FormDataRes {
   fieldType: String
   Question: String
   option: [String!]
-  theme: ThemeRes
 }
 
 type Form {
@@ -28,7 +21,7 @@ type Form {
   title: String!
   owner: String!
   formData: [FormDataRes!]
-  solution: [Solution!]
+  submission: [Submission!]
 }
 
 """User model"""
@@ -54,8 +47,8 @@ type Query {
   allforms: [Form!]!
   forms(owner: ID!): [Form!]!
   form(formId: ID!): Form!
-  solutions(formId: String!): [Solution!]!
-  solution(id: ID!): Solution!
+  submissions(formId: String!): [Submission!]!
+  submission(id: ID!): Submission!
 }
 
 type Mutation {
@@ -63,8 +56,8 @@ type Mutation {
   updateForm(updateFormInput: UpdateFormInput!, id: String!): Form!
   removeForm(id: ID!): Int!
   uploadFile(file: Upload!): Boolean!
-  createSolution(createSolutionInput: CreateSolutionInput!): Solution!
-  removeSolution(id: ID!): Int!
+  createSubmission(createSubmissionInput: CreateSubmissionInput!): Submission!
+  removeSubmission(id: ID!): Int!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signUp(loginUserInput: LoginUserInput!): User!
 }
@@ -79,7 +72,6 @@ input FormData {
   fieldType: AllowedfieldType!
   Question: String!
   option: [String]
-  theme: Theme
 }
 
 """The supported fieldtype."""
@@ -96,12 +88,6 @@ enum AllowedfieldType {
   textArea
 }
 
-input Theme {
-  background: String
-  font: String
-  color: String
-}
-
 input UpdateFormInput {
   title: String
   owner: String!
@@ -111,7 +97,7 @@ input UpdateFormInput {
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
-input CreateSolutionInput {
+input CreateSubmissionInput {
   formId: String!
   date: String
   res: [String!]
