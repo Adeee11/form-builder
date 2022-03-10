@@ -34,7 +34,7 @@ export class Form {
   owner:string;
 
   @Field({nullable:true})
-  date?:string;
+  date?:Date;
 
   @Field(()=>[FormDataRes],{nullable:true})
   formData?:FormDataRes[];

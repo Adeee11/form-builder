@@ -14,10 +14,10 @@ export class UsersResolver {
     ) {}
 
 
-    @ResolveField('form',()=>[Form])
+    @ResolveField('form',()=>[Form]) 
     async form(@Parent() form) {
       const { id } = form;
-      return this.formService.findAllRelatedToUser(id);
+      return this.formService.findRelatedToUser(id);
     }
 
 

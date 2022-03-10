@@ -11,7 +11,7 @@ export class Submission {
   formId:string;
 
   @Prop({ default:()=>{return  new Date()}})
-  date:string;
+  date:Date;
 
   @Prop()
   res?: [];

@@ -10,7 +10,7 @@ export class Submission {
   formId:string;
 
   @Field()
-  date:string;
+  date:Date;
 
   @Field(() => [String],{nullable:true})
   res?: string[];

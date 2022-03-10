@@ -17,11 +17,9 @@ export class FormResolver {
               private readonly submissionService: SubmissionService 
     ) {}
 
-
   @ResolveField('submission',()=>[Submission])
   async submission(@Parent() sol) {
     const { id } = sol;
-
     return this.submissionService.findAll(id);
   }
 
@@ -31,10 +29,18 @@ export class FormResolver {
     return this.formService.findAll();
   }
 
-  @Query(() => [Form], { name: 'forms' })
+
+  @Query(()=>[Form], {name:'sortedForms'})
   @UseGuards(JwtAuthGuard)
-  findRelatedToUser(@Args('owner', { type: () => ID }) owner: string, @Args('limit',{type:()=>Int, nullable:true}, ) limit:number, @Args('skip', {type:()=>Int, nullable:true}) skip:number) {
-    return this.formService.findRelatedToUser(owner, limit, skip);
+  getUserForm(@Args('owner') owner:string, 
+              @Args('sortBy', {defaultValue:1}) sortBy:number, 
+              @Args('limit', {nullable:true}) limit?:number, 
+              @Args('skip', {nullable:true}) skip?:number){
+    if(sortBy===1){
+      return this.formService.sortByDate(owner, limit, skip)
+    }else{
+      return this.formService.sortByTitle(owner, limit, skip)
+    }          
   }
 
   @Query(() => Form, { name: 'form' })
@@ -70,8 +76,8 @@ export class FormResolver {
       const randomstr=Math.random();  
       createReadStream()
               .pipe(createWriteStream(`./uploads/${randomstr}${filename}`))
-              .on('finish', () =>{ resolve(true); console.log(`./uploads/${randomstr}${filename}`)  })
-              .on('error', () => {reject(false);console.log("Error.....")})
+              .on('finish', () =>{ resolve(true)})
+              .on('error', () => {reject(false)})
       });
   } 
 }

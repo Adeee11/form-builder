@@ -4,6 +4,7 @@ import { Submission } from './entities/submission.entity';
 import { CreateSubmissionInput } from './dto/create-submission.input';
 
 
+
 @Resolver(() => Submission)
 export class SubmissionResolver {
   constructor(private readonly solutionService: SubmissionService) {}
@@ -14,8 +15,12 @@ export class SubmissionResolver {
   }
 
   @Query(() => [Submission], { name: 'submissions' })
-  findAll(@Args('formId') formId: string, @Args('limit',{type:()=>Int, nullable:true}, ) limit:number, @Args('skip', {type:()=>Int, nullable:true}) skip:number) {
-    return this.solutionService.findAllRelatedToForm(formId, limit, skip);
+  findAll(@Args('formId') formId: string, 
+          @Args('limit',{type:()=>Int, nullable:true}) limit:number, 
+          @Args('skip', {type:()=>Int, nullable:true}) skip:number,
+          @Args('sortBy', {defaultValue:'date'}) sortBy:string
+          ) {
+    return this.solutionService.findAllRelatedToForm(formId, limit, skip, sortBy);
   }
 
   @Query(() => Submission, { name: 'submission' })
@@ -31,3 +36,4 @@ export class SubmissionResolver {
  
   }
 }
+

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateFormInput } from './dto/create-form.input';
-import { UpdateFormInput } from './dto/update-form.input';
 import { Form , FormDocument} from './form.schema';
 import { Model } from 'mongoose';
 import { SubmissionService } from 'src/submission/submission.service';
@@ -33,7 +32,7 @@ export class FormService {
     return await this.formModel.find().exec();
   }
 
-  async findRelatedToUser(owner: string, limit:number, skip:number) {
+  async findRelatedToUser(owner?: string, limit?:number, skip?:number) {
     if(!skip && !limit){
       return await this.formModel.find({owner}) 
     }
@@ -48,10 +47,40 @@ export class FormService {
     } 
   }
 
-  async findAllRelatedToUser(owner){
-    return  await this.formModel.find({owner})
+  async sortByDate(owner:string,  limit?:number, skip?:number){
+          
+    if(!skip && !limit){
+      return await this.formModel.find({owner}).sort({'date':-1}) 
+    }
+     else if(!skip && limit){
+      return await this.formModel.find({owner}).sort({'date':-1}).limit(limit)
+     }
+     else if(skip && !limit){
+       return await this.formModel.find({owner}).sort({'date':-1}).skip(skip)
+     }  
+    else {
+    return  await this.formModel.find({owner}).sort({'date':-1}).skip(skip).limit(limit);
+    } 
   }
-  
+ 
+ 
+  async sortByTitle(owner:string,limit?:number, skip?:number){
+        
+       
+    if(!skip && !limit){
+      return await this.formModel.find({owner}).sort({'title':1}) 
+    }
+     else if(!skip && limit){
+      return await this.formModel.find({owner}).sort({'title':1}).limit(limit)
+     }
+     else if(skip && !limit){
+       return await this.formModel.find({owner}).sort({'title':1}).skip(skip)
+     }  
+    else {
+    return  await this.formModel.find({owner}).sort({'title':1}).skip(skip).limit(limit);
+    }
+}
+
   async findOne(id:string){
     return await this.formModel.findById(id);
   }
