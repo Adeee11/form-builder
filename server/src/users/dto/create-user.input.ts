@@ -9,7 +9,5 @@ export class CreateUserInput {
 
   @Field({ description: 'password field' })
   password:string;
-  
-
-  
+    
 }

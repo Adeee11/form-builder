@@ -1,7 +1,8 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { skip } from 'rxjs';
 
 @ObjectType()
-export class Solution {
+export class Submission {
   @Field(() => ID)
   id: string;
  
@@ -9,7 +10,7 @@ export class Solution {
   formId:string;
 
   @Field()
-  date:string;
+  date:Date;
 
   @Field(() => [String],{nullable:true})
   res?: string[];

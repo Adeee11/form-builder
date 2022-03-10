@@ -4,6 +4,38 @@ import { Document } from 'mongoose';
 export type FormDocument = Form & Document;
 
 @Schema()
+export class Theme{
+
+  @Prop({default:"#FFFFFF"})
+  background:string;
+
+  @Prop({default:"20px Arial, sans-serif"})
+  font:string;
+
+  @Prop({default:"#000000"})
+  color:string;
+
+} 
+
+
+@Schema()
+class FormData{
+
+  @Prop()
+  fieldType:string;
+
+  @Prop()
+  Question:string;
+
+  @Prop()
+  option:[string];
+
+  @Prop(Theme)
+  theme:Theme;
+}
+
+
+@Schema()
 export class Form {
    
 
@@ -13,7 +45,10 @@ export class Form {
   @Prop()
   owner:string;
 
-  @Prop()
+  @Prop({default:()=>{return new Date()}})
+  date:Date;
+
+  @Prop([FormData])
   formData:[FormData]
   
 }
