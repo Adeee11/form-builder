@@ -17,6 +17,9 @@ const List = styled.ul`
 const Item = styled.li`
   padding: 5px 10px;
   margin-bottom: 30px;
+  @media (min-width: 900px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const NavLink = styled(Link)`

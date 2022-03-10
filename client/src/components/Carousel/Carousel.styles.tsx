@@ -1,3 +1,4 @@
+import { current } from "@reduxjs/toolkit";
 import styled from "styled-components";
 
 interface Props {
@@ -15,11 +16,41 @@ const Container = styled.div<Props>`
   }
 `;
 
-const ImageContainer = styled(Container)`
+
+
+
+var test = 2;
+var test2 = 4;
+
+type ColumnProp = {
+  startColumn:number;
+  endColumn: number;
+}
+
+
+const ImageContainer = styled(Container)<ColumnProp>`
   text-align: center;
-`;
-const CarouselContainer = styled(Container)`
-  text-align: left;
+  background: red;
+  width: 100%;
+  grid-row: 1;
+  grid-column-start: ${({startColumn})=>startColumn};
+  grid-column-end: ${({endColumn})=>endColumn};
 `;
 
-export {Container, CarouselContainer, ImageContainer}
+const CarouselContainer = styled(Container)`
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  overflow-x: hidden;
+  position: relative;
+  left: 10vw;
+`;
+
+const LeftArrowContainer = styled.span`
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 40px;
+  align-self: center;
+`;
+
+export { Container, CarouselContainer, ImageContainer, LeftArrowContainer };

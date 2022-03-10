@@ -12,7 +12,7 @@ const ListOfLinks = (props: { items: Item[]; heading: string }) => {
       <Container>
         <Heading>{heading}</Heading>
         {items.map((item, index) => (
-          <Item key={index}>
+          <Item key={index.toString() + heading}>
             <UnstyledLink to={item.url}>{item.itemName}</UnstyledLink>
           </Item>
         ))}

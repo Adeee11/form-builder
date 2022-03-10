@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const Wrapper = styled.div`
+    overflow-x: hidden;
+`
+
 const Header = styled.header`
     margin: 0 auto;
     padding: 20px 2vw;
@@ -15,4 +19,4 @@ const Footer =styled.footer`
     color: white;
 `
 
-export {Header,Main,Footer}
+export {Header,Main,Footer, Wrapper}

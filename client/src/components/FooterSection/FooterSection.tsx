@@ -1,5 +1,11 @@
 import { ListOfLinks } from "../ListOfLinks";
-import { Container, WhiteLink } from "./FooterSection.styles";
+import {
+  Container,
+  WhiteLink,
+  IconContainer,
+  Wrapper,
+  LineBreak,
+} from "./FooterSection.styles";
 import { MdLocationOn } from "react-icons/md";
 import {
   AiOutlineCopyrightCircle,
@@ -21,30 +27,28 @@ const FooterSection = () => {
   ];
   return (
     <>
-      <Container>
+      <Wrapper>
         <ListOfLinks heading={headings[0]} items={items} />
         <ListOfLinks heading={headings[1]} items={items} />
         <ListOfLinks heading={headings[2]} items={items} />
         <ListOfLinks heading={headings[3]} items={items} />
-        <Container>
+        <IconContainer>
           <RiFacebookCircleLine />
           <AiFillTwitterCircle />
           <AiOutlineInstagram />
           <AiOutlineLinkedin />
           <AiOutlineYoutube />
-        </Container>
-        <hr />
+        </IconContainer>
+        <LineBreak />
         <Container>
           <WhiteLink to={"/"}>
-            <MdLocationOn />
-            With love from Barcelona
+            <MdLocationOn /> With love from Barcelona
           </WhiteLink>
           <WhiteLink to={"/"}>
-            <AiOutlineCopyrightCircle />
-            Typeform
+            <AiOutlineCopyrightCircle /> Typeform
           </WhiteLink>
         </Container>
-      </Container>
+      </Wrapper>
     </>
   );
 };

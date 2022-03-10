@@ -16,8 +16,8 @@ const HeroSection = () => {
         <Description
           heading={descriptionHeading}
           text={descriptionText}
-          headingSize={36}
-          textSize={24}
+          headingSize={'36px'}
+          textSize={'24px'}
         />
 
         <Button text="Get Started-it's free" />

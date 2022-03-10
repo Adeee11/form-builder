@@ -14,6 +14,7 @@ import {
 } from "./LoginForm.styles";
 import { useMutation } from "@apollo/client";
 import { LOG_IN } from "./queries";
+import { useNavigate } from "react-router-dom";
 
 type FormFields = {
   userName?: string;
@@ -27,6 +28,7 @@ const LoginForm = () => {
     watch,
     formState: { errors },
   } = useForm<FormFields>();
+  const navigate = useNavigate()
   const onSubmit: SubmitHandler<FormFields> = async (formData) => {
     const user = await logIn({
       variables: {
@@ -39,6 +41,7 @@ const LoginForm = () => {
 
     console.log("User Data", user.data);
     console.log("User error", user.errors);
+    user.data?navigate('/dashboard'):console.error('There\'s some error')
   };
 
   const [logIn, { loading, error }] = useMutation(LOG_IN);

@@ -9,6 +9,7 @@ import { App } from "./components/App";
 import { SignUpPage } from "./components/SignUpPage";
 import { LoginPage } from "./components/LoginPage";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { Dashboard } from "./components/Dashboard";
 
 const client = new ApolloClient({
   uri: "http://localhost:7000/graphql",
@@ -22,7 +23,7 @@ ReactDOM.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} />
-
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>

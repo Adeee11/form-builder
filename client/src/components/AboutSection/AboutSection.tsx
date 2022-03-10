@@ -34,24 +34,24 @@ const AboutSection = () => {
         <Description
           heading={headings[0]}
           text={texts[0]}
-          headingSize={14}
-          textSize={20}
+          headingSize={'14px'}
+          textSize={'20px'}
         />
         <Video width={'80vw'} url={video1} />
 
         <Description
           heading={headings[1]}
           text={texts[1]}
-          headingSize={14}
-          textSize={20}
+          headingSize={"14px"}
+          textSize={"20px"}
         />
         <Carousel imgs={[img1,img2,img3]}/>
 
         <Description
           heading={headings[2]}
           text={texts[2]}
-          headingSize={14}
-          textSize={20}
+          headingSize={"14px"}
+          textSize={"20px"}
         />
         <Video width={'80vw'} url={video2} />
         <Button text="Sign up for free"/>

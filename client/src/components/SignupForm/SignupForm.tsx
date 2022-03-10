@@ -19,6 +19,7 @@ import {
 } from "./SignupForm.styles";
 import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "./queries";
+import { useNavigate } from "react-router-dom";
 
 type FormFields = {
   email?: string;
@@ -38,8 +39,9 @@ const SignupForm = () => {
     watch,
     formState: { errors },
   } = useForm<FormFields>();
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormFields> = async (formData) => {
-    const user = await signup({
+    const user = await signUp({
       variables: {
         user: {
           username: formData.userName,
@@ -49,8 +51,11 @@ const SignupForm = () => {
     });
     console.log("User Data", user.data);
     console.log("User Errors", user.errors);
+
+    user.data?navigate('/login'):console.log('There\'s some error')
   };
-  const [signup, { data, loading, error }] = useMutation(SIGN_UP);
+
+  const [signUp, { data, loading, error }] = useMutation(SIGN_UP);
 
   if (loading) console.log("Loading...");
   if (error) console.log("My Error: ", error);
