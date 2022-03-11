@@ -19,12 +19,10 @@ export class FormService {
 
   async update( updateFormInput, id:string) {
      const m=await this.findOne(id)
-     m.title=updateFormInput.title;
-     if(updateFormInput.formData){
-         for(let i=0; i<updateFormInput.formData.length; i++){
-               m.formData[i]= updateFormInput.formData[i]
-           }
-        }
+     if(updateFormInput.title){
+      m.title=updateFormInput.title;
+     }
+     m.formData=updateFormInput.formData
      return await m.save();
   }
 
@@ -33,54 +31,14 @@ export class FormService {
   }
 
   async findRelatedToUser(owner?: string, limit?:number, skip?:number) {
-    if(!skip && !limit){
-      return await this.formModel.find({owner}) 
-    }
-     else if(!skip && limit){
-      return await this.formModel.find({owner}).limit(limit)
-     }
-     else if(skip && !limit){
-       return await this.formModel.find({owner}).skip(skip)
-     }  
-    else {
-    return  await this.formModel.find({owner}).skip(skip).limit(limit);
-    } 
+    return  await this.formModel.find({owner}).skip(skip||0).limit(limit||20); 
   }
 
-  async sortByDate(owner:string,  limit?:number, skip?:number){
-          
-    if(!skip && !limit){
-      return await this.formModel.find({owner}).sort({'date':-1}) 
-    }
-     else if(!skip && limit){
-      return await this.formModel.find({owner}).sort({'date':-1}).limit(limit)
-     }
-     else if(skip && !limit){
-       return await this.formModel.find({owner}).sort({'date':-1}).skip(skip)
-     }  
-    else {
-    return  await this.formModel.find({owner}).sort({'date':-1}).skip(skip).limit(limit);
-    } 
+  async sortByDateTitle(owner:string,  limit?:number, skip?:number, sortBy?:string){
+    let sortAcc=sortBy
+    return  await this.formModel.find({owner}).sort(sortBy).skip(skip||0).limit(limit||20);
   }
  
- 
-  async sortByTitle(owner:string,limit?:number, skip?:number){
-        
-       
-    if(!skip && !limit){
-      return await this.formModel.find({owner}).sort({'title':1}) 
-    }
-     else if(!skip && limit){
-      return await this.formModel.find({owner}).sort({'title':1}).limit(limit)
-     }
-     else if(skip && !limit){
-       return await this.formModel.find({owner}).sort({'title':1}).skip(skip)
-     }  
-    else {
-    return  await this.formModel.find({owner}).sort({'title':1}).skip(skip).limit(limit);
-    }
-}
-
   async findOne(id:string){
     return await this.formModel.findById(id);
   }

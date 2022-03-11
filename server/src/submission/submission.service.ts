@@ -20,18 +20,7 @@ export class SubmissionService {
 
   async findAllRelatedToForm(formId:string, limit?:number, skip?:number, sortBy?:string){
     let sortAcc=sortBy
-    if(!skip && !limit){
-      return await this.submissionModel.find({formId:formId}).sort(sortAcc) 
-    }
-     else if(!skip && limit){
-      return await this.submissionModel.find({formId:formId}).sort(sortAcc).limit(limit)
-     }
-     else if(skip && !limit){
-       return await this.submissionModel.find({formId:formId}).sort(sortAcc).skip(skip)
-     }  
-    else {
-    return  await this.submissionModel.find({formId:formId}).sort(sortAcc).skip(skip).limit(limit);
-    }
+    return  await this.submissionModel.find({formId:formId}).sort(sortAcc).skip(skip||0).limit(limit||20);
   }
 
   async findOne(id: string) {

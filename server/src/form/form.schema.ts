@@ -4,21 +4,6 @@ import { Document } from 'mongoose';
 export type FormDocument = Form & Document;
 
 @Schema()
-export class Theme{
-
-  @Prop({default:"#FFFFFF"})
-  background:string;
-
-  @Prop({default:"20px Arial, sans-serif"})
-  font:string;
-
-  @Prop({default:"#000000"})
-  color:string;
-
-} 
-
-
-@Schema()
 class FormData{
 
   @Prop()
@@ -30,8 +15,7 @@ class FormData{
   @Prop()
   option:[string];
 
-  @Prop(Theme)
-  theme:Theme;
+
 }
 
 
