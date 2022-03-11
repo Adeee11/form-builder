@@ -5,6 +5,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  max-width: 600px;
 `;
 const RadioButtonContainer = styled.div``;
 
@@ -41,7 +42,8 @@ const Submit = styled.input`
   color: white;
   background: #262627;
   font-size: 18px;
-  min-width: 80vw;
+  max-width: 80vw;
+  min-width: 400px;
   margin: 0 auto;
   margin-bottom: 20px;
 `;

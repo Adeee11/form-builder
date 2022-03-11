@@ -18,7 +18,8 @@ const Submit = styled.input`
   color: white;
   background: #262627;
   font-size: 18px;
-  min-width: 80vw;
+  max-width: 80vw;
+  min-width: 400px;
   margin: 0 auto;
   margin-bottom: 20px;
 `;

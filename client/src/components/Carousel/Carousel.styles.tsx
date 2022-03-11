@@ -1,56 +1,27 @@
-import { current } from "@reduxjs/toolkit";
 import styled from "styled-components";
 
-interface Props {
-  backgroundColor?: string;
-}
+type FocusedImageProp = {
+  focusedImage: number;
+};
 
-const Container = styled.div<Props>`
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 10px 20px;
-  background: ${({ backgroundColor }) => backgroundColor || "transparent"};
-  border: blue solid 2px;
-  @media (max-width: 900px) {
-    text-align: center;
-  }
-`;
-
-
-
-
-var test = 2;
-var test2 = 4;
-
-type ColumnProp = {
-  startColumn:number;
-  endColumn: number;
-}
-
-
-const ImageContainer = styled(Container)<ColumnProp>`
-  text-align: center;
-  background: red;
-  width: 100%;
-  grid-row: 1;
-  grid-column-start: ${({startColumn})=>startColumn};
-  grid-column-end: ${({endColumn})=>endColumn};
-`;
-
-const CarouselContainer = styled(Container)`
-  text-align: left;
+const CarouselWrapper = styled.div<FocusedImageProp>`
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  grid-column-gap: 10px;
   overflow-x: hidden;
-  position: relative;
-  left: 10vw;
-`;
+  margin-left: ${({focusedImage})=>((1-focusedImage)*280).toString() + 'px'};
+ 
+`
 
-const LeftArrowContainer = styled.span`
-  grid-column: 1;
-  grid-row: 1;
-  font-size: 40px;
+const CarouselItem = styled.div`
+  width: 280px;
+  height: 400px;
+  overflow: hidden;
+`
+
+const LeftArrow = styled.span`
   align-self: center;
-`;
+  font-size: 35px;
+`
 
-export { Container, CarouselContainer, ImageContainer, LeftArrowContainer };
+export {CarouselWrapper, CarouselItem, LeftArrow}

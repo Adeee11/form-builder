@@ -2,8 +2,11 @@ import styled from "styled-components";
 
 const Input = styled.input`
   padding: 6px 14px;
-  margin: 0 auto;
-  min-width: 80vw;
+  margin-left: 8vw;
+  @media (max-width: 500px) {
+    min-width: 80vw;
+  }
+  
   font-size: 16px;
 `;
 const Label = styled.label`
