@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const StyledButton = styled.button`
+type ButtonProp = {
+  btnColor?: string;
+};
+
+export const StyledButton = styled.button<ButtonProp>`
   font-size: 16px;
-  background: #262627;
+  background: ${({ btnColor }) => btnColor || "#262627"};
   color: #fcfaf8;
   padding: 12px 24px;
 `;

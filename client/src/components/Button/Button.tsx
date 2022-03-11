@@ -1,10 +1,10 @@
 import { StyledButton } from "./Button.styles"
 
-const Button = (props:{text:string}) => {
-  const {text } = props
+const Button = (props:{text:string, btnColor?:string}) => {
+  const {text, btnColor } = props
   return (
     <>
-      <StyledButton>{text}</StyledButton>
+      <StyledButton btnColor={btnColor} >{text}</StyledButton>
     </>
   )
 }
