@@ -1,10 +1,11 @@
+import { Wrapper } from "./LogoNavbar.styles";
 
 const LogoNavbar = () => {
   return (
     <>
-      LogoNavbar
+      <Wrapper>LogoNavbar</Wrapper>
     </>
-  )
-}
+  );
+};
 
-export default LogoNavbar
+export default LogoNavbar;

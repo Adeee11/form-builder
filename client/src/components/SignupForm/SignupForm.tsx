@@ -139,13 +139,13 @@ const SignupForm = () => {
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Field>
-          <InputField
+          {/* <InputField
             type={"email"}
             label={"Email"}
             placeHolder={"Email"}
             register={register}
             registerName={"email"}
-          />
+          /> */}
           <InputField
             type={"text"}
             label={"Username"}
