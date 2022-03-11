@@ -33,14 +33,12 @@ export class FormResolver {
   @Query(()=>[Form], {name:'sortedForms'})
   @UseGuards(JwtAuthGuard)
   getUserForm(@Args('owner') owner:string, 
-              @Args('sortBy', {defaultValue:1}) sortBy:number, 
+              @Args('sortBy', {defaultValue:"date"}) sortBy:string, 
               @Args('limit', {nullable:true}) limit?:number, 
               @Args('skip', {nullable:true}) skip?:number){
-    if(sortBy===1){
-      return this.formService.sortByDate(owner, limit, skip)
-    }else{
-      return this.formService.sortByTitle(owner, limit, skip)
-    }          
+    
+      return this.formService.sortByDateTitle(owner, limit, skip,sortBy)
+              
   }
 
   @Query(() => Form, { name: 'form' })

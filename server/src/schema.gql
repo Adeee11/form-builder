@@ -51,7 +51,7 @@ type Query {
   """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
   allforms: [Form!]!
-  sortedForms(owner: String!, sortBy: Float = 1, limit: Float, skip: Float): [Form!]!
+  sortedForms(owner: String!, sortBy: String = "date", limit: Float, skip: Float): [Form!]!
   form(formId: ID!): Form!
   submissions(formId: String!, limit: Int, skip: Int, sortBy: String = "date"): [Submission!]!
   submission(id: ID!): Submission!
@@ -96,7 +96,7 @@ enum AllowedfieldType {
 
 input UpdateFormInput {
   title: String
-  owner: String!
+  owner: String
   formData: [FormData]
 }
 

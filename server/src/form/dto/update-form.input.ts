@@ -8,9 +8,8 @@ export class UpdateFormInput extends PartialType(CreateFormInput) {
   @Field({nullable:true})
   title?: string;
 
-  @Field()
-  @IsNotEmpty()
-  owner:string;
+  @Field({nullable:true})
+  owner?:string;
 
   @Field(()=>[FormData],{nullable:'itemsAndList'})
   formData?:FormData[];
