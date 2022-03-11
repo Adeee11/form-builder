@@ -3,11 +3,12 @@ import { NavLinks } from "../NavLinks";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import {
   CrossButton,
-  LinkButton,
+  LoginButton,
   NavbarContainer,
   NavLinksContainer,
-  SigningContainer,
+  SignupButton,
   ToggleButton,
+  Wrapper,
 } from "./Navbar.styled";
 import { useState } from "react";
 import { Dropdown } from "../Dropdown";
@@ -49,14 +50,10 @@ const Navbar = () => {
               "Careers",
             ]}
           />
-          <SigningContainer>
-            {/* Check how to make the text of these links center  */}
-            <LinkButton to="/login" transparent>
-              Log in
-            </LinkButton>
-
-            <LinkButton to="/signup">Sign up</LinkButton>
-          </SigningContainer>
+          <Wrapper>
+            <LoginButton to={"/login"}>{"Log in"}</LoginButton>
+            <SignupButton to={"/signup"}>{"Sign up"}</SignupButton>
+          </Wrapper>
         </NavLinksContainer>
       </NavbarContainer>
     </>

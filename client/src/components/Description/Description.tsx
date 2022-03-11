@@ -3,8 +3,8 @@ import { Text, Heading } from "./Description.types";
 const Description = (props: {
   heading: string;
   text: string;
-  headingSize: number;
-  textSize: number;
+  headingSize: number | string;
+  textSize: number | string;
 }) => {
   const { heading, text, headingSize, textSize } = props;
   return (

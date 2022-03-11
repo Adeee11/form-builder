@@ -2,13 +2,12 @@ import { AboutSection } from "../AboutSection";
 import { FooterSection } from "../FooterSection";
 import { HeroSection } from "../HeroSection";
 import { Navbar } from "../Navbar";
-import { Footer, Main } from "./App.styles";
+import { Footer, Main, Wrapper } from "./App.styles";
 
 const App = () => {
   return (
-    <>
-      
-        <Navbar />
+    <Wrapper>
+      <Navbar />
       <Main>
         <HeroSection />
         <AboutSection />
@@ -16,7 +15,7 @@ const App = () => {
       <Footer>
         <FooterSection />
       </Footer>
-    </>
+    </Wrapper>
   );
 };
 
