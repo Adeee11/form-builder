@@ -5,6 +5,7 @@ const LOG_IN = gql`
     login(loginUserInput: $user) {
       user {
         username
+        id
       }
       access_token
     }

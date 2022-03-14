@@ -5,11 +5,11 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { App } from "./components/App";
-import { SignUpPage } from "./components/SignUpPage";
-import { LoginPage } from "./components/LoginPage";
+import { App } from "./pages/App";
+import { SignUpPage } from "./pages/signup";
+import { LoginPage } from "./pages/login";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { Dashboard } from "./components/Dashboard";
+import { Dashboard } from "./pages/dashboard";
 
 const client = new ApolloClient({
   uri: "http://localhost:7000/graphql",

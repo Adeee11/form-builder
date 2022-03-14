@@ -1,6 +1,6 @@
-import { Description } from "../Description";
-import { SignupForm } from "../SignupForm";
-import { SignupHeader } from "../SignupHeader";
+import { Description } from "../../components/Description";
+import { SignupForm } from "../../components/SignupForm";
+import { SignupHeader } from "../../components/SignupHeader";
 import { Container } from "./SignUpPage.styles";
 
 

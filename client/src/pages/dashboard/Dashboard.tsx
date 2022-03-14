@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { DashboardHeader } from "../DashboardHeader";
-import { SideBarMenu } from "../SideBarMenu";
-import { TypeformCard } from "../TypeformCard";
-import { WorkspaceAbout } from "../WorkspaceAbout";
-import { WorkspaceMain } from "../WorkspaceMain";
+import { DashboardHeader } from "../../components/DashboardHeader";
+import { SideBarMenu } from "../../components/SideBarMenu";
+import { WorkspaceAbout } from "../../components/WorkspaceAbout";
+import { WorkspaceMain } from "../../components/WorkspaceMain";
 import { Aside, Main, Section, Wrapper } from "./Dashboard.styles";
 
 const Dashboard = () => {

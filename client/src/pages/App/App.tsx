@@ -1,7 +1,7 @@
-import { AboutSection } from "../AboutSection";
-import { FooterSection } from "../FooterSection";
-import { HeroSection } from "../HeroSection";
-import { Navbar } from "../Navbar";
+import { AboutSection } from "../../components/AboutSection";
+import { FooterSection } from "../../components/FooterSection";
+import { HeroSection } from "../../components/HeroSection";
+import { Navbar } from "../../components/Navbar";
 import { Footer, Main, Wrapper } from "./App.styles";
 
 const App = () => {

@@ -1,7 +1,7 @@
 import { Brand } from "../Brand";
 import { Button } from "../Button";
 import { LogoNavbar } from "../LogoNavbar";
-import { Header } from "./DashboardHeader.styles";
+import { Container, Header } from "./DashboardHeader.styles";
 
 const DashboardHeader = () => {
   const brandName = "Typeform";
@@ -9,8 +9,10 @@ const DashboardHeader = () => {
     <>
       <Header>
         <Brand brandName={brandName} />
-        <Button text="View Plans" btnColor="#346551"/>
-        <LogoNavbar />
+        <Container>
+          <Button text="View Plans" btnColor="#346551" />
+          <LogoNavbar />
+        </Container>
       </Header>
     </>
   );

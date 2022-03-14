@@ -1,30 +1,53 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-    display: grid;
-    grid-template-columns: 2fr repeat(7, 1fr);
-    background: gray;
-    button {
-        grid-row: 2;
-        grid-column: 1/4;
-        max-width: 200px;
-    }
+  display: flex;
+  flex-direction: column;
 
-    select {
-        grid-row: 2;
-        grid-column: 5/8;
-    }
 `;
 
-const WorkspaceName = styled.input`
-    border: transparent;
-    outline: none;
-    font-size: 20px;
-    max-width: 80%;
-    margin-right: auto;
-    padding: 5px 8px;
-`
-const IconContainer = styled.span`
-`
+const WorkspaceName = styled.span`
+  font-size: 20px;
+  padding: 5px 10px;
+  max-width: 60vw;
+`;
+const PipeSymbol = styled.span``;
 
-export { Wrapper, WorkspaceName, IconContainer };
+const Row = styled.div`
+  display: flex;
+`;
+
+const FirstRow = styled(Row)`
+  justify-content: flex-start;
+  span {
+    margin-right: 10px;
+  }
+  svg {
+    margin-right: 10px;
+  }
+`;
+
+const SecondRow = styled(Row)`
+  justify-content: space-between;
+  button{
+      padding: 4px 8px;
+  }
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const IconContainer = styled.span``;
+
+export {
+  Wrapper,
+  WorkspaceName,
+  IconContainer,
+  PipeSymbol,
+  Row,
+  Column,
+  FirstRow,
+  SecondRow,
+};

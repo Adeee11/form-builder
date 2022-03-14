@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 const Header = styled.header`
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: 3fr 2fr;
     grid-auto-rows: minmax(64px,auto);
-    border: 1px blue solid;
     align-items: center;
-    grid-gap: 5px;
+    grid-gap: 10px;
 
     h1{
         font-size: 16px;
@@ -17,15 +16,22 @@ const Header = styled.header`
         font-size: 12px;
         border-radius: 6px;
         max-height: 32px;
-        min-width: 0;
-        grid-row: 1;
-        grid-column: 3;
+        min-width: 80px;
+        max-width: 100px;
+        margin-right: 10px;
         padding: 6px 8px;
+        justify-self: flex-end;
     }
 
-    div{
-        grid-column: 4;
-    }
+    
 `;
 
-export { Header };
+const Container = styled.div`
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+    padding: 2px 5px;
+`
+
+
+export { Header, Container };

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const Wrapper = styled.div`
   margin: 1vw 2vw;
-  
+  max-width: 100vw;
   display: grid;
   grid-template-columns: 2fr 8fr;
   header{
@@ -11,8 +11,9 @@ const Wrapper = styled.div`
   }
 `;
 const Main = styled.main<Collapsed>`
-  background: blue;
   grid-row: 2;
+  max-width: 100%;
+  overflow-x: scroll;
   grid-column: 2/3;
   ${({$isCollapsed})=>$isCollapsed?css`
     grid-column: 1/3;
@@ -34,7 +35,6 @@ const Aside = styled.aside<Collapsed>`
   `:''}
 `;
 const Section = styled.section`
-  background: pink;
 `;
 
 export { Wrapper, Main, Aside, Section };

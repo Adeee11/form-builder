@@ -1,6 +1,6 @@
-import { Description } from "../Description";
-import { LoginForm } from "../LoginForm";
-import { LoginHeader } from "../LoginHeader";
+import { Description } from "../../components/Description";
+import { LoginForm } from "../../components/LoginForm";
+import { LoginHeader } from "../../components/LoginHeader";
 
 import { Container } from "./LoginPage.styles";
 
