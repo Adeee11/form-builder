@@ -1,34 +1,38 @@
-import { InputType, Int, Field, ObjectType, InterfaceType } from '@nestjs/graphql';
+import { InputType, Int, Field, ObjectType, InterfaceType, registerEnumType } from '@nestjs/graphql';
+import { IsNotEmpty } from 'class-validator';
 
-@InputType()
-export class Theme{
+enum AllowedfieldType {
+  text="text",
+  email="email",
+  number="number", 
+  url="url",
+  date="date",
+  color="color",
+  range="range",
+  select="select",
+  choice="choice",   
+  textArea="textArea",   
+}
 
-  @Field({nullable:true})
-  background?:string;
+registerEnumType(AllowedfieldType, {
+  name: 'AllowedfieldType',
+  description: 'The supported fieldtype.',
+});
 
-  @Field({nullable:true})
-  font?:string;
 
-  @Field({nullable:true})
-  color?:string;
-
-} 
 
 
 @InputType()
 export class FormData{
     
-  @Field({nullable:true})
-   fieldType:string;
+   @Field(type => AllowedfieldType)
+   fieldType:AllowedfieldType;
 
-   @Field({nullable:true})
+   @Field()
    Question:string;
 
-   @Field(()=>[String],{nullable: true})
+   @Field(()=>[String],{nullable: "itemsAndList"})
    option?:string[];
- 
-   @Field({nullable:true})
-   theme?:Theme;
  
 }
 
@@ -37,15 +41,19 @@ export class FormData{
 export class CreateFormInput {
 
   @Field()
+  @IsNotEmpty()
   title: string;
 
   @Field()
+  @IsNotEmpty()
   owner:string;
 
-  @Field(()=>[FormData],{nullable:true})
+  @Field(()=>[FormData],{nullable:'itemsAndList'})
   formData?:FormData[];  
-
+  
+ 
 }
+
 
 
 

@@ -4,6 +4,22 @@ import { Document } from 'mongoose';
 export type FormDocument = Form & Document;
 
 @Schema()
+class FormData{
+
+  @Prop()
+  fieldType:string;
+
+  @Prop()
+  Question:string;
+
+  @Prop()
+  option:[string];
+
+
+}
+
+
+@Schema()
 export class Form {
    
 
@@ -13,7 +29,10 @@ export class Form {
   @Prop()
   owner:string;
 
-  @Prop()
+  @Prop({default:()=>{return new Date()}})
+  date:Date;
+
+  @Prop([FormData])
   formData:[FormData]
   
 }

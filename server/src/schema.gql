@@ -2,24 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Solution {
+type Submission {
   id: ID!
   formId: String!
-  date: String!
+  date: DateTime!
   res: [String!]
 }
 
-type ThemeRes {
-  background: String
-  font: String
-  color: String
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type FormDataRes {
   fieldType: String
   Question: String
   option: [String!]
-  theme: ThemeRes
 }
 
 type Form {
@@ -27,8 +25,9 @@ type Form {
   id: ID!
   title: String!
   owner: String!
+  date: DateTime
   formData: [FormDataRes!]
-  solution: [Solution!]
+  submission: [Submission!]
 }
 
 """User model"""
@@ -52,10 +51,10 @@ type Query {
   """argument=> username returns=>user (if exist)"""
   user(username: ID!): User!
   allforms: [Form!]!
-  forms(owner: ID!): [Form!]!
+  sortedForms(owner: String!, sortBy: String = "date", limit: Float, skip: Float): [Form!]!
   form(formId: ID!): Form!
-  solutions(formId: String!): [Solution!]!
-  solution(id: ID!): Solution!
+  submissions(formId: String!, limit: Int, skip: Int, sortBy: String = "date"): [Submission!]!
+  submission(id: ID!): Submission!
 }
 
 type Mutation {
@@ -63,8 +62,8 @@ type Mutation {
   updateForm(updateFormInput: UpdateFormInput!, id: String!): Form!
   removeForm(id: ID!): Int!
   uploadFile(file: Upload!): Boolean!
-  createSolution(createSolutionInput: CreateSolutionInput!): Solution!
-  removeSolution(id: ID!): Int!
+  createSubmission(createSubmissionInput: CreateSubmissionInput!): Submission!
+  removeSubmission(id: ID!): Int!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signUp(loginUserInput: LoginUserInput!): User!
 }
@@ -72,34 +71,41 @@ type Mutation {
 input CreateFormInput {
   title: String!
   owner: String!
-  formData: [FormData!]
+  formData: [FormData]
 }
 
 input FormData {
-  fieldType: String
-  Question: String
-  option: [String!]
-  theme: Theme
+  fieldType: AllowedfieldType!
+  Question: String!
+  option: [String]
 }
 
-input Theme {
-  background: String
-  font: String
-  color: String
+"""The supported fieldtype."""
+enum AllowedfieldType {
+  text
+  email
+  number
+  url
+  date
+  color
+  range
+  select
+  choice
+  textArea
 }
 
 input UpdateFormInput {
   title: String
-  owner: String!
-  formData: [FormData!]
+  owner: String
+  formData: [FormData]
 }
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
-input CreateSolutionInput {
+input CreateSubmissionInput {
   formId: String!
-  date: String!
+  date: String
   res: [String!]
 }
 
