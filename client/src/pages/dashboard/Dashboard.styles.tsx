@@ -9,15 +9,20 @@ const Wrapper = styled.div`
       grid-column: 1/3;
       grid-row: 1;
   }
+  hr{
+    grid-column: 1/3;
+    grid-row: 2;
+  }
 `;
 const Main = styled.main<Collapsed>`
-  grid-row: 2;
+  grid-row: 4;
   max-width: 100%;
   overflow-x: scroll;
   grid-column: 2/3;
+  background: #FAFAFA;
   ${({ $isCollapsed }) => $isCollapsed ? css`
     grid-column: 1/3;
-    grid-row: 3;
+    grid-row: 4;
   `: ''}
 `;
 
@@ -27,11 +32,11 @@ type Collapsed = {
 
 const Aside = styled.aside<Collapsed>`
   // background: green;
-  grid-row: 2;
+  grid-row: 3;
   grid-column: 1;
   ${({ $isCollapsed }) => $isCollapsed ? css`
     grid-column: 1/3;
-    grid-row: 2;
+    grid-row: 3;
   `: ''}
 `;
 const Section = styled.section`

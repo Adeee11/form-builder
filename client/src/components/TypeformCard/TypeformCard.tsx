@@ -10,7 +10,7 @@ const TypeformCard = (props: {
     <>
       <Card>
         <TypeFormName>{typeformName}</TypeFormName>
-
+        <hr />
         <ResponsesCounter>
           {responsesNumber
             ? `${responsesNumber} responses yet.`
