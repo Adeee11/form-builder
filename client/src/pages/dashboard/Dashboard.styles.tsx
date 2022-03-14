@@ -15,24 +15,24 @@ const Main = styled.main<Collapsed>`
   max-width: 100%;
   overflow-x: scroll;
   grid-column: 2/3;
-  ${({$isCollapsed})=>$isCollapsed?css`
+  ${({ $isCollapsed }) => $isCollapsed ? css`
     grid-column: 1/3;
     grid-row: 3;
-  `:''}
+  `: ''}
 `;
 
 type Collapsed = {
-  $isCollapsed?:boolean;
+  $isCollapsed?: boolean;
 }
 
 const Aside = styled.aside<Collapsed>`
-  background: green;
+  // background: green;
   grid-row: 2;
   grid-column: 1;
-  ${({$isCollapsed})=>$isCollapsed?css`
+  ${({ $isCollapsed }) => $isCollapsed ? css`
     grid-column: 1/3;
     grid-row: 2;
-  `:''}
+  `: ''}
 `;
 const Section = styled.section`
 `;
