@@ -52,7 +52,7 @@ const SignupForm = () => {
     console.log("User Data", user.data);
     console.log("User Errors", user.errors);
 
-    user.data?navigate('/login'):console.log('There\'s some error')
+    user.data ? navigate('/login') : console.log('There\'s some error')
   };
 
   const [signUp, { data, loading, error }] = useMutation(SIGN_UP);
