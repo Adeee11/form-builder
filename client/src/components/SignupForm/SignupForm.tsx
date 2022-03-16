@@ -171,7 +171,7 @@ const SignupForm = () => {
           />
         </Field>
 
-        <CheckBoxContainer>
+        {/* <CheckBoxContainer>
           <InputField
             type={"checkbox"}
             label={checkboxLabels[0]}
@@ -191,7 +191,7 @@ const SignupForm = () => {
 
         <DropdownContainer>
           <Dropdown heading={"See options"} dropdownItems={Radios} />
-        </DropdownContainer>
+        </DropdownContainer> */}
 
         <Field>
           <Submit type={"submit"} value={"Create my free account"} />
