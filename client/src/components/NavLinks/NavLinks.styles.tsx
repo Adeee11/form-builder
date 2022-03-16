@@ -3,32 +3,48 @@ import { Link } from "react-router-dom";
 
 const List = styled.ul`
   list-style: none;
-  padding-left: 0;
-  grid-column: 1/3;
-  grid-row: 2;
-  @media (min-width: 900px) {
-      grid-row: 1;
-      grid-column:2/3 ;
-      display:flex;
-      
+  display: flex;
+  flex-direction: column;
+  padding: 76px 32px;
+  padding-top: 0;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
   }
 `;
 
 const Item = styled.li`
-  padding: 5px 10px;
-  margin-bottom: 30px;
-  @media (min-width: 900px) {
-    margin-bottom: 10px;
+  min-height: 68px;
+  margin-bottom: 16px;
+  p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    font-family: "Poppins", sans-serif;
+    cursor: pointer;
+  }
+  @media (min-width: 1024px) {
+    min-height: 0px;
+    margin: 0;
+    margin-right: 5px;
+    padding: 5px 2px;
+    p {
+      font-size: 16px;
+      vertical-align: middle;
+    }
   }
 `;
 
 const NavLink = styled(Link)`
-  text-decoration: none;
   color: white;
+  text-decoration: none;
   font-size: 30px;
-  @media (min-width: 900px) {
-      color:black;
-      font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  @media (min-width: 1024px) {
+    font-size: 16px;
+    color: black;
+    vertical-align: middle;
   }
 `;
 

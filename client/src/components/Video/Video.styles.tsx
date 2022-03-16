@@ -5,7 +5,7 @@ type WidthProp = {
 }
 
 const VideoContainer = styled.video<WidthProp>`
-    width:${({width})=>width || '100vw'};
+    width:${({width})=>width || '100%'};
     height:auto;
 `
 export {VideoContainer}

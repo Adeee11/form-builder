@@ -1,4 +1,4 @@
-import { Text, Heading } from "./Description.types";
+import { Text, Heading } from "./Description.styles";
 
 const Description = (props: {
   heading: string;
