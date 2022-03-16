@@ -2,6 +2,20 @@ import styled, { css } from "styled-components";
 
 
 const Wrapper = styled.div`
+background: #FAFAFA;
+
+.chooseInput{
+    background: #E3E3E3;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+}
 
 `
 const Header = styled.div`
@@ -10,14 +24,39 @@ const Header = styled.div`
     font-size: 14px;
     margin-right: 10px;
     padding: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+    flex-wrap: wrap;
+    background: white;
+    .first{
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        span{
+            min-width: 104px;
+        }
+        input{
+        outline: none;
+        border: none;
+        font-size: 14px;
+        margin-left: 4px;
+        font-weight: 600;
+    }
+    }
+    
+
     ul{
+
         display: flex;
         list-style: none;
         flex-wrap: nowrap;
         align-items: center;
+        @media (max-width:"900px"){
+            /* flex-basis: 100%; */
+
+        }
         li{
            margin-right   :10px ;
+           cursor: pointer;
         }
     }
     p{
@@ -63,6 +102,7 @@ const Header = styled.div`
     }
 `
 const Form = styled.form`
+   background: white;
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -72,48 +112,88 @@ const Form = styled.form`
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
    position: relative;
    .que{
-       min-width: 300px;
+       
+       width  :100% ;
+       display: flex;
+       align-items: center;
+       padding: 7px;
+       margin-top :20px ;
+       span{
+           margin-right: 4px;
+       }
        input{
-       /* max-width: 300px; */
+       width :100% ;
        border:none;
        outline: none;
-      margin-top :20px ;
-      padding: 7px;
+     
+      
    }
    }
    
    .ans{
-       min-width: 300px;
+       min-width: 600px;
        color:lightblue;
        border-bottom: 2px solid lightblue;
        padding: 10px;
+       margin-left: 10px;
    }
+  
 
 .sub{
-    /* border:1px solid black;  */
+    
     z-index: 1;
     border:none;
     padding: 6px 12px;
     font-size :14px ;
     border-radius: 5px;
-    position:absolute;
-    bottom:20px;
-    border:0.5px solid black;
-    color:rgb(38, 38, 39);
+    margin-top: 30px;
+    border:none;
+    color:white;
+    background: blue;
 }
 .opt{
+    min-width: 600px;
+    padding:10px;
+    span{
+        width: 100%;
+        display: flex;
+    }
     input{
-        border:1px solid lightblue;
+
+        border: none;
         padding:6px;
-        background: lightblue;
         outline: none;
         border-radius: 4px;
+        width: 100%;
     }
     button{
-        background: black;
-        color:white;
+        border: none;
         padding: 6px 10px;
         border-radius: 4px;
+    }
+}
+.optlist{
+    min-width: 600px;
+      display:flex; 
+      width: 100%;
+      align-items: center;
+      background:lightblue ;
+      margin-top: 10px;
+      border-radius: 4px;
+    p{
+      border:1px solid lightblue;
+      font-size: 16px;
+      padding: 6px;
+      border-radius:6px ;
+      width: 100%;
+    }
+    button{
+      color:blue;
+      background: lightblue;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      border: none;
     }
 }
 
@@ -132,7 +212,7 @@ z-index: 999;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-200px, -130px);
+    transform: translate(-130px, -200px);
     margin-left: auto;
     margin-right: auto;
     background: white;
