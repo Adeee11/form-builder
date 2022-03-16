@@ -11,6 +11,7 @@ const Field = styled.div`
   flex-direction: column;
   padding: 5px 10px;
   text-align: left;
+  margin-bottom: 20px;
   input{
     max-width: 80%;
   }

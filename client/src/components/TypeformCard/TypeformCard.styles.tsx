@@ -12,6 +12,7 @@ const Card = styled.div`
     justify-content: center;
     svg{
         grid-row: 3;
+        justify-self: center;
     }
     hr{
         grid-row: 2;
