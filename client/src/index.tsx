@@ -13,7 +13,7 @@ import { Dashboard } from "./pages/dashboard";
 import { CreateForm } from "./pages/CreateForm";
 
 const client = new ApolloClient({
-  uri: "http://localhost:7000/graphql",
+  uri: "http://localhost:3000/graphql",
   cache: new InMemoryCache(),
 });
 
