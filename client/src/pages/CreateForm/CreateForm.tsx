@@ -25,9 +25,10 @@ const CreateForm = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setformData] = useState<any>([]);
     const [opt, setOpt] = useState('');
+    const [que, setQue] = useState('')
     const [title, setTitle] = useState('my typeform');
-    const [result, setResult] = useState<any>();
-    const [count, setCount] = useState(0);
+    const [editQue, setEditQue] = useState(-1);
+
     const CREATE_FORM = gql`
     mutation createForm($input:CreateFormInput!){
         createForm(createFormInput:$input){
@@ -44,25 +45,7 @@ const CreateForm = () => {
       }
     `;
 
-    const UPDATE_FORM = gql`
-    mutation updateForm($input:UpdateFormInput!, $id:String!){
-        updateForm(updateFormInput:$input, id:$id){
-          id
-          date
-          title
-          formData{
-            Question
-            fieldType
-            option
-          }
-        }
-      }
-    `
-
-
-
     const [create, { loading, error }] = useMutation(CREATE_FORM);
-    const [update, state] = useMutation(UPDATE_FORM);
 
     if (loading) console.log("loading...", loading);
     if (error) console.error("error:", error);
@@ -73,52 +56,46 @@ const CreateForm = () => {
     }
 
     const saveQuestion = (que: string, index: number) => {
-        const newData: any = formData;
+        const newData = [...formData];
         newData[index].Question = que;
-        setformData(newData)
+        setformData([...newData])
+        setEditQue(-1)
+    }
+    const delQue = (i: number) => {
+        console.log(i)
+        const list = formData
+        list.splice(i, 1)
+        setformData((prev: any) => [...list]);
+        console.log("formdata", formData)
     }
 
-
     const saveOption = (opt: string, i: number) => {
-        const list: any = formData;
+        const list = [...formData];
         list[i].option[formData[i].option.length] = opt;
         setformData((prev: any) => [...list]);
         setOpt('');
     }
 
+
     const del = (i: number, index: number) => {
-        const list: any = formData;
+        const list = formData;
         list[i].option.splice(index, 1);
         setformData([...list])
     }
     const submitHandler = async () => {
-        if (count == 0) {
-            const data: any = await create({
-                variables: {
-                    input: {
-                        title: title,
-                        owner: "621cb297a05f470851fa3f96",
-                        formData: formData
-                    }
-                }
-            })
-            console.log(data);
-            setResult(data);
-            setCount((prevCount) => prevCount + 1);
-        } else {
-            console.log("count", count)
-            const data2 = await update({
-                variables: {
-                    input: {
-                        title: title,
-                        formData: formData
-                    },
-                    id: result.data.createForm.id
-                }
-            })
 
-            console.log("data2:", data2);
-        }
+        const data: any = await create({
+            variables: {
+                input: {
+                    title: title,
+                    owner: "621cb297a05f470851fa3f96",
+                    formData: formData
+                }
+            }
+        })
+        console.log(data);
+        if (data) alert("form Created")
+        else alert("Fill all the Questions. ")
     }
 
 
@@ -139,7 +116,6 @@ const CreateForm = () => {
                 <p>
                     <span className='preview'><BsFillEyeFill /></span>
                     <button className='publish' onClick={submitHandler}>Publish</button>
-                    <button className='plans'>View Plans</button>
                     <span className='avatar'>P</span>
                 </p>
             </Header>
@@ -179,12 +155,20 @@ const CreateForm = () => {
             </Modal>}
 
             <Form>
+                <div className='form-header'>
+                    {title}
+                </div>
+                {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) => <div key={i}>
 
-                {formData.map((a: { fieldType: string, option: string[] }, i: number) => <div key={i}>
+                    <div className='que' onClick={() => { setEditQue(i); setQue(formData[i].Question) }}>
 
-                    <div className='que'>
                         <span>{i + 1}.</span>
-                        <input type="text" placeholder='Your Question here' className="input" onChange={(e) => saveQuestion(e.target.value, i)} />
+                        {editQue == i ? <>
+                            <input type="text" placeholder='Your Question here?' className="input" onChange={(e) => setQue(e.target.value)} value={que} onBlur={() => saveQuestion(que, i)} />
+
+                        </>
+                            : <input type="text" placeholder='Your Question here?' className="input" value={a.Question} />}
+                        <button type="button" className='delque' onClick={() => delQue(i)}>x</button>
                     </div>
                     {(a.fieldType !== "select" && a.fieldType !== "choice") ?
                         <p className='ans'>Enter Your Answer here</p> :

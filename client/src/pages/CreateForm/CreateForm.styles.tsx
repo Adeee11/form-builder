@@ -21,16 +21,24 @@ background: #FAFAFA;
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    margin-right: 10px;
-    padding: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
-    flex-wrap: wrap;
+    font-size: 14px;  
     background: white;
+    @media(max-width:768px){
+        flex-direction: column;
+        overflow: hidden;
+        ul, p{
+            justify-content: space-evenly;
+        }
+
+
+    
+    }
     .first{
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
         span{
             min-width: 104px;
         }
@@ -50,10 +58,9 @@ const Header = styled.div`
         list-style: none;
         flex-wrap: nowrap;
         align-items: center;
-        @media (max-width:"900px"){
-            /* flex-basis: 100%; */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
 
-        }
         li{
            margin-right   :10px ;
            cursor: pointer;
@@ -62,7 +69,9 @@ const Header = styled.div`
     p{
         display: flex;
         align-items: center;
-        .publish, .plans{
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        .publish{
             background: black;
             color:white;
             padding: 6px 12px;
@@ -73,13 +82,11 @@ const Header = styled.div`
             cursor: pointer;
             height: 32px;
         }
-        .plans{
-            background: forestgreen;
-        }
+        
         .avatar{
             margin-left: 10px;
             border-radius: 50%;
-            background: red;
+            background: blue;
             color:white;
             width:32px;
             height: 32px;
@@ -100,6 +107,7 @@ const Header = styled.div`
             
         }
     }
+   
 `
 const Form = styled.form`
    background: white;
@@ -111,6 +119,19 @@ const Form = styled.form`
    margin: 0 auto;
    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
    position: relative;
+   border-radius: 10px;
+   margin-top: 20px;
+   overflow: hidden;
+   .form-header{
+    border-radius: 10px;
+       font-size: 25px;
+       font-weight: 700;
+       text-align: left;
+       width: 100%;
+       padding: 10px;
+       border-top: 10px solid blue;
+       
+   }
    .que{
        
        width  :100% ;
@@ -136,6 +157,10 @@ const Form = styled.form`
        border-bottom: 2px solid lightblue;
        padding: 10px;
        margin-left: 10px;
+       @media (max-width:768px) {
+        min-width   : 0;
+        width:80vw;
+       }
    }
   
 
@@ -150,10 +175,15 @@ const Form = styled.form`
     border:none;
     color:white;
     background: blue;
+    margin-bottom: 20px;
 }
 .opt{
     min-width: 600px;
     padding:10px;
+    @media (max-width:768px) {
+        min-width   : 0;
+        width:80vw;
+       }
     span{
         width: 100%;
         display: flex;
@@ -180,6 +210,10 @@ const Form = styled.form`
       background:lightblue ;
       margin-top: 10px;
       border-radius: 4px;
+      @media (max-width:768px) {
+        min-width   : 0;
+        width:80vw;
+       }
     p{
       border:1px solid lightblue;
       font-size: 16px;
@@ -195,6 +229,13 @@ const Form = styled.form`
       cursor: pointer;
       border: none;
     }
+}
+.delque{
+    border:none;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    margin-left: 7px;
 }
 
 `
@@ -218,6 +259,12 @@ z-index: 999;
     background: white;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 5;
+
+    @media(max-width:768px){
+        width: 80%;
+        height   :auto ;
+        transform: translate(-40vw, -200px);
+    }
       h3{
           margin-left: 10px;
           color: rgb(38, 38, 39);
@@ -232,7 +279,6 @@ z-index: 999;
            color: rgb(38, 38, 39);
            span{
                 border-radius:4px ;
-                /* padding: 5px; */
                 font-size: 17px;
                 padding:4px ;
                 display: inline-flex;
