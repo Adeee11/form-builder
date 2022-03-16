@@ -10,10 +10,17 @@ import { SignUpPage } from "./pages/signup";
 import { LoginPage } from "./pages/login";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Dashboard } from "./pages/dashboard";
+// import { useAppSelector } from "./providers/app/hooks";
+// React hooks can't be called at top level. So, add header when calling query through
+// context and modifying header
+// const token = useAppSelector((state)=> state.token.token)
 
 const client = new ApolloClient({
   uri: "http://localhost:7000/graphql",
   cache: new InMemoryCache(),
+  // headers: {
+  //   authorization: "Bearer " + token
+  // }
 });
 
 ReactDOM.render(
