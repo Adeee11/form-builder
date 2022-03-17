@@ -6,28 +6,29 @@ import {
     BsTelephoneFill,
     BsTextParagraph
 } from 'react-icons/bs';
-
 import { MdEmail, MdShortText } from 'react-icons/md';
-
 import {
     Wrapper,
     Header,
     Form,
     Modal
 } from './CreateForm.styles';
-
 import { gql, useMutation } from "@apollo/client";
 import { AiOutlinePlus } from 'react-icons/ai';
+import { Preview } from '../../components/preview';
 
 
 
 const CreateForm = () => {
     const [showModal, setShowModal] = useState(false);
+    const [previewMode, setPreviewMode] = useState(false);
     const [formData, setformData] = useState<any>([]);
     const [opt, setOpt] = useState('');
     const [que, setQue] = useState('')
     const [title, setTitle] = useState('my typeform');
     const [editQue, setEditQue] = useState(-1);
+    const [formId, setFormId] = useState('');
+
 
     const CREATE_FORM = gql`
     mutation createForm($input:CreateFormInput!){
@@ -45,13 +46,29 @@ const CreateForm = () => {
       }
     `;
 
+    const UPDATE_FORM = gql`
+    mutation updateForm($input:UpdateFormInput!, $id:String!){
+        updateForm(updateFormInput:$input, id:$id){
+          id
+          date
+          title
+          formData{
+            Question
+            fieldType
+            option
+          }
+        }
+      }
+    `
+
     const [create, { loading, error }] = useMutation(CREATE_FORM);
+    const [update, state] = useMutation(UPDATE_FORM);
 
     if (loading) console.log("loading...", loading);
     if (error) console.error("error:", error);
 
     const AddInput = (i: string) => {
-        setformData([...formData, { fieldType: i, option: [], Question: "" }])
+        setformData([...formData, { fieldType: i, option: [] }])
         setShowModal(false);
     }
 
@@ -61,8 +78,8 @@ const CreateForm = () => {
         setformData([...newData])
         setEditQue(-1)
     }
-    const delQue = (i: number) => {
-        console.log(i)
+    const delQue = (i: number, e: any) => {
+        e.stopPropagation();
         const list = formData
         list.splice(i, 1)
         setformData((prev: any) => [...list]);
@@ -83,23 +100,41 @@ const CreateForm = () => {
         setformData([...list])
     }
     const submitHandler = async () => {
-
-        const data: any = await create({
-            variables: {
-                input: {
-                    title: title,
-                    owner: "621cb297a05f470851fa3f96",
-                    formData: formData
+        if (formId) {
+            const updatedForm = await update({
+                variables: {
+                    input: {
+                        title: title,
+                        formData: formData
+                    },
+                    id: formId
                 }
-            }
-        })
-        console.log(data);
-        if (data) alert("form Created")
-        else alert("Fill all the Questions. ")
+            })
+
+            console.log("updatedForm:", updatedForm);
+        } else {
+            const createdForm = await create({
+                variables: {
+                    input: {
+                        title: title,
+                        owner: "621cb297a05f470851fa3f96",
+                        formData: formData
+                    }
+                }
+            })
+            console.log(createdForm);
+            setFormId(createdForm.data.createForm.id);
+
+            if (createdForm) alert("form Created")
+
+        }
+
     }
 
 
-
+    if (previewMode) {
+        return <Preview formId={formId} onClose={() => setPreviewMode(false)} />
+    }
     return (
         <Wrapper>
             <Header>
@@ -110,55 +145,57 @@ const CreateForm = () => {
 
                 <ul>
                     <li>Create</li>
-
                     <li>Connect</li>
-
                     <li>Share</li>
-
                     <li>Result</li>
-
                 </ul>
 
                 <p>
-                    <span className='preview'><BsFillEyeFill /></span>
-                    <button className='publish' onClick={submitHandler}>Publish</button>
+                    {formId &&
+                        <span className='preview' onClick={() => setPreviewMode(true)}>
+                            <BsFillEyeFill />
+                        </span>
+                    }
+                    <button className='publish'>Publish</button>
                     <span className='avatar'>P</span>
                 </p>
             </Header>
 
-            {showModal && <Modal onClick={() => setShowModal(false)}>
+            {showModal &&
 
-                <div className='popup' >
-                    <h3>All Questions Types</h3>
-                    <ul>
-                        <li onClick={() => AddInput("text")}>
-                            <span className='short'><MdShortText /></span>
-                            Short Text
-                        </li>
-                        <li onClick={() => AddInput("textArea")}>
-                            <span className='long'><BsTextParagraph /></span>
-                            Long Text
-                        </li>
-                        <li onClick={() => AddInput("choice")}>
-                            <span className='choice'><BsCheckLg /></span>
-                            Multiple Choices
-                        </li>
-                        <li onClick={() => AddInput("email")}>
-                            <span className='email'><MdEmail /></span>
-                            Email
-                        </li>
-                        <li onClick={() => AddInput("number")}>
-                            <span className='number'><BsTelephoneFill /></span>
-                            Phone Number
-                        </li>
-                        <li onClick={() => AddInput("url")}>
-                            <span className='url'><BsLink /></span>
-                            Website
-                        </li>
-                    </ul>
-                </div>
+                <Modal onClick={() => setShowModal(false)}>
 
-            </Modal>}
+                    <div className='popup' >
+                        <h3>All Questions Types</h3>
+                        <ul>
+                            <li onClick={() => AddInput("text")}>
+                                <span className='short'><MdShortText /></span>
+                                Short Text
+                            </li>
+                            <li onClick={() => AddInput("textArea")}>
+                                <span className='long'><BsTextParagraph /></span>
+                                Long Text
+                            </li>
+                            <li onClick={() => AddInput("choice")}>
+                                <span className='choice'><BsCheckLg /></span>
+                                Multiple Choices
+                            </li>
+                            <li onClick={() => AddInput("email")}>
+                                <span className='email'><MdEmail /></span>
+                                Email
+                            </li>
+                            <li onClick={() => AddInput("number")}>
+                                <span className='number'><BsTelephoneFill /></span>
+                                Phone Number
+                            </li>
+                            <li onClick={() => AddInput("url")}>
+                                <span className='url'><BsLink /></span>
+                                Website
+                            </li>
+                        </ul>
+                    </div>
+
+                </Modal>}
 
             <Form>
                 <div className='form-header'>
@@ -179,7 +216,7 @@ const CreateForm = () => {
                                 <input type="text" placeholder='Your Question here?' className="input" value={a.Question} readOnly={true} />
                             }
 
-                            <button type="button" className='delque' onClick={() => delQue(i)}>x</button>
+                            <button type="button" className='delque' onClick={(e) => delQue(i, e)}>x</button>
 
                         </div>
 
@@ -209,14 +246,12 @@ const CreateForm = () => {
                 )}
 
                 <span className="chooseInput" onClick={() => setShowModal(true)}>
-
                     <AiOutlinePlus />
-
                 </span>
 
                 {
                     formData.length > 0 &&
-                    <button type="button" className="sub">Submit</button>
+                    <button type="button" className="sub" onClick={submitHandler}>Save</button>
                 }
             </Form>
         </Wrapper>

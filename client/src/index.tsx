@@ -11,6 +11,7 @@ import { LoginPage } from "./pages/login";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { Dashboard } from "./pages/dashboard";
 import { CreateForm } from "./pages/CreateForm";
+import { Preview } from "./components/preview";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",

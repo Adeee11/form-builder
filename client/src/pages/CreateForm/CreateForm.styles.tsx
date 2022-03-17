@@ -121,7 +121,7 @@ const Form = styled.form`
    position: relative;
    border-radius: 10px;
    margin-top: 20px;
-   overflow: hidden;
+   overflow-x: hidden;
    .form-header{
     border-radius: 10px;
        font-size: 25px;
