@@ -20,7 +20,7 @@ const WorkspaceAbout = () => {
     <>
       <Wrapper>
         <FirstRow>
-          <WorkspaceName contentEditable>{workspaceName}</WorkspaceName>
+          <WorkspaceName type={"text"} defaultValue={workspaceName}/>
           <PipeSymbol>|</PipeSymbol>
           <FaUserPlus />
           <ImLoop />

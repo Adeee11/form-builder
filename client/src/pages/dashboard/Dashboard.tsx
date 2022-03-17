@@ -23,8 +23,8 @@ const Dashboard = () => {
         </Main>
         {/* Aside menu and workspce header are same thing. Collapsed aside menu is workspace header  */}
         <Aside $isCollapsed = {isSideMenuCollapsed}>
-          {/* SidebarMenu */}
-          <SideBarMenu />
+          SidebarMenu
+          {/* <SideBarMenu /> */}
         </Aside>
         <button onClick={()=>setIsSideMenuCollapsed(!isSideMenuCollapsed)}>Test for Collapse</button>
       </Wrapper>

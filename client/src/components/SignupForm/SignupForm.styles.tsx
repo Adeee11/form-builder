@@ -2,18 +2,23 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-column-gap: 20px;
   margin-bottom: 20px;
   max-width: 600px;
 `;
 const RadioButtonContainer = styled.div``;
 
 const Field = styled.div`
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   padding: 5px 10px;
   text-align: left;
+  margin-bottom: 20px;
+  input{
+    max-width: 80vw;
+  }
 `;
 
 const CheckBoxContainer = styled.div`
@@ -43,7 +48,7 @@ const Submit = styled.input`
   background: #262627;
   font-size: 18px;
   max-width: 80vw;
-  min-width: 400px;
+  min-width: 300px;
   margin: 0 auto;
   margin-bottom: 20px;
 `;
