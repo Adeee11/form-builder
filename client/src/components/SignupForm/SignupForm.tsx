@@ -55,11 +55,10 @@ const SignupForm = () => {
         },
       },
     });
-    // console.log("User Data", user.data);
-    // console.log("User Errors", user.errors);
-    await user.data?dispatch(changeUserName(user.data.signUp.username)):console.log("Some error")
-    console.log("Username: ", userName)
-    user.data?navigate('/login'):console.log('There\'s some error')
+    console.log("User Data", user.data);
+    console.log("User Errors", user.errors);
+
+    user.data ? navigate('/login') : console.log('There\'s some error')
   };
 
   const [signUp, { loading, error }] = useMutation(SIGN_UP);
