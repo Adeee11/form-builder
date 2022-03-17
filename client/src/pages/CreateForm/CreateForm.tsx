@@ -51,7 +51,7 @@ const CreateForm = () => {
     if (error) console.error("error:", error);
 
     const AddInput = (i: string) => {
-        setformData([...formData, { fieldType: i, option: [] }])
+        setformData([...formData, { fieldType: i, option: [], Question: "" }])
         setShowModal(false);
     }
 
@@ -99,6 +99,7 @@ const CreateForm = () => {
     }
 
 
+
     return (
         <Wrapper>
             <Header>
@@ -109,10 +110,15 @@ const CreateForm = () => {
 
                 <ul>
                     <li>Create</li>
+
                     <li>Connect</li>
+
                     <li>Share</li>
+
                     <li>Result</li>
+
                 </ul>
+
                 <p>
                     <span className='preview'><BsFillEyeFill /></span>
                     <button className='publish' onClick={submitHandler}>Publish</button>
@@ -158,34 +164,56 @@ const CreateForm = () => {
                 <div className='form-header'>
                     {title}
                 </div>
-                {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) => <div key={i}>
 
-                    <div className='que' onClick={() => { setEditQue(i); setQue(formData[i].Question) }}>
+                {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) =>
+                    <div key={i}>
 
-                        <span>{i + 1}.</span>
-                        {editQue == i ? <>
-                            <input type="text" placeholder='Your Question here?' className="input" onChange={(e) => setQue(e.target.value)} value={que} onBlur={() => saveQuestion(que, i)} />
+                        <div className='que' onClick={() => { setEditQue(i); setQue(formData[i].Question) }}>
 
-                        </>
-                            : <input type="text" placeholder='Your Question here?' className="input" value={a.Question} />}
-                        <button type="button" className='delque' onClick={() => delQue(i)}>x</button>
+                            <span>{i + 1}.</span>
+
+                            {editQue == i ?
+
+                                <input type="text" placeholder='Your Question here?' className="input" onChange={(e) => setQue(e.target.value)} value={que} onBlur={() => saveQuestion(que, i)} /> :
+
+                                <input type="text" placeholder='Your Question here?' className="input" value={a.Question} readOnly={true} />
+                            }
+
+                            <button type="button" className='delque' onClick={() => delQue(i)}>x</button>
+
+                        </div>
+
+                        {(a.fieldType !== "select" && a.fieldType !== "choice") ?
+
+                            <p className='ans'>Enter Your Answer here</p> :
+
+                            <div className='opt'>
+                                <span>
+
+                                    <input type="text" placeholder="Enter Options Here" onChange={(e) => setOpt((prev) => e.target.value)} value={opt} />
+
+                                    <button type="button" onClick={() => saveOption(opt, i)}>+</button>
+
+                                </span>
+
+                                {a.option.length > 0 && a.option.map((o: string, index: number) =>
+
+                                    <div key={index} className="optlist">
+
+                                        <p>{o}</p>
+
+                                        <button type="button" onClick={() => del(i, index)}>x</button></div>)}
+
+                            </div>}
                     </div>
-                    {(a.fieldType !== "select" && a.fieldType !== "choice") ?
-                        <p className='ans'>Enter Your Answer here</p> :
-                        <div className='opt'>
-                            <span>
-                                <input type="text" placeholder="Enter Options Here" onChange={(e) => setOpt((prev) => e.target.value)} value={opt} />
-                                <button type="button" onClick={() => saveOption(opt, i)}>+</button>
-                            </span>
-                            {a.option.length > 0 && a.option.map((o: string, index: number) =>
-                                <div key={index} className="optlist"> <p>{o}</p>
-                                    <button type="button" onClick={() => del(i, index)}>x</button></div>)}
-                        </div>}
-                </div>
                 )}
+
                 <span className="chooseInput" onClick={() => setShowModal(true)}>
+
                     <AiOutlinePlus />
+
                 </span>
+
                 {
                     formData.length > 0 &&
                     <button type="button" className="sub">Submit</button>
