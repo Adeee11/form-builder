@@ -17,7 +17,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { Preview } from '../../components/preview';
 import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { Link } from 'react-router-dom';
 
 interface formDataType {
     Question: string,
@@ -68,7 +68,7 @@ const CreateForm = () => {
             })
             console.log(createdForm);
             setFormId(createdForm.data.createForm.id);
-
+            localStorage.setItem("formId", createdForm.data.createForm.id)
             if (createdForm) alert("form Created")
         }
     };
@@ -170,10 +170,10 @@ const CreateForm = () => {
                 </div>
 
                 <ul>
-                    <li>Create</li>
+                    <li><Link to="/createForm">Create</Link></li>
                     <li>Connect</li>
                     <li>Share</li>
-                    <li>Result</li>
+                    <li><Link to="/results">Result</Link></li>
                 </ul>
 
                 <p>
