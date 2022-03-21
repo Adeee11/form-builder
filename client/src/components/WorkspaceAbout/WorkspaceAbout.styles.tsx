@@ -6,10 +6,12 @@ const Wrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const WorkspaceName = styled.span`
+const WorkspaceName = styled.input`
   font-size: 20px;
   padding: 5px 10px;
-  max-width: 60vw;
+  max-width: 40vw;
+  outline: none;
+  border: none;
 `;
 const PipeSymbol = styled.span``;
 
@@ -19,6 +21,9 @@ const Row = styled.div`
 
 const FirstRow = styled(Row)`
   justify-content: flex-start;
+  align-items: center;
+  padding: 20px 10px;
+  padding-bottom: 5px;
   span {
     margin-right: 10px;
   }
@@ -28,9 +33,16 @@ const FirstRow = styled(Row)`
 `;
 
 const SecondRow = styled(Row)`
+  padding: 20px 10px;
+
+  padding-top: 5px;
   justify-content: space-between;
-  button{
-      padding: 4px 8px;
+  button {
+    padding: 4px 8px;
+    min-width: 130px;
+  }
+  select{
+    min-width: 130px;
   }
 `;
 

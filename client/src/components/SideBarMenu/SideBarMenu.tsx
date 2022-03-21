@@ -1,78 +1,68 @@
-import { useState } from 'react';
-import { BsFillPersonFill, BsSearch } from "react-icons/bs";
-import { MdArrowDropDown, MdArrowDropUp, MdArrowUpward } from "react-icons/md";
-import { RiArrowDropUpLine, RiArrowDropDownLine } from "react-icons/ri";
+import { useState } from "react";
 import {
-  Wrapper,
-  Search,
-  WorkSpaceType,
-  WorkSpace,
-  Account,
-  Help,
-  Container
+  Container,
+  HelpLinks,
+  Menu,
+  MenuTopBar,
+  PersonalDetails,
+  Text,
+  Workspaces,
+  Button,
+  Username,
+  Heading,
+  BlueLink,
 } from "./SideBarMenu.styles";
+import { CgMenuGridR } from "react-icons/cg";
+import {
+  AiOutlinePlus,
+  AiOutlineSearch,
+  AiOutlineCaretRight,
+} from "react-icons/ai";
+import { HiUser } from "react-icons/hi";
+import { Dropdown } from "../Dropdown";
 
-const SideBarMenu = () => {
-  const [showHelpList, setShowHelpList] = useState(false);
+const SideBarMenu = (props: {showMenu: boolean}) => {
+  const workspaceType = "PRIVATE";
+  const userName = "Nitin";
+  const dropdownItems = [
+    "Help Center",
+    "Ask the community",
+    "Learn the basics",
+    "Branch or skip questions",
+    "Pull in info you alreay know",
+    "Embed your typeform",
+  ];
+  const {showMenu} = props;
+  
   return (
     <>
-      <Wrapper>
-        <Search>
-          <span>
-            <BsSearch />
-          </span>
-          <input type="text" placeholder="Find workspace or typeform" />
-        </Search>
-
-        <WorkSpaceType>
-          <span>
-            <span>
-              <MdArrowDropDown />
-            </span>
-            <span>
-              <BsFillPersonFill />
-            </span>
-
-            <p>PRIVATE</p>
-          </span>
-          <button>+</button>
-        </WorkSpaceType>
-
-        {/* number of forms */}
-        <WorkSpace>
-          my workSpace
-          <span>{1}</span>
-        </WorkSpace>
-        <Container>
-          <Account>
-            {/* username's Account */}
-            <h3><b>Username's</b> acount</h3>
-            <p>Response Collected</p>
-            {/* number of responses */}
-            <p>6</p>
-          </Account>
-
-          <Help>
-
-            <p onClick={() => setShowHelpList(!showHelpList)}>
-              {"Help & Inspiration"}
-              <span>
-                {!showHelpList && <RiArrowDropUpLine />}
-                {showHelpList && <RiArrowDropDownLine />}
-              </span>
-            </p>
-            {showHelpList &&
-              <ul>
-                <li>Help Center</li>
-                <li>Ask The Community </li>
-                <li>Learn The Basics</li>
-                <li>Branch or skip Question</li>
-                <li>Pull in info you already know</li>
-                <li>Embed your typeform</li>
-              </ul>}
-          </Help>
-        </Container>
-      </Wrapper>
+      
+      <Menu showMenu={showMenu}>
+        <Workspaces>
+          <AiOutlineCaretRight />
+          <HiUser />
+          <Text>{workspaceType}</Text>
+          <Button>
+            <AiOutlinePlus />
+          </Button>
+        </Workspaces>
+        <PersonalDetails>
+          <Username>
+            <Text>{userName}</Text> account
+          </Username>
+          <Heading>
+            {"Responses Collected"}
+            <Text>{"3"}</Text>
+          </Heading>
+          <BlueLink to={"/"}>{"Increase response limit"}</BlueLink>
+        </PersonalDetails>
+        <HelpLinks>
+          <Dropdown
+            heading={"Help & Inspiration"}
+            dropdownItems={dropdownItems}
+          />
+        </HelpLinks>
+      </Menu>
     </>
   );
 };

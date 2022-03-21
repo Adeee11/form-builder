@@ -14,9 +14,17 @@ const Title = styled.h1`
   font-size: 30px;
   color: #262627;
   font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 50px;
 `;
 const StyledLink = styled(Link)`
   color: black;
 `;
 
-export { Container, Title, StyledLink };
+const DescriptionContainer = styled.div`
+  margin: 50px auto;
+  max-width: 400px;
+`
+
+export { Container, Title, StyledLink,DescriptionContainer };

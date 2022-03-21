@@ -21,7 +21,7 @@ import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "./queries";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
-import { changeUserName } from "../../providers/features/userSlice";
+import { changeUser } from "../../providers/features/userSlice";
 
 type FormFields = {
   email?: string;
@@ -36,8 +36,8 @@ type FormFields = {
 
 const SignupForm = () => {
   // redux
-  const userName = useAppSelector((state) => state.user.username)
-  const dispatch = useAppDispatch()
+  const userName = useAppSelector((state) => state.user.username);
+  const dispatch = useAppDispatch();
   // useform hook
   const {
     register,
@@ -55,11 +55,16 @@ const SignupForm = () => {
         },
       },
     });
-    // console.log("User Data", user.data);
-    // console.log("User Errors", user.errors);
-    await user.data?dispatch(changeUserName(user.data.signUp.username)):console.log("Some error")
-    console.log("Username: ", userName)
-    user.data?navigate('/login'):console.log('There\'s some error')
+    console.log("User Data", user.data);
+    console.log("User Errors", user.errors);
+    if (user.data) {
+      const newUser: { username: string; id: string } = {
+        username: user.data.signUp.username,
+        id: user.data.signUp.id,
+      };
+      dispatch(changeUser(newUser));
+      navigate("/login");
+    }
   };
 
   const [signUp, { loading, error }] = useMutation(SIGN_UP);
@@ -171,7 +176,7 @@ const SignupForm = () => {
           />
         </Field>
 
-        <CheckBoxContainer>
+        {/* <CheckBoxContainer>
           <InputField
             type={"checkbox"}
             label={checkboxLabels[0]}
@@ -191,7 +196,7 @@ const SignupForm = () => {
 
         <DropdownContainer>
           <Dropdown heading={"See options"} dropdownItems={Radios} />
-        </DropdownContainer>
+        </DropdownContainer> */}
 
         <Field>
           <Submit type={"submit"} value={"Create my free account"} />

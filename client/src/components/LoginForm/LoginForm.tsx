@@ -45,7 +45,7 @@ const LoginForm = () => {
       },
     });
 
-    // console.log("User Data", user.data);
+    console.log("User Data", user.data);
     // console.log("User error", user.errors);
     // console.log("TEST",user.data.login.access_token )
     (await user.data)
