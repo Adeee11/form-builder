@@ -20,6 +20,8 @@ import {
 import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "./queries";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
+import { changeUserName } from "../../providers/features/userSlice";
 
 type FormFields = {
   email?: string;
@@ -33,6 +35,10 @@ type FormFields = {
 };
 
 const SignupForm = () => {
+  // redux
+  const userName = useAppSelector((state) => state.user.username)
+  const dispatch = useAppDispatch()
+  // useform hook
   const {
     register,
     handleSubmit,
@@ -49,17 +55,20 @@ const SignupForm = () => {
         },
       },
     });
-    console.log("User Data", user.data);
-    console.log("User Errors", user.errors);
 
-    user.data ? navigate('/login') : console.log('There\'s some error')
+    // console.log("User Data", user.data);
+    // console.log("User Errors", user.errors);
+    await user.data?dispatch(changeUserName(user.data.signUp.username)):console.log("Some error")
+    console.log("Username: ", userName)
+    user.data?navigate('/login'):console.log('There\'s some error')
+
   };
 
-  const [signUp, { data, loading, error }] = useMutation(SIGN_UP);
+  const [signUp, { loading, error }] = useMutation(SIGN_UP);
 
   if (loading) console.log("Loading...");
   if (error) console.log("My Error: ", error);
-  if (data) console.log("Data", data);
+  // if (data) console.log("Data", data);
 
   const checkboxLabels = [
     <Text>

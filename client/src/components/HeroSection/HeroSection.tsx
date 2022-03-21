@@ -1,7 +1,14 @@
 import { Button } from "../Button";
 import { Description } from "../Description";
 import { Video } from "../Video";
-import { Container } from "./HeroSection.styles";
+import {
+  Wrapper,
+  Container,
+  ListContainer,
+  VideoContainer,
+  ButtonContainer,
+  DescriptionContainer,
+} from "./HeroSection.styles";
 //@ts-ignore
 import heroVideo from "../../assets/imgs/hero-video.mp4";
 import { CheckedList } from "../CheckedList";
@@ -12,22 +19,33 @@ const HeroSection = () => {
     "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead—and make everyone happy.";
   return (
     <>
-      <Container>
-        <Description
-          heading={descriptionHeading}
-          text={descriptionText}
-          headingSize={'36px'}
-          textSize={'24px'}
-        />
+      <Wrapper>
+        <DescriptionContainer>
+          {/* Description */}
+          <Description
+            heading={descriptionHeading}
+            text={descriptionText}
+            headingSize={"36px"}
+            textSize={"24px"}
+          />
+        </DescriptionContainer>
 
-        <Button text="Get Started-it's free" />
-        {/* This video would be added in the background  */}
+        <ButtonContainer>
+          {/* Button */}
+          <Button text="Get Started-it's free" />
+        </ButtonContainer>
 
-        <Video url={heroVideo} />
-        <CheckedList
-          items={["No credit card required", "No time limit on Free plan"]}
-        />
-      </Container>
+        <VideoContainer>
+          {/* Video */}
+          <Video url={heroVideo} />
+          </VideoContainer>
+        <ListContainer>
+          {/* List */}
+          <CheckedList
+            items={["No credit card required", "No time limit on Free plan"]}
+          />
+        </ListContainer>
+      </Wrapper>
     </>
   );
 };

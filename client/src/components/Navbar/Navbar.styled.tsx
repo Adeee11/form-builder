@@ -2,27 +2,27 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const NavbarContainer = styled.header`
-  margin: 0 auto;
-  padding: 20px 2vw;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  @media (min-width: 900px) {
-    padding-bottom: 10px;
-    background: #F8F5F3;
+  display: flex;
+  min-height: 68px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  @media (min-width: 1024px){
+    padding: 10px 20px;
+    background: #f8f5f3;
   }
 `;
 
 const ToggleButton = styled.span`
-  grid-column: 2;
-  grid-row: 1;
-  font-size: 24px;
-  justify-self: flex-end;
-  @media (min-width: 900px) {
+  font-size: 26px;
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
 const CrossButton = styled(ToggleButton)`
-  color: white;
+  text-align: right;
+  padding: 16px 24px;
 `;
 
 type ToggleProps = {
@@ -30,71 +30,63 @@ type ToggleProps = {
 };
 
 const NavLinksContainer = styled.nav<ToggleProps>`
-  align-items: flex-start;
-  @media (max-width: 900px) {
-    color: white;
-    background: #131313;
+  @media (max-width: 1024px) {
     position: fixed;
-    top: 0;
+    top: 0px;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-    display: ${({ toggle }) => (toggle ? "grid" : "none")};
-    grid-template-columns: 1fr;
-    overflow-y: scroll;
+    min-width: 100vw;
+    min-height: 100vh;
+    background: #131313;
+    color: white;
+    display: ${({ toggle }) => (toggle ? "flex" : "none")};
+    flex-direction: column;
+    z-index: 1000;
   }
-  @media (min-width: 900px) {
+  
+
+  @media (min-width: 1024px) {
     display: flex;
-    justify-content: space-between;
-    color: black;
   }
 `;
 
 const LoginButton = styled(Link)`
-  text-decoration: none;
-  font-size: 16x;
-  margin-left: 10px;
-  margin-right: 12px;
   padding: 8px 16px;
-  vertical-align: middle;
-  max-height: 50px;
-  min-width: 80px;
-  border-radius: 2px;
-  border: 1px white solid;
-  background: transparent;
+  margin-right: 12px;
+  border: 1px solid white;
+  border-radius: 4px;
   color: white;
-  @media (min-width: 900px) {
+  text-decoration: none;
+  @media (min-width: 1024px) {
+    border: 1px solid black;
     color: black;
-    border: 1px black solid;
   }
 `;
 
 const SignupButton = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  margin-left: 10px;
+  padding: 8px 16px;
   margin-right: 12px;
-  padding: 8px 12px 6px;
-  vertical-align: middle;
-  max-height: 50px;
-  min-width: 80px;
-  border-radius: 2px;
-  border: 1px white solid;
-  background: white;
+  border: 1px solid black;
+  border-radius: 4px;
   color: black;
-  @media (min-width: 900px) {
+  background: white;
+  text-decoration: none;
+  @media (min-width: 1024px) {
     background: black;
     color: white;
-    border: 1px white solid;
   }
 `;
 
 const Wrapper = styled.div`
-  grid-column: 1;
-  grid-row: 3;
+  background: black;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
+  @media (min-width: 1024px) {
+    background: transparent;
+    padding: 5px;
+    align-items: center;
+  }
 `;
 
 export {
