@@ -12,10 +12,11 @@ import { ImLoop } from "react-icons/im";
 import { BsThreeDots } from "react-icons/bs";
 import { Button } from "../Button";
 import { SelectField } from "../SelectField";
+import { useNavigate } from "react-router-dom";
 
 const WorkspaceAbout = () => {
   const workspaceName = "My Workspace";
-
+  const navigate = useNavigate();
   return (
     <>
       <Wrapper>
@@ -27,7 +28,7 @@ const WorkspaceAbout = () => {
           <BsThreeDots />
         </FirstRow>
         <SecondRow>
-          <Button text={"+ Create typeform"} />
+          <Button text={"+ Create typeform"} onClick={() => navigate('/createForm')}/>
           <SelectField
             options={["Date Created", "Last Updated", "Alphabetical"]}
             label={""}
