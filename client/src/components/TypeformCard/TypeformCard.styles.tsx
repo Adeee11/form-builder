@@ -16,6 +16,7 @@ const Card = styled.div`
     }
     hr{
         grid-row: 2;
+        grid-column: 1/3;
     }
 `
 const TypeFormName = styled.h3`

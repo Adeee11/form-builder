@@ -8,16 +8,32 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { App } from "./pages/App";
 import { SignUpPage } from "./pages/signup";
 import { LoginPage } from "./pages/login";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { Dashboard } from "./pages/dashboard";
 import { CreateForm } from "./pages/CreateForm";
+import { setContext } from '@apollo/client/link/context';
+
 // import { useAppSelector } from "./providers/app/hooks";
 // React hooks can't be called at top level. So, add header when calling query through
 // context and modifying header
 // const token = useAppSelector((state)=> state.token.token)
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: "http://localhost:7000/graphql",
+});
+
+const authLink = setContext((_,{ headers})=>{
+  const token = localStorage.getItem('token')
+  return{
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}`:''
+    }
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
   // headers: {
   //   authorization: "Bearer " + token
@@ -47,3 +63,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+

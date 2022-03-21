@@ -28,12 +28,15 @@ const Menu = styled.div<ToggleProp>`
   height: 100%;
   background: white;
   border-right: 1px solid gray;
-  border-bottom:  1px solid gray;
- 
+  border-bottom: 1px solid gray;
 `;
 
 const Workspaces = styled.div`
-  /* border: 2px solid red; */
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto 1fr;
+  justify-content: space-evenly;
+  padding: 2px;
 `;
 const PersonalDetails = styled.div`
   /* border: 2px solid red; */
@@ -44,7 +47,20 @@ const HelpLinks = styled.div`
   grid-row: 4;
 `;
 
-const Button = styled.button``;
+const ButtonContainer = styled.div`
+  padding: 2px;
+`
+const Row = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`
+
+const Button = styled.button`
+  border: transparent;
+  padding: 5px 10px;
+  background: rgba(120,120,120, 0.3);
+  flex-basis: auto;
+`;
 const Username = styled.h4``;
 const Heading = styled.h5``;
 const BlueLink = styled(Link)``;
@@ -60,4 +76,6 @@ export {
   Username,
   Heading,
   BlueLink,
+  ButtonContainer,
+  Row
 };

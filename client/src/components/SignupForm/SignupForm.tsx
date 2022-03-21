@@ -57,7 +57,7 @@ const SignupForm = () => {
     });
     console.log("User Data", user.data);
     console.log("User Errors", user.errors);
-    if (user.data) {
+    if (await user.data) {
       const newUser: { username: string; id: string } = {
         username: user.data.signUp.username,
         id: user.data.signUp.id,

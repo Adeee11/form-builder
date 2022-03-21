@@ -18,6 +18,7 @@ import {
 
 import { gql, useMutation } from "@apollo/client";
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useAppSelector } from '../../providers/app/hooks';
 
 
 
@@ -28,6 +29,7 @@ const CreateForm = () => {
     const [que, setQue] = useState('')
     const [title, setTitle] = useState('my typeform');
     const [editQue, setEditQue] = useState(-1);
+    const userID = useAppSelector(state => state.user.id)
 
     const CREATE_FORM = gql`
     mutation createForm($input:CreateFormInput!){
@@ -48,7 +50,7 @@ const CreateForm = () => {
     const [create, { loading, error }] = useMutation(CREATE_FORM);
 
     if (loading) console.log("loading...", loading);
-    if (error) console.error("error:", error);
+    if (error) console.error("error:", JSON.stringify(error, null,2));
 
     const AddInput = (i: string) => {
         setformData([...formData, { fieldType: i, option: [], Question: "" }])
@@ -88,7 +90,7 @@ const CreateForm = () => {
             variables: {
                 input: {
                     title: title,
-                    owner: "621cb297a05f470851fa3f96",
+                    owner: userID,
                     formData: formData
                 }
             }
