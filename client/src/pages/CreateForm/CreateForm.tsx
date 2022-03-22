@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     BsCheckLg,
     BsFillEyeFill,
@@ -12,12 +12,57 @@ import {
     Header,
     Form,
 } from './CreateForm.styles';
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Preview } from '../../components/preview';
 import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom';
+
+const CREATE_FORM = gql`
+mutation createForm($input:CreateFormInput!){
+    createForm(createFormInput:$input){
+      id
+      date
+      title
+      formData{
+        Question
+        fieldType
+        option
+      }
+      
+    }
+  }
+`;
+
+const UPDATE_FORM = gql`
+mutation updateForm($input:UpdateFormInput!, $id:String!){
+    updateForm(updateFormInput:$input, id:$id){
+      id
+      date
+      title
+      formData{
+        Question
+        fieldType
+        option
+      }
+    }
+  }
+`
+const GET_FORM = gql`
+query form($input: ID!) {
+form(formId: $input) {
+  id
+  title
+date
+formData{
+  Question
+  fieldType
+  option
+}
+}
+}
+`
 
 interface formDataType {
     Question: string,
@@ -42,7 +87,15 @@ const CreateForm = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
         defaultValues: { title: "my typeform" }
     });
+    const [create, { loading, error }] = useMutation(CREATE_FORM);
+    const [update, state] = useMutation(UPDATE_FORM);
+    const { loading: load, error: err, data } = useQuery(GET_FORM, {
+        variables: { input: localStorage.getItem("formId") },
+    });
 
+    if (load) console.log("data:", data)
+    if (err) console.log("err:", err)
+    
     const onSubmit: SubmitHandler<Inputs> = async data => {
         if (formId) {
             const updatedForm = await update({
@@ -73,39 +126,9 @@ const CreateForm = () => {
         }
     };
 
-    const CREATE_FORM = gql`
-    mutation createForm($input:CreateFormInput!){
-        createForm(createFormInput:$input){
-          id
-          date
-          title
-          formData{
-            Question
-            fieldType
-            option
-          }
-          
-        }
-      }
-    `;
 
-    const UPDATE_FORM = gql`
-    mutation updateForm($input:UpdateFormInput!, $id:String!){
-        updateForm(updateFormInput:$input, id:$id){
-          id
-          date
-          title
-          formData{
-            Question
-            fieldType
-            option
-          }
-        }
-      }
-    `
 
-    const [create, { loading, error }] = useMutation(CREATE_FORM);
-    const [update, state] = useMutation(UPDATE_FORM);
+
 
     if (loading) console.log("loading...", loading);
     if (error) console.error("error:", error);
@@ -114,7 +137,7 @@ const CreateForm = () => {
         setformData([...formData, { fieldType: i, option: [], Question: "" }])
         setShowModal(false);
     }
-
+ 
     const saveQuestion = (que: string, index: number) => {
         const newData = [...formData];
         newData[index].Question = que;
@@ -172,7 +195,7 @@ const CreateForm = () => {
                 <ul>
                     <li><Link to="/createForm">Create</Link></li>
                     <li>Connect</li>
-                    <li>Share</li>
+                    <li><Link to="/share">Share</Link></li>
                     <li><Link to="/results">Result</Link></li>
                 </ul>
 
@@ -240,7 +263,7 @@ const CreateForm = () => {
                                     <input
                                         type="text"
                                         placeholder="Enter Options Here"
-                                        {...register("option", { required: true })}
+                                        {...register("option")}
                                     />
 
                                     <button
@@ -275,6 +298,7 @@ const CreateForm = () => {
                     formData.length > 0 &&
                     <button type="submit" className="sub" >Save</button>
                 }
+                {/* <button onClick={() => console.log(data)} type="button">Show saved </button> */}
             </Form>
         </Wrapper>
     )

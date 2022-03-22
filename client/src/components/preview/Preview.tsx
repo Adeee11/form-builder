@@ -58,7 +58,7 @@ const Preview = ({ onClose, formId }: propsType) => {
             }
         })
         console.log(data);
-        setRes([]);
+        if(data)alert("form submitted")
     }
     console.log(res)
 
@@ -100,7 +100,7 @@ const Preview = ({ onClose, formId }: propsType) => {
                                 </div>)
                         }
                     </div>)}
-                <button className='sub' onClick={submitHandler}>Submit</button>
+                <button className='sub' onClick={submitHandler} type="button">Submit</button>
             </Form>
         </PreviewContainer>
     )

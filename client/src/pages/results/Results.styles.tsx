@@ -101,27 +101,55 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 background: white;
 
 
+
  ul{
      list-style: none;
      display: flex;
      max-width: 900px;
      margin: 0 auto;
+     @media(max-width:768px){
+         /* justify-content:space-between */
+         width:100%;
+     }
+     
 
      li{
          color:#898989;
-         font-size: 15px;
+         font-size: 12px;
          margin-right: 10px;
          text-transform: uppercase;
          cursor: pointer;
          padding:10px;
+         display:flex;
+         align-items:center;
+         justify-content:center;
+         @media(max-width:768px){
+         flex:1;
+         background:#F4F4F4;
+         margin-right:0px;
+         border-right:0.5px solid black;
+         text-align:center;
+        
+     }
      }
      li:hover{
          color:black;
+         @media(max-width:768px){
+            border-bottom:none;
+            color:#898989;
          
+     }    
      }
      .active{
          color: black;
          border-bottom:2px solid black;
+         
+         @media(max-width:768px){
+            border-bottom:none;
+         background:#737373;
+         color:white;
+         
+     }
      }
  }
 
@@ -129,14 +157,27 @@ background: white;
 const Insights = styled.div`
 max-width: 900px;
 margin: 0 auto;
+@media(max-width:768px){
+       width:100%;
+         
+     }
 p{
     padding: 40px 0;
     color:#272727;
     font-size: 24px;
+    @media(max-width:768px){
+         width:90%;
+         margin:0 auto;
+     }
 }
 ul{
     list-style: none;
     display: flex;
+        @media(max-width:768px){
+         flex-wrap:wrap;
+         width:90%;
+         margin:0 auto;
+     }
     li{
         margin-right: 48px;
         span{
@@ -160,6 +201,10 @@ max-width: 900px;
 margin: 0 auto;
 display: flex;
 justify-content: space-between;
+@media(max-width:768px){
+       flex-direction:column-reverse;
+       width:90%;
+     }
 .first{
     flex-basis: 70%;
 .heading{

@@ -71,7 +71,7 @@ const Results = () => {
                 <ul>
                     <li onClick={() => setMenu('insights')} className={menu === "insights" ? "active" : ""}>Insights</li>
                     <li onClick={() => setMenu('summary')} className={menu === "summary" ? "active" : ""}>Summary</li>
-                    <li onClick={() => setMenu('responses')} className={menu === "responses" ? "active" : ""}>Responses[{data && data.form.submission.length}]</li>
+                    <li onClick={() => setMenu('responses')} className={menu === "responses" ? "active" : ""}>Responses [{data && data.form.submission.length}]</li>
                 </ul>
             </Menu>
             {menu === "insights" &&
