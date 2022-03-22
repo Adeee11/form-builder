@@ -49,9 +49,13 @@ const Results = () => {
                 </div>
 
                 <ul>
-                    <li><Link to="/createForm">create</Link></li>
-                    <li>Connect</li>
-                    <li>Share</li>
+                    <li>
+                        <Link to="/createForm">create</Link>
+                    </li>
+                    {/* <li>Connect</li> */}
+                    <li>
+                        <Link to="/share">Share</Link>
+                    </li>
                     <li>
                         <Link to="/results">Result</Link>
                     </li>

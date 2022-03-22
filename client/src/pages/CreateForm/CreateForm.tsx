@@ -1,12 +1,5 @@
-import { useState, useEffect } from 'react'
-import {
-    BsCheckLg,
-    BsFillEyeFill,
-    BsLink,
-    BsTelephoneFill,
-    BsTextParagraph
-} from 'react-icons/bs';
-import { MdEmail, MdShortText } from 'react-icons/md';
+import { useState } from 'react'
+import { BsFillEyeFill } from 'react-icons/bs';
 import {
     Wrapper,
     Header,
@@ -95,7 +88,7 @@ const CreateForm = () => {
 
     if (load) console.log("data:", data)
     if (err) console.log("err:", err)
-    
+
     const onSubmit: SubmitHandler<Inputs> = async data => {
         if (formId) {
             const updatedForm = await update({
@@ -137,7 +130,7 @@ const CreateForm = () => {
         setformData([...formData, { fieldType: i, option: [], Question: "" }])
         setShowModal(false);
     }
- 
+
     const saveQuestion = (que: string, index: number) => {
         const newData = [...formData];
         newData[index].Question = que;
@@ -194,7 +187,7 @@ const CreateForm = () => {
 
                 <ul>
                     <li><Link to="/createForm">Create</Link></li>
-                    <li>Connect</li>
+                    {/* <li>Connect</li> */}
                     <li><Link to="/share">Share</Link></li>
                     <li><Link to="/results">Result</Link></li>
                 </ul>

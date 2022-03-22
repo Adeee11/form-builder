@@ -14,6 +14,7 @@ import { Dashboard } from "./pages/dashboard";
 import { CreateForm } from "./pages/CreateForm";
 import { Preview } from "./components/preview";
 import { Results } from "./pages/results";
+import { Share } from "./pages/share";
 
 // import { useAppSelector } from "./providers/app/hooks";
 // React hooks can't be called at top level. So, add header when calling query through
@@ -40,6 +41,7 @@ ReactDOM.render(
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/createForm" element={<CreateForm />} />
+            <Route path="/share" element={<Share />} />
             <Route path="/results" element={<Results />} />
           </Routes>
         </BrowserRouter>
