@@ -14,7 +14,6 @@ import {
 } from './CreateForm.styles';
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useAppSelector } from '../../providers/app/hooks';
 import { Preview } from '../../components/preview';
 import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -84,24 +83,6 @@ const CreateForm = () => {
     const [previewMode, setPreviewMode] = useState(false);
     const [formData, setformData] = useState<formDataType[]>([]);
     const [editQue, setEditQue] = useState(-1);
-    const userID = useAppSelector(state => state.user.id)
-
-    const CREATE_FORM = gql`
-    mutation createForm($input:CreateFormInput!){
-        createForm(createFormInput:$input){
-          id
-          date
-          title
-          formData{
-            Question
-            fieldType
-            option
-          }
-          
-        }
-      }
-    `;
-
     const [formId, setFormId] = useState('');
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
         defaultValues: { title: "my typeform" }
@@ -150,7 +131,7 @@ const CreateForm = () => {
 
 
     if (loading) console.log("loading...", loading);
-    if (error) console.error("error:", JSON.stringify(error, null,2));
+    if (error) console.error("error:", error);
 
     const AddInput = (i: string) => {
         setformData([...formData, { fieldType: i, option: [], Question: "" }])
@@ -185,18 +166,6 @@ const CreateForm = () => {
         setformData([...list])
     }
 
-        // const data: any = await create({
-        //     variables: {
-        //         input: {
-        //             title: title,
-        //             owner: userID,
-        //             formData: formData
-        //         }
-        //     }
-        // })
-        console.log(data);
-        if (data) alert("form Created")
-        else alert("Fill all the Questions. ")
     const Onedit = async (i: number) => {
         await setEditQue(i);
         setValue("question", formData[i].Question);
