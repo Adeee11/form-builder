@@ -4,11 +4,12 @@ import { BsThreeDots } from "react-icons/bs";
 const TypeformCard = (props: {
   typeformName: string;
   responsesNumber: number;
+  onClick: () => void
 }) => {
-  const { typeformName, responsesNumber } = props;
+  const { typeformName, responsesNumber, onClick } = props;
   return (
     <>
-      <Card>
+      <Card onClick={onClick}>
         <TypeFormName>{typeformName}</TypeFormName>
         <hr />
         <ResponsesCounter>
