@@ -53,8 +53,8 @@ const LoginForm = () => {
         username: user.data.login.user.username,
         id: user.data.login.user.id,
       };
-      dispatch(changeUser(newUser));
-      dispatch(changeToken(user.data.login.access_token));
+      await dispatch(changeUser(newUser));
+      await dispatch(changeToken(user.data.login.access_token));
       // saving jwt token
       localStorage.setItem("token", accessToken);
 

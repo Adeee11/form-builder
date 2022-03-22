@@ -11,10 +11,14 @@ const WorkspaceMain = () => {
   });
   if (loading) console.log("Loading ...");
   if (error) console.log(JSON.stringify(error, null, 2));
-  if (data) console.log("Data", data);
-  const TypeformNames = data.sortedForms.map(
+  if (data) {
+    console.log("Data", data);
+  }
+  console.log("data", JSON.stringify(data, null, 2));
+  const Names: string[] = data.sortedForms.length? data.sortedForms.map(
     (ele: { title: string }) => ele.title
-  );
+  ): 'No typeform yet';
+  const TypeformNames = [...Names]
 
   return (
     <>

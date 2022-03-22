@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   HelpLinks,
@@ -12,40 +12,65 @@ import {
   Heading,
   BlueLink,
   Row,
+  ItemContainer,
+  FAQLink,
 } from "./SideBarMenu.styles";
-import { CgMenuGridR } from "react-icons/cg";
 import {
   AiOutlinePlus,
-  AiOutlineSearch,
-  AiOutlineCaretRight,
+  AiOutlineCaretDown,
+  AiOutlineQuestion,
+  AiFillStar,
+  AiOutlineBranches,
+  AiFillEyeInvisible,
 } from "react-icons/ai";
 import { HiUser } from "react-icons/hi";
+import { FaUserFriends } from "react-icons/fa";
+import { ImEmbed } from "react-icons/im";
 import { Dropdown } from "../Dropdown";
 import { ButtonContainer } from "../HeroSection/HeroSection.styles";
 import { useAppSelector } from "../../providers/app/hooks";
+
+const Item = (props: { icon: React.ReactNode; linkText: string }) => {
+  const { icon, linkText } = props;
+  return (
+    <>
+      <ItemContainer>
+        {icon}
+        <FAQLink to={"/"}>{linkText}</FAQLink>
+      </ItemContainer>
+    </>
+  );
+};
 
 const SideBarMenu = (props: { showMenu: boolean }) => {
   const workspaceType = "PRIVATE";
   const workSpaceName = "First";
   const noOfTypeform = 3;
-  const userName = useAppSelector(state => state.user.username);
+  const userName = useAppSelector((state) => state.user.username);
   const dropdownItems = [
-    "Help Center",
-    "Ask the community",
-    "Learn the basics",
-    "Branch or skip questions",
-    "Pull in info you alreay know",
-    "Embed your typeform",
+    <Item key={"sbd1"} linkText="Help Center" icon={<AiOutlineQuestion />} />,
+    <Item key={"sbd2"} linkText="Ask the community" icon={<FaUserFriends />} />,
+    <Item key={"sbd3"} linkText="Learn the basics" icon={<AiFillStar />} />,
+    <Item
+      key={"sbd4"}
+      linkText="Branch or skip questions"
+      icon={<AiOutlineBranches />}
+    />,
+    <Item
+      key={"sbd5"}
+      linkText="Pull in info you alreay know"
+      icon={<AiFillEyeInvisible />}
+    />,
+    <Item key={"sbd6"} linkText="Embed your typeform" icon={<ImEmbed />} />,
   ];
   const { showMenu } = props;
-  
 
   return (
     <>
       <Menu showMenu={showMenu}>
         <Workspaces>
           <div>
-            <AiOutlineCaretRight />
+            <AiOutlineCaretDown />
             <HiUser />
             <Text>{workspaceType}</Text>
           </div>
