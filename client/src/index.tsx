@@ -10,8 +10,14 @@ import { SignUpPage } from "./pages/signup";
 import { LoginPage } from "./pages/login";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { Dashboard } from "./pages/dashboard";
+
 import { CreateForm } from "./pages/CreateForm";
+<<<<<<< HEAD
 import { setContext } from '@apollo/client/link/context';
+=======
+import { Preview } from "./components/preview";
+import { Results } from "./pages/results";
+>>>>>>> form-builder/createForm
 
 // import { useAppSelector } from "./providers/app/hooks";
 // React hooks can't be called at top level. So, add header when calling query through
@@ -51,6 +57,7 @@ ReactDOM.render(
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/createForm" element={<CreateForm />} />
+            <Route path="/results" element={<Results />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>
