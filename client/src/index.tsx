@@ -20,9 +20,8 @@ import { Results } from "./pages/results";
 // context and modifying header
 // const token = useAppSelector((state)=> state.token.token)
 
-
 const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql",
+  uri: "http://localhost:7000/graphql",
   cache: new InMemoryCache(),
   // headers: {
   //   authorization: "Bearer " + token

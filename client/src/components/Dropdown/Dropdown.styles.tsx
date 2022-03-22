@@ -13,6 +13,10 @@ const List = styled.ul<showItemsProp>`
   list-style: none;
   padding-left: 0;
   display:${({showItems})=> showItems?'grid':'none'};
+  /* @media (min-width: 1024px) {
+      position: absolute;
+  } */
+
   
 `;
 
