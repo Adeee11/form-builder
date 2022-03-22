@@ -15,6 +15,7 @@ import { CreateForm } from "./pages/CreateForm";
 import { setContext } from '@apollo/client/link/context';
 import { Preview } from "./components/preview";
 import { Results } from "./pages/results";
+import EditForm from "./pages/EditForm";
 
 // import { useAppSelector } from "./providers/app/hooks";
 // React hooks can't be called at top level. So, add header when calling query through
@@ -55,6 +56,7 @@ ReactDOM.render(
             <Route path="/login" element={<LoginPage />} />
             <Route path="/createForm" element={<CreateForm />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/editForm" element={<EditForm />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

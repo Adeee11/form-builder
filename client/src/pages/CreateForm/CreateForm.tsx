@@ -18,6 +18,7 @@ import { Preview } from '../../components/preview';
 import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../providers/app/hooks';
 
 const CREATE_FORM = gql`
 mutation createForm($input:CreateFormInput!){
@@ -84,6 +85,7 @@ const CreateForm = () => {
     const [formData, setformData] = useState<formDataType[]>([]);
     const [editQue, setEditQue] = useState(-1);
     const [formId, setFormId] = useState('');
+    const userId = useAppSelector(state => state.user.id)
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
         defaultValues: { title: "my typeform" }
     });
@@ -114,7 +116,7 @@ const CreateForm = () => {
                 variables: {
                     input: {
                         title: data.title,
-                        owner: "621cb297a05f470851fa3f96",
+                        owner: userId,
                         formData: formData
                     }
                 }
