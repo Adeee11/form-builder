@@ -12,6 +12,7 @@ const List = styled.ul`
     flex-direction: row;
     align-items: center;
     padding: 0;
+    overflow-y: auto;
   }
 `;
 
