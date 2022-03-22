@@ -1,17 +1,44 @@
+import { useQuery } from "@apollo/client";
+import { useAppSelector } from "../../providers/app/hooks";
 import { TypeformCard } from "../TypeformCard";
+import { GET_FORMS } from "./queries";
 import { Wrapper } from "./WorkspaceMain.styles";
 
 const WorkspaceMain = () => {
-  const TypeformNames = ["First Typeform","Second Typeform", "Third Typeform", "Fourth Typeform"]
+  const userId = useAppSelector((state) => state.user.id);
+  const { loading, error, data } = useQuery(GET_FORMS, {
+    variables: { userId },
+  });
+  if (loading) console.log("Loading ...");
+  if (error) console.log(JSON.stringify(error, null, 2));
+  if (data) {
+    console.log("Data", data);
+  }
+  console.log("data", JSON.stringify(data, null, 2));
+  let TypeformNames:string[];
+  if(data){
+    const Names: string[] = data.sortedForms.map(
+      (ele: { title: string; __typename: string }) => ele.title
+    );
+    console.log(Names.length);
+     TypeformNames = Names.length ? [...Names] : ["No typedForm yet"];
+  } else{
+   TypeformNames = ['Data didn\'t arrive yet']
+
+  }
+  
 
   return (
     <>
       <hr />
       <Wrapper>
-        <TypeformCard typeformName={TypeformNames[0]} responsesNumber={0}/>
-        <TypeformCard typeformName={TypeformNames[1]} responsesNumber={1}/>
-        <TypeformCard  typeformName={TypeformNames[2]} responsesNumber={2}/>
-        <TypeformCard  typeformName={TypeformNames[3]} responsesNumber={3}/>
+        {TypeformNames.map((title: string, index: number) => (
+          <TypeformCard
+            key={"tfc" + index.toString()}
+            typeformName={title}
+            responsesNumber={0}
+          />
+        ))}
       </Wrapper>
     </>
   );

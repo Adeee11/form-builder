@@ -17,6 +17,7 @@ import { LOG_IN } from "./queries";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
 import { changeToken } from "../../providers/features/tokenSlice";
+import { changeUser } from "../../providers/features/userSlice";
 
 type FormFields = {
   userName?: string;
@@ -45,14 +46,20 @@ const LoginForm = () => {
       },
     });
 
-    // console.log("User Data", user.data);
+    console.log("User Data", user.data);
+
+    if (await user.data) {
+      const newUser: { username: string; id: string } = {
+        username: user.data.login.user.username,
+        id: user.data.login.user.id,
+      };
+      await dispatch(changeUser(newUser));
+      await dispatch(changeToken(user.data.login.access_token));
+
+      navigate("/dashboard");
+    }
     // console.log("User error", user.errors);
     // console.log("TEST",user.data.login.access_token )
-    (await user.data)
-      ? dispatch(changeToken(user.data.login.access_token))
-      : console.log("Token didn't receive");
-    console.log("Access Token", accessToken);
-    user.data ? navigate("/dashboard") : console.error("There's some error");
   };
   // graphql
   const [logIn, { loading, error }] = useMutation(LOG_IN);

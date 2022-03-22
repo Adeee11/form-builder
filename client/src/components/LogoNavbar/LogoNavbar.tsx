@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAppSelector } from "../../providers/app/hooks";
 import { NavLinks } from "../NavLinks";
 import {
   Wrapper,
@@ -12,21 +13,23 @@ import {
 } from "./LogoNavbar.styles";
 
 const LogoNavbar = () => {
+
   const [toggle, setToggle] = useState(false);
-  const userName = "Nitin Pandey"; // dynamically fetch it from api and store it in the store
+  const userName = useAppSelector(state => state.user.username); 
   const email = "test@gmail.com";
-  const [firstName, lastName] = userName.split(" ");
+  // will implement first and last name one after confirming that there's a last name 
+  // const [firstName, lastName] = userName.split(" ");
   return (
     <>
       <Wrapper>
         <Logo onClick={() => setToggle(!toggle)}>
-          {firstName[0] + lastName[0]}
+          {userName[0] + userName[userName.length -1] }
         </Logo>
         <Email>{email}</Email>
 
         <ToggleContent toggle={toggle}>
           <NavbarHeader>
-            <Logo>{firstName[0] + lastName[0]}</Logo>
+            <Logo>{userName[0] + userName[userName.length -1]}</Logo>
             <Username>{userName}</Username>
             <MenuType>Settings</MenuType>
           </NavbarHeader>

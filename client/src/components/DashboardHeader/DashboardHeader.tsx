@@ -4,6 +4,7 @@ import { LogoNavbar } from "../LogoNavbar";
 import { Container, Header } from "./DashboardHeader.styles";
 
 const DashboardHeader = () => {
+  
   const brandName = "Typeform";
   return (
     <>
