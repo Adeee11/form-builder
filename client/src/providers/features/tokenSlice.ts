@@ -14,6 +14,7 @@ export const tokenSlice = createSlice({
     reducers:{
         changeToken: (state, action:PayloadAction<string>) => {
             state.token = action.payload;
+            localStorage.setItem('token', state.token);
         }
     }
 })

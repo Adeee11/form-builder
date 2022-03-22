@@ -55,8 +55,6 @@ const LoginForm = () => {
       };
       await dispatch(changeUser(newUser));
       await dispatch(changeToken(user.data.login.access_token));
-      // saving jwt token
-      localStorage.setItem("token", accessToken);
 
       navigate("/dashboard");
     }

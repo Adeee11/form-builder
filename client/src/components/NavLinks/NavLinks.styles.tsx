@@ -5,8 +5,9 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
-  padding: 76px 32px;
+  padding: 8px 32px;
   padding-top: 0;
+  overflow-y: scroll;
   @media (min-width: 1024px) {
     flex-direction: row;
     align-items: center;
@@ -15,7 +16,7 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-  min-height: 68px;
+  min-height: 50px;
   margin-bottom: 16px;
   p {
     display: flex;

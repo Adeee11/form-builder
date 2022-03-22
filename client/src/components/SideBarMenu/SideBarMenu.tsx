@@ -14,6 +14,9 @@ import {
   Row,
   ItemContainer,
   FAQLink,
+  ButtonContainer,
+  GridRowWrapper,
+  HorizontalLine,
 } from "./SideBarMenu.styles";
 import {
   AiOutlinePlus,
@@ -27,7 +30,6 @@ import { HiUser } from "react-icons/hi";
 import { FaUserFriends } from "react-icons/fa";
 import { ImEmbed } from "react-icons/im";
 import { Dropdown } from "../Dropdown";
-import { ButtonContainer } from "../HeroSection/HeroSection.styles";
 import { useAppSelector } from "../../providers/app/hooks";
 
 const Item = (props: { icon: React.ReactNode; linkText: string }) => {
@@ -80,9 +82,13 @@ const SideBarMenu = (props: { showMenu: boolean }) => {
               <AiOutlinePlus />
             </Button>
           </ButtonContainer>
-
-          <Text>{workSpaceName}</Text>
-          <Text>{noOfTypeform}</Text>
+          <GridRowWrapper>
+            <Text>{workSpaceName}</Text>
+            <Text>{noOfTypeform}</Text>
+          </GridRowWrapper>
+          <HorizontalLine>
+            <hr />
+          </HorizontalLine>
         </Workspaces>
 
         <PersonalDetails>
@@ -94,6 +100,9 @@ const SideBarMenu = (props: { showMenu: boolean }) => {
             <Text>{noOfTypeform}</Text>
           </Heading>
           <BlueLink to={"/"}>{"Increase response limit"}</BlueLink>
+          <HorizontalLine>
+            <hr />
+          </HorizontalLine>
         </PersonalDetails>
         <HelpLinks>
           <Dropdown

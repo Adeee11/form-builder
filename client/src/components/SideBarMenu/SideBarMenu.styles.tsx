@@ -34,10 +34,16 @@ const Menu = styled.div<ToggleProp>`
 const Workspaces = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto 1fr;
-  justify-content: space-evenly;
-  padding: 2px;
+  grid-template-rows: auto auto 1fr;
+  padding: 10px 2px;
+  grid-column-gap: 0;
 `;
+const HorizontalLine = styled.div`
+  grid-column:1/3;
+  grid-row: 3;
+  align-self: flex-end;
+  padding-top: 20px;
+`
 const PersonalDetails = styled.div`
   /* border: 2px solid red; */
   grid-row: 3;
@@ -49,6 +55,7 @@ const HelpLinks = styled.div`
 
 const ButtonContainer = styled.div`
   padding: 2px;
+  margin: 0;
 `;
 const Row = styled.div`
   display: flex;
@@ -80,6 +87,13 @@ const ItemContainer = styled.div`
   max-width: 100%;
   align-items: center;
 `;
+const GridRowWrapper= styled.div`
+  display: contents;
+  background: gray;
+  span{
+    background: rgba(120,120,120,0.4);
+  }
+`
 export {
   MenuTopBar,
   Container,
@@ -95,5 +109,7 @@ export {
   ButtonContainer,
   Row,
   ItemContainer,
-  FAQLink
+  FAQLink,
+  GridRowWrapper,
+  HorizontalLine
 };

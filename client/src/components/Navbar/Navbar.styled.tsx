@@ -31,7 +31,7 @@ type ToggleProps = {
 
 const NavLinksContainer = styled.nav<ToggleProps>`
   @media (max-width: 1024px) {
-    position: fixed;
+    position: absolute;
     top: 0px;
     left: 0;
     min-width: 100vw;
@@ -40,7 +40,7 @@ const NavLinksContainer = styled.nav<ToggleProps>`
     color: white;
     display: ${({ toggle }) => (toggle ? "flex" : "none")};
     flex-direction: column;
-    z-index: 1000;
+    z-index: 1000; 
   }
   
 
