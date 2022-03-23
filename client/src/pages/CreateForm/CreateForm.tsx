@@ -147,7 +147,7 @@ const CreateForm = () => {
     console.log(formData);
   };
   const delQue = (i: number, e: any) => {
-    e.stopPropagation();
+    e.stopPropagation(); // need to ask why used?
     const list = formData;
     list.splice(i, 1);
     setformData([...list]);
@@ -166,6 +166,7 @@ const CreateForm = () => {
     setformData([...list]);
   };
 
+  // why made this function async
   const Onedit = async (i: number) => {
     await setEditQue(i);
     setValue("question", formData[i].Question);
