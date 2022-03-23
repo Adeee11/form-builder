@@ -1,11 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
-import { format } from 'path';
-import React, { useState } from 'react'
-import { BsFillEyeFill } from 'react-icons/bs'
+import { useState } from 'react'
 import { BsCheckLg, BsLink, BsTelephoneFill, BsTextParagraph } from 'react-icons/bs';
 import { MdEmail, MdShortText } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import { Header, Wrapper, Menu, Insights, Summary, Responses } from './Results.styles'
+import { Wrapper, Menu, Insights, Summary, Responses } from './Results.styles'
 
 const GET_QUESTION = gql`
 query form($input:ID!){
@@ -28,11 +25,13 @@ query form($input:ID!){
     }
   }
 `;
+type propType = {
+    formId?: string,
+}
 
-
-const Results = () => {
+const Results = ({ formId }: propType) => {
+    console.log(formId);
     const [menu, setMenu] = useState('insights');
-    const formId = localStorage.getItem('formId')
     const { loading, error, data } = useQuery(GET_QUESTION, {
         variables: {
             input: formId
@@ -42,35 +41,6 @@ const Results = () => {
     if (error) console.log("error", error);
     return (
         <Wrapper>
-            <Header>
-                <div className='first'>
-                    <span>my Work space /</span>
-                    <span>{data && data.form.title}</span>
-                </div>
-
-                <ul>
-                    <li>
-                        <Link to="/createForm">create</Link>
-                    </li>
-                    {/* <li>Connect</li> */}
-                    <li>
-                        <Link to="/share">Share</Link>
-                    </li>
-                    <li>
-                        <Link to="/results">Result</Link>
-                    </li>
-                </ul>
-
-                <p>
-
-                    <span className='preview' >
-                        <BsFillEyeFill />
-                    </span>
-
-                    <button className='publish'>Publish</button>
-                    <span className='avatar'>P</span>
-                </p>
-            </Header>
             <Menu>
                 <ul>
                     <li onClick={() => setMenu('insights')} className={menu === "insights" ? "active" : ""}>Insights</li>
@@ -88,19 +58,19 @@ const Results = () => {
                     <ul>
                         <li>
                             <span className='first'>Views</span>
-                            <span className='second'>2</span>
+                            <span className='second'>{data && data.form.submission.length}</span>
                         </li>
                         <li>
                             <span className='first'>Starts</span>
-                            <span className='second'>2</span>
+                            <span className='second'>{data && data.form.submission.length}</span>
                         </li>
                         <li>
                             <span className='first'>Submissions</span>
-                            <span className='second'>2</span>
+                            <span className='second'>{data && data.form.submission.length}</span>
                         </li>
                         <li>
                             <span className='first'>Completion Rate</span>
-                            <span className='second'>50%</span>
+                            <span className='second'>100%</span>
                         </li>
                         <li>
                             <span className='first'>Time to complete</span>
@@ -119,7 +89,7 @@ const Results = () => {
 
 
                         {data && data.form.formData.map((item: any, index: number) =>
-                            <div className='block' >
+                            <div className='block' key={index}>
                                 <div className='question'>
 
 
@@ -160,8 +130,8 @@ const Results = () => {
                                     <span>{item.Question}</span>
                                 </div>
 
-                                {data.form.submission.map((i: any) =>
-                                    <p className='ans'>{i.res[index]}</p>
+                                {data.form.submission.map((i: any, a: number) =>
+                                    <p className='ans' key={a}>{i.res[index]}</p>
                                 )}
                             </div>
 
@@ -188,7 +158,7 @@ const Results = () => {
                             <p>date</p>
                         </div>
                         {data && data.form.formData.map((item: any, index: number) =>
-                            <div className='block' key={item.id}>
+                            <div className='block' key={index}>
                                 <div className='question'>
                                     <span>{index + 1}</span>
                                     <span>{item.Question}</span>
@@ -217,7 +187,7 @@ const Results = () => {
                         </div>
                     )}
 
-
+                    <button onClick={() => console.log(data)}>Show Res</button>
                 </Responses>
             }
 

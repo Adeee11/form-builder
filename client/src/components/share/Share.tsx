@@ -1,3 +1,4 @@
+import { gql, useQuery } from '@apollo/client'
 import React from 'react'
 import { AiOutlineLink } from 'react-icons/ai'
 import { BsFacebook, BsFillEyeFill, BsLinkedin, BsTwitter } from 'react-icons/bs'
@@ -5,41 +6,31 @@ import { FaFacebook, FaFacebookF, FaLinkedinIn } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import { RiMessageFill } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
-import { Container, Header } from './Share.styles'
+import { Container } from './Share.styles'
 
-const Share = () => {
+const GET_TITLE = gql`
+query form($input:ID!){
+    form(formId:$input){
+      id
+      date
+      title
+      owner
+    }
+  }
+`;
+type propType = {
+    formId?: string
+}
+
+const Share = ({ formId }: propType) => {
+    // const formId = localStorage.getItem('formId');
+    const { loading, error, data } = useQuery(GET_TITLE, {
+        variables: {
+            input: formId
+        },
+    });
     return (
         < >
-            <Header>
-                <div className='first'>
-                    <span>my Work space /</span>
-                    {/* <span>{data && data.form.title}</span> */}
-                </div>
-
-                <ul>
-                    <li>
-                        <Link to="/createForm">create</Link>
-                    </li>
-                    {/* <li>Connect</li> */}
-                    <li>
-                        <Link to="/share">Share</Link>
-                    </li>
-                    <li>
-                        <Link to="/results">Result</Link>
-                    </li>
-                </ul>
-
-                <p>
-
-                    <span className='preview' >
-                        <BsFillEyeFill />
-                    </span>
-
-                    <button className='publish'>Publish</button>
-                    <span className='avatar'>P</span>
-                </p>
-            </Header>
-
             <Container>
                 <span className='heading'>Share your typeForm</span>
                 <div className='section1'>
@@ -50,7 +41,7 @@ const Share = () => {
                             Get the link or share on social
                         </div>
                         <div className='inputandbtn'>
-                            <input type="text" />
+                            <input type="text" value={data && "http://localhost:3001/form/" + data.form.id} />
                             <button>Copy Link</button>
                         </div>
                         <div className='socialmedia'>

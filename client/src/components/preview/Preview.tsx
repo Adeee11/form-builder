@@ -31,10 +31,12 @@ mutation createSubmission($input:CreateSubmissionInput!){
 `
 type propsType = {
     onClose: () => void,
-    formId: string
+    formId: string,
+    isForm?: boolean,
 }
-const Preview = ({ onClose, formId }: propsType) => {
+const Preview = ({ onClose, formId, isForm }: propsType) => {
     const [res, setRes] = useState<string[]>([]);
+    const [isActive, setIsActive] = useState(false);
 
     const { loading, error, data } = useQuery(GET_FORM, {
         variables: { input: formId },
@@ -43,6 +45,7 @@ const Preview = ({ onClose, formId }: propsType) => {
 
 
     const saveRes = (val: string, index: number) => {
+
         const listOfRes: string[] = [...res];
         listOfRes[index] = val;
         setRes([...listOfRes]);
@@ -58,13 +61,14 @@ const Preview = ({ onClose, formId }: propsType) => {
             }
         })
         console.log(data);
-        if(data)alert("form submitted")
+        if (data) alert("form answer submitted")
+        onClose();
     }
     console.log(res)
 
     return (
         <PreviewContainer>
-            <PreviewHeader>
+            {!isForm && <PreviewHeader>
                 <span className='back' onClick={() => onClose()}>
                     <BsArrowLeft />
                 </span>
@@ -73,7 +77,7 @@ const Preview = ({ onClose, formId }: propsType) => {
                     <span><AiOutlineReload /></span>
                     <span>Restart</span>
                 </button>
-            </PreviewHeader>
+            </PreviewHeader>}
 
             <Form>
                 <header>
@@ -85,7 +89,7 @@ const Preview = ({ onClose, formId }: propsType) => {
                             <span >{index + 1}</span>
                             {item.Question}
                         </p>
-                        {item.fieldType == "text" &&
+                        {item.fieldType !== "choice" &&
                             <input
                                 type={item.fieldType}
                                 className='answer'
@@ -95,7 +99,7 @@ const Preview = ({ onClose, formId }: propsType) => {
                         {
                             item.fieldType == "choice" &&
                             item.option.map((opt: string) =>
-                                <div className='opt' onClick={() => saveRes(opt, index)}>
+                                <div onClick={() => { saveRes(opt, index); }} className={isActive ? "opt act" : "opt"}>
                                     {opt}
                                 </div>)
                         }

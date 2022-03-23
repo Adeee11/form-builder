@@ -10,12 +10,9 @@ import { SignUpPage } from "./pages/signup";
 import { LoginPage } from "./pages/login";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { Dashboard } from "./pages/dashboard";
-
 import { CreateForm } from "./pages/CreateForm";
 import { setContext } from '@apollo/client/link/context';
-import { Preview } from "./components/preview";
-import { Results } from "./pages/results";
-import { Share } from "./pages/share";
+import { Form } from "./pages/form";
 
 // import { useAppSelector } from "./providers/app/hooks";
 // React hooks can't be called at top level. So, add header when calling query through
@@ -23,15 +20,15 @@ import { Share } from "./pages/share";
 // const token = useAppSelector((state)=> state.token.token)
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:7000/graphql",
+  uri: "http://localhost:3000/graphql",
 });
 
-const authLink = setContext((_,{ headers})=>{
+const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token')
-  return{
+  return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}`:''
+      authorization: token ? `Bearer ${token}` : ''
     }
   }
 })
@@ -55,8 +52,7 @@ ReactDOM.render(
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/createForm" element={<CreateForm />} />
-            <Route path="/share" element={<Share />} />
-            <Route path="/results" element={<Results />} />
+            <Route path="form/:id" element={<Form />} />
           </Routes>
         </BrowserRouter>
       </ApolloProvider>

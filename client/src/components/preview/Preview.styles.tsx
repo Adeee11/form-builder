@@ -81,6 +81,10 @@ header{
         font-size: 16px;
         cursor: pointer;
     }
+    .act{
+        border:1px solid black;
+        color:black
+    }
     .opt:hover{
         color: blue;
     }

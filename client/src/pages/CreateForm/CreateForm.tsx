@@ -10,7 +10,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { Preview } from '../../components/preview';
 import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Share } from '../../components/share';
+import { Results } from '../../components/results';
 
 const CREATE_FORM = gql`
 mutation createForm($input:CreateFormInput!){
@@ -77,6 +78,7 @@ const CreateForm = () => {
     const [formData, setformData] = useState<formDataType[]>([]);
     const [editQue, setEditQue] = useState(-1);
     const [formId, setFormId] = useState('');
+    const [menu, setMenu] = useState('create');
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
         defaultValues: { title: "my typeform" }
     });
@@ -186,10 +188,10 @@ const CreateForm = () => {
                 </div>
 
                 <ul>
-                    <li><Link to="/createForm">Create</Link></li>
-                    {/* <li>Connect</li> */}
-                    <li><Link to="/share">Share</Link></li>
-                    <li><Link to="/results">Result</Link></li>
+                    <li onClick={() => setMenu('create')}>Create</li>
+                    <li onClick={() => setMenu('connect')}>Connect</li>
+                    <li onClick={() => setMenu('share')}>Share</li>
+                    <li onClick={() => setMenu('result')}>Result</li>
                 </ul>
 
                 <p>
@@ -209,90 +211,98 @@ const CreateForm = () => {
                     AddInput={AddInput}
                 />}
 
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            {menu === "create" &&
+                <Form onSubmit={handleSubmit(onSubmit)}>
 
-                <div className='form-header'>
-                    {watch("title")}
-                </div>
+                    <div className='form-header'>
+                        {watch("title")}
+                    </div>
 
-                {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) =>
-                    <div key={i}>
+                    {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) =>
+                        <div key={i}>
 
-                        <div className='que' onClick={() => Onedit(i)}>
+                            <div className='que' onClick={() => Onedit(i)}>
 
-                            <span>{i + 1}.</span>
+                                <span>{i + 1}.</span>
 
-                            {i === editQue ?
-
-                                <input
-                                    type="text"
-                                    placeholder='Your Question here?'
-                                    className="input"
-                                    id="input"
-                                    {...register("question")}
-                                    onBlur={() => saveQuestion(watch("question"), i)}
-                                /> :
-                                <p className='input'>
-                                    {a.Question || "Your Question Here?"}
-                                </p>
-                            }
-
-                            <button
-                                type="button"
-                                className='delque'
-                                onClick={(e) => delQue(i, e)}>
-                                x
-                            </button>
-
-                        </div>
-
-                        {(a.fieldType !== "select" && a.fieldType !== "choice") ?
-
-                            <p className='ans'>Enter Your Answer here</p> :
-
-                            <div className='opt'>
-                                <span>
+                                {i === editQue ?
 
                                     <input
                                         type="text"
-                                        placeholder="Enter Options Here"
-                                        {...register("option")}
-                                    />
+                                        placeholder='Your Question here?'
+                                        className="input"
+                                        id="input"
+                                        {...register("question")}
+                                        onBlur={() => saveQuestion(watch("question"), i)}
+                                    /> :
+                                    <p className='input'>
+                                        {a.Question || "Your Question Here?"}
+                                    </p>
+                                }
 
-                                    <button
-                                        type="button"
-                                        onClick={() => saveOption(watch("option"), i)}>
-                                        +
-                                    </button>
+                                <button
+                                    type="button"
+                                    className='delque'
+                                    onClick={(e) => delQue(i, e)}>
+                                    x
+                                </button>
 
-                                </span>
+                            </div>
 
-                                {a.option.length > 0 && a.option.map((o: string, index: number) =>
+                            {(a.fieldType !== "select" && a.fieldType !== "choice") ?
 
-                                    <div key={index} className="optlist">
+                                <p className='ans'>Enter Your Answer here</p> :
 
-                                        <p>{o}</p>
+                                <div className='opt'>
+                                    <span>
+
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Options Here"
+                                            {...register("option")}
+                                        />
 
                                         <button
                                             type="button"
-                                            onClick={() => del(i, index)}>
-                                            x</button>
-                                    </div>)}
+                                            onClick={() => saveOption(watch("option"), i)}>
+                                            +
+                                        </button>
 
-                            </div>}
-                    </div>
-                )}
+                                    </span>
 
-                <span className="chooseInput" onClick={() => setShowModal(true)}>
-                    <AiOutlinePlus />
-                </span>
+                                    {a.option.length > 0 && a.option.map((o: string, index: number) =>
 
-                {
-                    formData.length > 0 &&
-                    <button type="submit" className="sub" >Save</button>
-                }
-                {/* <button onClick={() => console.log(data)} type="button">Show saved </button> */}
-            </Form>
+                                        <div key={index} className="optlist">
+
+                                            <p>{o}</p>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => del(i, index)}>
+                                                x</button>
+                                        </div>)}
+
+                                </div>}
+                        </div>
+                    )}
+
+                    <span className="chooseInput" onClick={() => setShowModal(true)}>
+                        <AiOutlinePlus />
+                    </span>
+
+                    {
+                        formData.length > 0 &&
+                        <button type="submit" className="sub" >Save</button>
+                    }
+
+                </Form>}
+            {
+                menu === "share" && <Share formId={formId} />
+            }
+
+            {
+                menu == "result" && <Results formId={formId} />
+            }
         </Wrapper>
     )
 }
