@@ -4,6 +4,7 @@ const Wrapper = styled.div`
 
 `
 
+
 const Avatar = styled.span`
     border: blue 2px solid;
     border-radius: 50%;
