@@ -15,18 +15,16 @@ const WorkspaceMain = () => {
     console.log("Data", data);
   }
   console.log("data", JSON.stringify(data, null, 2));
-  let TypeformNames:string[];
-  if(data){
+  let TypeformNames: string[];
+  if (data) {
     const Names: string[] = data.sortedForms.map(
       (ele: { title: string; __typename: string }) => ele.title
     );
     console.log(Names.length);
-     TypeformNames = Names.length ? [...Names] : ["No typedForm yet"];
-  } else{
-   TypeformNames = ['Data didn\'t arrive yet']
-
+    TypeformNames = Names.length ? [...Names] : ["No typedForm yet"];
+  } else {
+    TypeformNames = ["Data didn't arrive yet"];
   }
-  
 
   return (
     <>
