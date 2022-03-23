@@ -43,7 +43,7 @@ const WorkspaceMain = () => {
   const dispatch = useAppDispatch();
 
   // editFormId . Id of form being clicked
-  const editFormId = useAppSelector((state) => state.editFormId);
+  const editFormId = useAppSelector((state) => state.editFormId.editFormId);
   // console.log("heya eddit form id", editFormId)
 
   //navigate hook from react-router-dom
