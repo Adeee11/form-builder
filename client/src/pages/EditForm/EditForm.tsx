@@ -2,7 +2,22 @@ import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import { useAppSelector } from "../../providers/app/hooks";
-import { Avatar, Wrapper } from "./EditForm.styles";
+import {
+  Avatar,
+  FormName,
+  FormNameContainer,
+  Header,
+  LinkContainer,
+  PublishContainer,
+  StyledLink,
+  ItemContainer,
+  WorkspaceName,
+  Wrapper,
+  Main,
+  Form,
+  Heading,
+  PlusButton,
+} from "./EditForm.styles";
 import { GET_FORM_BY_ID } from "./queries";
 
 interface Form_Data {
@@ -81,52 +96,52 @@ const EditForm = () => {
     formTitle = SAMPLE_DATA.data.form.title;
     formFields = SAMPLE_DATA.data.form.formData;
   }
+  console.log(formFields);
 
   const workspaceName = "My Workspace";
 
   return (
     <>
-      <Wrapper className="container">
-        <header>
-          {/* Workspace and Form name  */}
-          <div className="row">
-            <div className="col-3">{workspaceName}</div>
-            <div className="col-9">
-              {/* Need to align center */}
-              {formTitle}
-            </div>
-          </div>
+      <Wrapper>
+        <Header>
+          <FormNameContainer>
+            <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
+            <FormName>{formTitle}</FormName>
+          </FormNameContainer>
           {/* Links  */}
-          <div className="row">
-            <div className="col-3">
-              <Link to={"/"}>Create</Link>
+          <LinkContainer>
+            <div>
+              <StyledLink to={"/"}>Create</StyledLink>
             </div>
-            <div className="col-3">
-              <Link to={"/"}>Connect</Link>
+            <div>
+              <StyledLink to={"/"}>Connect</StyledLink>
             </div>
-            <div className="col-3">
-              <Link to={"/"}>Share</Link>
+            <div>
+              <StyledLink to={"/"}>Share</StyledLink>
             </div>
-            <div className="col-3">
-              <Link to={"/"}>Result</Link>
+            <div>
+              <StyledLink to={"/"}>Result</StyledLink>
             </div>
-          </div>
+          </LinkContainer>
           {/* Publish buttons  */}
-          <div className="row">
-            <div className="col-6">
+          <PublishContainer>
+            <ItemContainer>
               <Button text="Publish" />
-            </div>
-            <div className="col-6">
+            </ItemContainer>
+
+            <ItemContainer>
               <Avatar>{AvatarLetter}</Avatar>
+            </ItemContainer>
+          </PublishContainer>
+        </Header>
+        <Main>
+          <Form>
+            <Heading>{formTitle}</Heading>
+            <div>
+              <PlusButton>+</PlusButton>
             </div>
-          </div>
-        </header>
-        <main className="container">
-          <form>
-            <h1>{formTitle}</h1>
-            <button>+</button>
-          </form>
-        </main>
+          </Form>
+        </Main>
       </Wrapper>
     </>
   );
