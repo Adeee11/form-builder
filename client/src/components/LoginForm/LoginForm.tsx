@@ -64,7 +64,7 @@ const LoginForm = () => {
   // graphql
   const [logIn, { loading, error }] = useMutation(LOG_IN);
   if (loading) console.log("loading...", loading);
-  if (error) console.error(error);
+  if (error) console.error(JSON.stringify(error, null, 2) );
 
   return (
     <>

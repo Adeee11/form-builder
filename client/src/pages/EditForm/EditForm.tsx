@@ -86,7 +86,7 @@ const EditForm = () => {
 
   return (
     <>
-      <div className="container">
+      <Wrapper className="container">
         <header>
           {/* Workspace and Form name  */}
           <div className="row">
@@ -127,7 +127,7 @@ const EditForm = () => {
             <button>+</button>
           </form>
         </main>
-      </div>
+      </Wrapper>
     </>
   );
 };
