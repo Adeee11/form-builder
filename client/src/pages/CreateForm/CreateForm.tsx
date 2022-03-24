@@ -12,6 +12,7 @@ import Modal from '../../components/Modal/Modal';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Share } from '../../components/share';
 import { Results } from '../../components/results';
+import { useAppSelector } from "../../providers/app/hooks";
 
 const CREATE_FORM = gql`
 mutation createForm($input:CreateFormInput!){
@@ -43,20 +44,7 @@ mutation updateForm($input:UpdateFormInput!, $id:String!){
     }
   }
 `
-const GET_FORM = gql`
-query form($input: ID!) {
-form(formId: $input) {
-  id
-  title
-date
-formData{
-  Question
-  fieldType
-  option
-}
-}
-}
-`
+
 
 interface formDataType {
     Question: string,
@@ -84,12 +72,10 @@ const CreateForm = () => {
     });
     const [create, { loading, error }] = useMutation(CREATE_FORM);
     const [update, state] = useMutation(UPDATE_FORM);
-    const { loading: load, error: err, data } = useQuery(GET_FORM, {
-        variables: { input: localStorage.getItem("formId") },
-    });
+    const userId = useAppSelector((state) => state.user.id);
 
-    if (load) console.log("data:", data)
-    if (err) console.log("err:", err)
+
+
 
     const onSubmit: SubmitHandler<Inputs> = async data => {
         if (formId) {
@@ -109,7 +95,7 @@ const CreateForm = () => {
                 variables: {
                     input: {
                         title: data.title,
-                        owner: "621cb297a05f470851fa3f96",
+                        owner: userId,
                         formData: formData
                     }
                 }
