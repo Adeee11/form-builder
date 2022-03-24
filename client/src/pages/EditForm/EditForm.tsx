@@ -301,7 +301,9 @@ const EditForm = () => {
                         // defaultValue={(index + 1).toString() + field.Question}
                       />
                       <PlusButtonContainer>
-                        <PlusButton onClick={() => remove(index)}>-</PlusButton>
+                        <PlusButton onClick={() => remove(index)} type="button">
+                          -
+                        </PlusButton>
                       </PlusButtonContainer>
                     </QuestionContainer>
                     {field.answer.fieldType === "select" ? (
