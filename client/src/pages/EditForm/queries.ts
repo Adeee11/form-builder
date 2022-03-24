@@ -17,4 +17,19 @@ const GET_FORM_BY_ID = gql`
   }
 `;
 
-export { GET_FORM_BY_ID };
+const UPDATE_FORM = gql`
+  mutation updateForm($input: UpdateFormInput!, $id: String!) {
+    updateForm(updateFormInput: $input, id: $id) {
+      id
+      date
+      title
+      formData {
+        Question
+        fieldType
+        option
+      }
+    }
+  }
+`;
+
+export { GET_FORM_BY_ID, UPDATE_FORM };

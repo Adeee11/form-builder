@@ -3,12 +3,19 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 10px 3vw;
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 const Avatar = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: blue 2px solid;
   border-radius: 50%;
-  padding: 4px 8px;
+  padding: 4px;
+  width: 30px;
+  height: 30px;
   color: white;
   background: blue;
   text-transform: capitalize;
@@ -72,23 +79,118 @@ const ItemContainer = styled.div`
 `;
 
 const Main = styled.main`
+  margin: 0 auto;
   margin-top: 20px;
   border-top: 8px solid blue;
   border-radius: 6px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  max-width: 90vw;
 `;
 
 const Form = styled.form`
   padding: 20px 0;
-  div {
+  flex-direction: column;
+
+  /* div {
     margin-top: 10px;
     text-align: center;
-  }
+  } */
+`;
+
+const FormFields = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  padding: 5px 15px;
+`;
+
+const Input = styled.input`
+  outline: none;
+  border: none;
+  border-bottom: 1px solid lightblue;
+  padding: 6px;
+  border-radius: 6px;
+  width: 100%;
+`;
+
+const Question = styled.input`
+  outline: none;
+  border: none;
+  width: 100%;
 `;
 
 const PlusButton = styled.button`
   padding: 5px 10px;
   border: transparent;
   font-size: 20px;
+`;
+
+const PlusButtonContainer = styled.div`
+  text-align: center;
+  margin: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const QuestionContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Textarea = styled.textarea`
+  outline: none;
+  border: 1px solid lightblue;
+  width: 100%;
+  height: auto;
+  border-radius: 5%;
+`;
+
+const Submit = styled.input.attrs((props) => ({
+  type: "submit",
+  value: props.value,
+}))`
+  max-width: 150px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: white;
+  background: blue;
+  border: blue 1px solid;
+  border-radius: 5px;
+`;
+
+const Option = styled.input.attrs((props) => ({
+  type: "radio",
+}))`
+  height: auto;
+  outline: none;
+  border: gray 1px solid;
+  border-radius: 4%;
+  padding: 5px 10px;
+`;
+
+const AddNewOption = styled.input.attrs((props) => ({
+  type: "text",
+}))`
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+  padding: 5px 10px;
+`;
+
+const OptionsContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid blue;
 `;
 
 export {
@@ -106,4 +208,15 @@ export {
   Form,
   Heading,
   PlusButton,
+  FormFields,
+  Input,
+  PlusButtonContainer,
+  Question,
+  QuestionContainer,
+  Textarea,
+  ButtonContainer,
+  Submit,
+  Option,
+  AddNewOption,
+  OptionsContainer,
 };
