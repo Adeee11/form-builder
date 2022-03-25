@@ -351,7 +351,7 @@ const EditForm = () => {
                               <PlusButton
                                 onClick={() => removeOption(option, index)}
                               >
-                                -
+                                &#9747;
                               </PlusButton>
                             </PlusButtonContainer>
                           </OptionsContainer>

@@ -88,6 +88,7 @@ const Header = styled.div`
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      text-transform: uppercase;
     }
     .preview {
       background: #e3e3e3;
