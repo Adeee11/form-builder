@@ -18,6 +18,7 @@ const Dashboard = () => {
   const onClick = () => {
     setIsSideMenuCollapsed(!isSideMenuCollapsed);
   };
+  const [filter, setFilter] = useState("date");
   return (
     <>
       <Wrapper>
@@ -28,17 +29,16 @@ const Dashboard = () => {
             {/* Workspace Header */}
             <WorkspaceHeader onClick={onClick} />
             <hr />
-
           </Header>
-          
+
           <Section>
             {/* Workspace about */}
-            <WorkspaceAbout />
+            <WorkspaceAbout changeFilter={setFilter} filter={filter} />
             <hr />
           </Section>
           <Container $isCollapsed={isSideMenuCollapsed}>
             {/* Workspace main */}
-            <WorkspaceMain />
+            <WorkspaceMain filter={filter} />
             <hr />
           </Container>
           <Aside $isCollapsed={isSideMenuCollapsed}>

@@ -71,32 +71,32 @@ type FormValues = {
 };
 
 // Sample Data
-const SAMPLE_DATA: Form_Data = {
-  data: {
-    form: {
-      id: "62399c3b72d0b98a7184422b",
-      title: "myrm",
-      owner: "62397013e3a4f86fafa0f26f",
-      formData: [
-        {
-          fieldType: "text",
-          Question: "q1?",
-          option: [],
-        },
-        {
-          fieldType: "text",
-          Question: "q2?",
-          option: [],
-        },
-        {
-          fieldType: "select",
-          Question: "gender?",
-          option: ["male", "female", "other"],
-        },
-      ],
-    },
-  },
-};
+// const SAMPLE_DATA: Form_Data = {
+//   data: {
+//     form: {
+//       id: "62399c3b72d0b98a7184422b",
+//       title: "myrm",
+//       owner: "62397013e3a4f86fafa0f26f",
+//       formData: [
+//         {
+//           fieldType: "text",
+//           Question: "q1?",
+//           option: [],
+//         },
+//         {
+//           fieldType: "text",
+//           Question: "q2?",
+//           option: [],
+//         },
+//         {
+//           fieldType: "select",
+//           Question: "gender?",
+//           option: ["male", "female", "other"],
+//         },
+//       ],
+//     },
+//   },
+// };
 
 // for removing __typename field from formData
 const removeTypename = (object: any) => {
@@ -113,8 +113,8 @@ const EditForm = () => {
   const editFormId = useAppSelector((state) => state.editFormId.editFormId);
 
   // query was being called again and again and that led to appending of data to fields many
-  // times. Thus previous data was loading. This will get set to false in useEffect and will
-  // become true only after submitting. Also need to clear all fields after submitting.
+  // times. Thus previous data was loading. This will get set to true in useEffect and will
+  // become false only after submitting. Also need to clear all fields after submitting.
   const [firstLoad, setFirstLoad] = useState(true);
   // name of owner of form
   const userName = useAppSelector((state) => state.user.username);
@@ -148,9 +148,9 @@ const EditForm = () => {
 
   if (loading) console.log("Loading....");
   if (error) console.log(JSON.stringify(error, null, 2));
-
+  // if (data) console.log(data);
   const AvatarLetter = userName[0];
-
+  console.log("Form Data", watch("formData"));
   // UseEffect hook
   useEffect(() => {
     if (data) {
@@ -159,41 +159,43 @@ const EditForm = () => {
       );
 
       setFormTitle(data.form.title);
-      firstLoad &&
-        append(
-          formData.map((field) => {
-            const formField = {
-              question: {
-                value: field.Question,
-              },
-              answer: {
-                value: "",
-                fieldType: field.fieldType,
-                option: field.option,
-              },
-            };
-            return formField;
-          })
-        );
-    } else {
-      firstLoad &&
-        append(
-          SAMPLE_DATA.data.form.formData.map((field) => {
-            const formField = {
-              question: {
-                value: field.Question,
-              },
-              answer: {
-                value: "",
-                fieldType: field.fieldType,
-                option: field.option,
-              },
-            };
-            return formField;
-          })
-        );
+      firstLoad
+        ? append(
+            formData.map((field) => {
+              const formField = {
+                question: {
+                  value: field.Question,
+                },
+                answer: {
+                  value: "",
+                  fieldType: field.fieldType,
+                  option: field.option,
+                },
+              };
+              return formField;
+            })
+          )
+        : console.log(`FirstLoad: ${firstLoad}`);
+      setFirstLoad(false);
     }
-    setFirstLoad(false);
+    //  else {
+    //   // firstLoad &&
+    //   append(
+    //     SAMPLE_DATA.data.form.formData.map((field) => {
+    //       const formField = {
+    //         question: {
+    //           value: field.Question,
+    //         },
+    //         answer: {
+    //           value: "",
+    //           fieldType: field.fieldType,
+    //           option: field.option,
+    //         },
+    //       };
+    //       return formField;
+    //     })
+    //   );
+    // }
   }, [data, append, firstLoad]);
 
   // let watchFormTitle = watch("formTitle");
@@ -220,6 +222,7 @@ const EditForm = () => {
       },
     });
     console.log("Updated form", updatedForm);
+
     alert("Form Saved");
   };
 
@@ -313,7 +316,7 @@ const EditForm = () => {
           {menu === "create" && (
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormName
-                defaultValue={formTitle}
+                // defaultValue={formTitle}
                 {...register("formTitle")}
                 placeholder={"New Title here..."}
               />
@@ -343,7 +346,7 @@ const EditForm = () => {
                           </PlusButton>
                         </PlusButtonContainer>
                       </QuestionContainer>
-                      {field.answer.fieldType === "select" ? (
+                      {field.answer.fieldType === "choice" ? (
                         <>
                           <NewOptionContainer>
                             <AddNewOption
@@ -362,9 +365,9 @@ const EditForm = () => {
                             </PlusButtonContainer>
                           </NewOptionContainer>
 
-                          {field.answer.option.map((option) => (
+                          {field.answer.option.map((option, indx) => (
                             <OptionsContainer>
-                              <div>
+                              <div key={indx.toString() + "co"}>
                                 <Option
                                   value={option}
                                   name={field.question.value}
