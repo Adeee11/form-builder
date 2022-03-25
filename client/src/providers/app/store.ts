@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import  loginReducer  from '../features/loginSlice'
 import  userReducer from '../features/userSlice'
 import tokenReducer from '../features/tokenSlice'
+import editFormIdReducer from "../features/editFormIdSlice";
 
 export const store = configureStore({
     reducer:{
         login: loginReducer,
         user: userReducer,
-        token: tokenReducer
+        token: tokenReducer,
+        editFormId: editFormIdReducer
     }
 })
 

@@ -1,23 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Token {
-    token:string
+  token: string;
 }
 
-const initialState:Token ={
-    token:''
-}
+const initialState: Token = {
+  token: "",
+};
 
 export const tokenSlice = createSlice({
-    name: 'accessToken',
-    initialState,
-    reducers:{
-        changeToken: (state, action:PayloadAction<string>) => {
-            state.token = action.payload;
-            localStorage.setItem('token', state.token);
-        }
-    }
-})
+  name: "accessToken",
+  initialState,
+  reducers: {
+    changeToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+      localStorage.setItem("token", state.token);
+    },
+  },
+});
 
-export const {changeToken} = tokenSlice.actions;
+export const { changeToken } = tokenSlice.actions;
 export default tokenSlice.reducer;
