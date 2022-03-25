@@ -316,7 +316,7 @@ const EditForm = () => {
           {menu === "create" && (
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormName
-                // defaultValue={formTitle}
+                defaultValue={watch("formTitle")}
                 {...register("formTitle")}
                 placeholder={"New Title here..."}
               />
