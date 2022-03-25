@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AiOutlineReload } from 'react-icons/ai'
 import { BsArrowLeft } from 'react-icons/bs'
 import { Form, PreviewContainer, PreviewHeader } from './Preview.styles'
 import { gql, useMutation, useQuery } from '@apollo/client';
-
+import InputType from '../InputType/InputType';
 
 const GET_FORM = gql`
 query form($input: ID!) {
@@ -44,6 +44,16 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     const [create, { loading: l, error: e }] = useMutation(CREATE_SUBMISSION)
 
 
+    useEffect(() => {
+        if (data) {
+            const list = [];
+            for (let i = 0; i < data.form.formData.length; i++) {
+                list.push("");
+            }
+            setRes([...list])
+        }
+    }, [])
+
     const saveRes = (val: string, index: number) => {
 
         const listOfRes: string[] = [...res];
@@ -52,17 +62,28 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     }
 
     const submitHandler = async () => {
-        const data: any = await create({
-            variables: {
-                input: {
-                    formId: formId,
-                    res: res
-                }
+        let isCompletelyfilled = true
+        for (let i = 0; i < res.length; i++) {
+            if (res[i] == "") {
+                isCompletelyfilled = false
             }
-        })
-        console.log(data);
-        if (data) alert("form answer submitted")
-        onClose();
+        }
+        if (isCompletelyfilled) {
+            const savedRes: any = await create({
+                variables: {
+                    input: {
+                        formId: formId,
+                        res: res
+                    }
+                }
+            })
+            console.log(savedRes);
+            if (savedRes) alert("form answer submitted")
+            onClose();
+        }
+        else {
+            alert("fill the ans for all question:")
+        }
     }
     console.log(res)
 
@@ -89,13 +110,21 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                             <span >{index + 1}</span>
                             {item.Question}
                         </p>
-                        {item.fieldType !== "choice" &&
+                        {item.fieldType !== "choice" && <>
                             <input
-                                type={item.fieldType}
+                                type="text"
                                 className='answer'
                                 placeholder="Enter Your answer here"
                                 onChange={(e) => saveRes(e.target.value, index)}
-                            />}
+
+                            />
+                            {/* <InputType
+                                fieldType={item.fieldType}
+                                onchange={saveRes}
+                                index={index}
+                            /> */}
+                        </>
+                        }
                         {
                             item.fieldType == "choice" &&
                             item.option.map((opt: string) =>
@@ -104,6 +133,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                                 </div>)
                         }
                     </div>)}
+
                 <button className='sub' onClick={submitHandler} type="button">Submit</button>
             </Form>
         </PreviewContainer>
@@ -111,3 +141,6 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
 }
 
 export default Preview
+
+
+
