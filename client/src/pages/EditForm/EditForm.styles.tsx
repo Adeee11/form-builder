@@ -172,6 +172,8 @@ const Option = styled.input.attrs((props) => ({
   border: gray 1px solid;
   border-radius: 4%;
   padding: 5px 10px;
+  /* margin-right: 20px; */
+  visibility: hidden;
 `;
 
 const AddNewOption = styled.input.attrs((props) => ({
@@ -186,11 +188,26 @@ const AddNewOption = styled.input.attrs((props) => ({
 const OptionsContainer = styled.div`
   margin-top: 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 10px;
   align-items: center;
   padding: 10px;
   border: 1px solid blue;
+  label::before {
+    content: "";
+    height: 22px;
+    width: 22px;
+    border: 1px solid blue;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin-right: 10px;
+    color: blue;
+  }
+  input[type="radio"]:checked + label::before {
+    content: "✓";
+    font-size: 18px;
+  }
 `;
 
 export {

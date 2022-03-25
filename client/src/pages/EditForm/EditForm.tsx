@@ -242,6 +242,21 @@ const EditForm = () => {
     update(index, newValue);
   };
 
+  const removeOption = (option: string, fieldIndex: number) => {
+    const options = fields[fieldIndex].answer.option.filter(
+      (value) => value != option
+    );
+    const newValue = {
+      question: fields[fieldIndex].question,
+      answer: {
+        fieldType: fields[fieldIndex].answer.fieldType,
+        value: "",
+        option: options,
+      },
+    };
+    update(fieldIndex, newValue);
+  };
+
   return (
     <>
       <Wrapper>
@@ -324,12 +339,21 @@ const EditForm = () => {
                         </PlusButtonContainer>
                         {field.answer.option.map((option) => (
                           <OptionsContainer>
-                            <Option
-                              value={option}
-                              name={field.question.value}
-                              id={option}
-                            />
-                            <label htmlFor={option}>{option}</label>
+                            <div>
+                              <Option
+                                value={option}
+                                name={field.question.value}
+                                id={option}
+                              />
+                              <label htmlFor={option}>{option}</label>
+                            </div>
+                            <PlusButtonContainer>
+                              <PlusButton
+                                onClick={() => removeOption(option, index)}
+                              >
+                                -
+                              </PlusButton>
+                            </PlusButtonContainer>
                           </OptionsContainer>
                         ))}
                       </>
