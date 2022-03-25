@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
+import { Results } from "../../components/results";
+import { Share } from "../../components/share";
 import { useAppSelector } from "../../providers/app/hooks";
 import {
   Avatar,
@@ -30,6 +32,7 @@ import {
   Option,
   AddNewOption,
   OptionsContainer,
+  NewOptionContainer,
 } from "./EditForm.styles";
 import { GET_FORM_BY_ID, UPDATE_FORM } from "./queries";
 
@@ -64,6 +67,7 @@ type FormValues = {
       option: string[];
     };
   }[];
+  formTitle: string;
 };
 
 // Sample Data
@@ -118,13 +122,15 @@ const EditForm = () => {
   const [showModal, setShowModal] = useState(false);
 
   // useForm Hook
-  const { register, control, handleSubmit } = useForm<FormValues>();
+  const { register, control, handleSubmit, watch } = useForm<FormValues>();
   // for dynamic fields in form
   const { fields, append, remove, update } = useFieldArray({
     name: `formData`,
     control,
   });
 
+  // For choosing different options
+  const [menu, setMenu] = useState("create");
   // state for formTitle
   const [formTitle, setFormTitle] = useState("No form yet");
 
@@ -190,7 +196,12 @@ const EditForm = () => {
     setFirstLoad(false);
   }, [data, append, firstLoad]);
 
+  // let watchFormTitle = watch("formTitle");
+  // watchFormTitle = formTitle;
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log(data);
+    setFormTitle(data.formTitle);
     const formData: FieldData[] = data.formData.map((ele) => {
       const obj = {
         fieldType: ele.answer.fieldType,
@@ -263,21 +274,25 @@ const EditForm = () => {
         <Header>
           <FormNameContainer>
             <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
-            <FormName>{formTitle}</FormName>
+            <Heading>{watch("formTitle")}</Heading>
           </FormNameContainer>
           {/* Links  */}
           <LinkContainer>
             <div>
-              <StyledLink to={"/"}>Create</StyledLink>
+              {/* <StyledLink to={"/"}>Create</StyledLink> */}
+              <span onClick={() => setMenu("create")}>Create</span>
             </div>
             <div>
-              <StyledLink to={"/"}>Connect</StyledLink>
+              {/* <StyledLink to={"/"}>Connect</StyledLink> */}
+              <span onClick={() => setMenu("connect")}>Connect</span>
             </div>
             <div>
-              <StyledLink to={"/"}>Share</StyledLink>
+              {/* <StyledLink to={"/"}>Share</StyledLink> */}
+              <span onClick={() => setMenu("share")}>Share</span>
             </div>
             <div>
-              <StyledLink to={"/"}>Result</StyledLink>
+              {/* <StyledLink to={"/"}>Result</StyledLink> */}
+              <span onClick={() => setMenu("result")}>Result</span>
             </div>
           </LinkContainer>
           {/* Publish buttons  */}
@@ -295,101 +310,115 @@ const EditForm = () => {
           {showModal && (
             <Modal setShowModal={setShowModal} AddInput={AddInput} />
           )}
-
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Heading>{formTitle}</Heading>
-            <div>
-              {fields.map((field, index) => {
-                return (
-                  <FormFields key={field.id}>
-                    {/* <label>
+          {menu === "create" && (
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <FormName
+                defaultValue={formTitle}
+                {...register("formTitle")}
+                placeholder={"New Title here..."}
+              />
+              <div>
+                {fields.map((field, index) => {
+                  return (
+                    <FormFields key={field.id}>
+                      {/* <label>
                       {index + 1}. {field.Question}
                     </label> */}
-                    <QuestionContainer>
-                      {index + 1}.{" "}
-                      <Question
-                        type={"text"}
-                        {...register(
-                          `formData.${index}.question.value` as const
-                        )}
-                        placeholder={"Write your question..."}
-                        // defaultValue={(index + 1).toString() + field.Question}
-                      />
-                      <PlusButtonContainer>
-                        <PlusButton onClick={() => remove(index)} type="button">
-                          -
-                        </PlusButton>
-                      </PlusButtonContainer>
-                    </QuestionContainer>
-                    {field.answer.fieldType === "select" ? (
-                      <>
-                        <AddNewOption
+                      <QuestionContainer>
+                        {index + 1}.{" "}
+                        <Question
+                          type={"text"}
                           {...register(
-                            `formData.${index}.answer.value` as const
+                            `formData.${index}.question.value` as const
                           )}
-                          placeholder={"add new option..."}
+                          placeholder={"Write your question..."}
+                          // defaultValue={(index + 1).toString() + field.Question}
                         />
                         <PlusButtonContainer>
                           <PlusButton
-                            onClick={() => addNewOption(index)}
+                            onClick={() => remove(index)}
                             type="button"
                           >
-                            +
+                            &#9747;
                           </PlusButton>
                         </PlusButtonContainer>
-                        {field.answer.option.map((option) => (
-                          <OptionsContainer>
-                            <div>
-                              <Option
-                                value={option}
-                                name={field.question.value}
-                                id={option}
-                              />
-                              <label htmlFor={option}>{option}</label>
-                            </div>
+                      </QuestionContainer>
+                      {field.answer.fieldType === "select" ? (
+                        <>
+                          <NewOptionContainer>
+                            <AddNewOption
+                              {...register(
+                                `formData.${index}.answer.value` as const
+                              )}
+                              placeholder={"add new option..."}
+                            />
                             <PlusButtonContainer>
                               <PlusButton
-                                onClick={() => removeOption(option, index)}
+                                onClick={() => addNewOption(index)}
+                                type="button"
                               >
-                                &#9747;
+                                +
                               </PlusButton>
                             </PlusButtonContainer>
-                          </OptionsContainer>
-                        ))}
-                      </>
-                    ) : field.answer.fieldType === "textArea" ? (
-                      <>
-                        <Textarea
-                          {...register(
-                            `formData.${index}.answer.value` as const
-                          )}
-                          placeholder={"Enter answer..."}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <Input
-                          type={field.answer.fieldType}
-                          {...register(
-                            `formData.${index}.answer.value` as const
-                          )}
-                          placeholder={"Enter answer..."}
-                        />
-                      </>
-                    )}
-                  </FormFields>
-                );
-              })}
-              <PlusButtonContainer>
-                <PlusButton type="button" onClick={() => setShowModal(true)}>
-                  +
-                </PlusButton>
-              </PlusButtonContainer>
-              <ButtonContainer>
-                <Submit value={"Save Form"} />
-              </ButtonContainer>
-            </div>
-          </Form>
+                          </NewOptionContainer>
+
+                          {field.answer.option.map((option) => (
+                            <OptionsContainer>
+                              <div>
+                                <Option
+                                  value={option}
+                                  name={field.question.value}
+                                  id={option}
+                                />
+                                <label htmlFor={option}>{option}</label>
+                              </div>
+                              <PlusButtonContainer>
+                                <PlusButton
+                                  onClick={() => removeOption(option, index)}
+                                >
+                                  &#9747;
+                                </PlusButton>
+                              </PlusButtonContainer>
+                            </OptionsContainer>
+                          ))}
+                        </>
+                      ) : field.answer.fieldType === "textArea" ? (
+                        <>
+                          <Textarea
+                            {...register(
+                              `formData.${index}.answer.value` as const
+                            )}
+                            placeholder={"Enter answer..."}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Input
+                            type={field.answer.fieldType}
+                            {...register(
+                              `formData.${index}.answer.value` as const
+                            )}
+                            placeholder={"Enter answer..."}
+                          />
+                        </>
+                      )}
+                    </FormFields>
+                  );
+                })}
+                <PlusButtonContainer>
+                  <PlusButton type="button" onClick={() => setShowModal(true)}>
+                    +
+                  </PlusButton>
+                </PlusButtonContainer>
+                <ButtonContainer>
+                  <Submit value={"Save Form"} />
+                </ButtonContainer>
+              </div>
+            </Form>
+          )}
+          {menu === "share" && <Share formId={String(editFormId)} />}
+
+          {menu == "result" && <Results formId={String(editFormId)} />}
         </Main>
       </Wrapper>
     </>

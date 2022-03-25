@@ -37,6 +37,9 @@ const LinkContainer = styled.div`
   justify-content: space-evenly;
   border-bottom: 1px solid gray;
   padding: 10px 0;
+  span {
+    cursor: pointer;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -48,13 +51,19 @@ const StyledLink = styled(Link)`
 `;
 
 const Heading = styled.h1`
-  font-weight: 400;
-  font-size: 25px;
-`;
-
-const FormName = styled.h1`
   font-size: 14px;
   font-weight: 700;
+`;
+
+const FormName = styled.input.attrs((props) => ({
+  type: "text",
+}))`
+  font-weight: 400;
+  font-size: 25px;
+  width: 100%;
+  outline: none;
+  border: none;
+  margin-left: 15px;
 `;
 const WorkspaceName = styled.h1`
   font-size: 14px;
@@ -183,6 +192,7 @@ const AddNewOption = styled.input.attrs((props) => ({
   border: none;
   border-bottom: 1px solid gray;
   padding: 5px 10px;
+  width: 100%;
 `;
 
 const OptionsContainer = styled.div`
@@ -199,6 +209,11 @@ const OptionsContainer = styled.div`
   button {
     background: transparent;
   }
+`;
+
+const NewOptionContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export {
@@ -227,4 +242,5 @@ export {
   Option,
   AddNewOption,
   OptionsContainer,
+  NewOptionContainer,
 };
