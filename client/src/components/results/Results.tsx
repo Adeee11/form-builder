@@ -1,8 +1,16 @@
-import { gql, useQuery } from '@apollo/client';
-import { useState } from 'react'
-import { BsCheckLg, BsLink, BsTelephoneFill, BsTextParagraph } from 'react-icons/bs';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react'
+import { BsCheckLg, BsFillCloudDownloadFill, BsLink, BsTelephoneFill, BsTextParagraph } from 'react-icons/bs';
 import { MdEmail, MdShortText } from 'react-icons/md';
 import { Wrapper, Menu, Insights, Summary, Responses } from './Results.styles'
+import exportFromJSON from 'export-from-json';
+import ModalRes from '../ModalRes/ModalRes';
+import InsightsComponent from '../InsightsComponent/Insights';
+import Nav from '../Nav/Nav';
+
+
+
+
 
 const GET_QUESTION = gql`
 query form($input:ID!){
@@ -25,60 +33,84 @@ query form($input:ID!){
     }
   }
 `;
+
+const REMOVE_SUBMISSION = gql`
+mutation removeSubmission($input:ID!){
+    removeSubmission(id:$input)
+  }  
+`
 type propType = {
     formId?: string,
 }
 
 const Results = ({ formId }: propType) => {
-    console.log(formId);
     const [menu, setMenu] = useState('insights');
-    const { loading, error, data } = useQuery(GET_QUESTION, {
+    const [submission, setSubmission] = useState<any>([]);
+    const [date, setDate] = useState('');
+    const [id, setId] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const { loading, error, data, refetch } = useQuery(GET_QUESTION, {
         variables: {
             input: formId
         },
     });
+
+    const [remove, { loading: l, error: e }] = useMutation(REMOVE_SUBMISSION)
+
     if (loading) console.log("loading..", data);
     if (error) console.log("error", error);
+
+    useEffect(() => {
+        refetch();
+    }, [])
+
+    const saveSubmission = (i: string[], j: string, k: string) => {
+        setSubmission(i);
+        setDate(j)
+        setId(k)
+        console.log("res:", i);
+        console.log("date:", date);
+        console.log("id:", k)
+        setShowModal(true)
+    }
+
+    const downloadExcel = () => {
+        const list: any = []
+        for (let i = 0; i < data.form.formData.length; i++) {
+            list.push({})
+            for (let j = 0; j < data.form.submission.length; j++) {
+                list[i]['question'] = data.form.formData[i].Question
+                list[i]['user ' + j] = data.form.submission[j].res[i]
+            }
+        }
+        const fileName = 'DownloadedResponses'
+        const exportType = exportFromJSON.types.csv
+        exportFromJSON({ data: list, fileName, exportType })
+    }
+
+    const deleteRes = async () => {
+        console.log("delete code for ", id)
+        const data: any = await remove({
+            variables: {
+                input: id
+            }
+        })
+        console.log(data);
+        refetch()
+    }
+
     return (
         <Wrapper>
+
             <Menu>
-                <ul>
-                    <li onClick={() => setMenu('insights')} className={menu === "insights" ? "active" : ""}>Insights</li>
-                    <li onClick={() => setMenu('summary')} className={menu === "summary" ? "active" : ""}>Summary</li>
-                    <li onClick={() => setMenu('responses')} className={menu === "responses" ? "active" : ""}>Responses [{data && data.form.submission.length}]</li>
-                </ul>
+                <Nav
+                    menu={menu}
+                    setMenu={setMenu}
+                    data={data}
+                />
             </Menu>
             {menu === "insights" &&
-                <Insights>
-                    <div className='filter'>
-                        {/* filter for submissions */}
-
-                    </div>
-                    <p>Big Picture</p>
-                    <ul>
-                        <li>
-                            <span className='first'>Views</span>
-                            <span className='second'>{data && data.form.submission.length}</span>
-                        </li>
-                        <li>
-                            <span className='first'>Starts</span>
-                            <span className='second'>{data && data.form.submission.length}</span>
-                        </li>
-                        <li>
-                            <span className='first'>Submissions</span>
-                            <span className='second'>{data && data.form.submission.length}</span>
-                        </li>
-                        <li>
-                            <span className='first'>Completion Rate</span>
-                            <span className='second'>100%</span>
-                        </li>
-                        <li>
-                            <span className='first'>Time to complete</span>
-                            <span className='second'>00:60</span>
-                        </li>
-                    </ul>
-
-                </Insights>
+                <InsightsComponent data={data} />
 
             }
             {
@@ -143,51 +175,56 @@ const Results = ({ formId }: propType) => {
                         <button>Generate a report</button>
                         <div className='text'>Share your results with anyone. Your report automatically updates as new answers come in.</div>
                     </div>
-                </Summary>
+                </Summary>}
 
-
-            }
             {menu === "responses" &&
                 <Responses>
+                    <span onClick={downloadExcel} className="download">
+                        <BsFillCloudDownloadFill />
+                    </span>
+                    {showModal &&
+                        <ModalRes
+                            setShowModal={setShowModal}
+                            date={date}
+                            deleteRes={deleteRes}
+                            data={data}
+                            submission={submission}
+                        />
+                    }
+                    <div className='con'>
+                        <div className='flex'>
 
-                    <div className='flex'>
-                        <div className='block'>
-                            <input type="checkbox" />
+                            <div className='block'>
+                                <p>date</p>
+                            </div>
+                            {data && data.form.formData.map((item: any, index: number) =>
+                                <div className='block' key={index}>
+                                    <div className='question'>
+                                        <span>{index + 1}</span>
+                                        <span>{item.Question}</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <div className='block'>
-                            <p>date</p>
-                        </div>
-                        {data && data.form.formData.map((item: any, index: number) =>
-                            <div className='block' key={index}>
-                                <div className='question'>
-                                    <span>{index + 1}</span>
-                                    <span>{item.Question}</span>
+
+
+
+                        {data && data.form.submission.map((i: any, id: number) =>
+                            <div key={i.id} onClick={() => saveSubmission(i.res, i.date, i.id)}>
+                                <div className='flex'>
+
+                                    <div className='block'>
+                                        {i.date}
+                                    </div>
+
+                                    {i.res.map((item: any) => <div className='block'>
+                                        {item}
+                                    </div>)}
                                 </div>
                             </div>
-
                         )}
                     </div>
 
-
-
-                    {data && data.form.submission.map((i: any, id: number) =>
-                        <div key={i.id}>
-                            <div className='flex'>
-                                <div className='block'>
-                                    <input type="checkbox" />
-                                </div>
-                                <div className='block'>
-                                    {i.date}
-                                </div>
-
-                                {i.res.map((item: any) => <div className='block'>
-                                    {item}
-                                </div>)}
-                            </div>
-                        </div>
-                    )}
-
-                    <button onClick={() => console.log(data)}>Show Res</button>
                 </Responses>
             }
 

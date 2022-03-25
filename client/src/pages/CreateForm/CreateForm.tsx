@@ -6,8 +6,9 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Preview } from "../../components/preview";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Share } from "../../components/share";
-import { Results } from "../../components/results";
+import { Share } from '../../components/share';
+import { Results } from '../../components/results';
+import { useAppSelector } from "../../providers/app/hooks";
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -66,33 +67,21 @@ type Inputs = {
 };
 
 const CreateForm = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [previewMode, setPreviewMode] = useState(false);
-  const [formData, setformData] = useState<formDataType[]>([]);
-  const [editQue, setEditQue] = useState(-1);
-  const [formId, setFormId] = useState("");
-  const [menu, setMenu] = useState("create");
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: { title: "my typeform" },
-  });
-  const [create, { loading, error }] = useMutation(CREATE_FORM);
-  const [update, state] = useMutation(UPDATE_FORM);
-  const {
-    loading: load,
-    error: err,
-    data,
-  } = useQuery(GET_FORM, {
-    variables: { input: localStorage.getItem("formId") },
-  });
+    const [showModal, setShowModal] = useState(false);
+    const [previewMode, setPreviewMode] = useState(false);
+    const [formData, setformData] = useState<formDataType[]>([]);
+    const [editQue, setEditQue] = useState(-1);
+    const [formId, setFormId] = useState('');
+    const [menu, setMenu] = useState('create');
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
+        defaultValues: { title: "my typeform" }
+    });
+    const [create, { loading, error }] = useMutation(CREATE_FORM);
+    const [update, state] = useMutation(UPDATE_FORM);
+    const userId = useAppSelector((state) => state.user.id);
 
-  if (load) console.log("data:", data);
-  if (err) console.log("err:", err);
+
+
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (formId) {
@@ -106,31 +95,38 @@ const CreateForm = () => {
         },
       });
 
-      console.log("updatedForm:", updatedForm);
-    } else {
-      const createdForm = await create({
-        variables: {
-          input: {
-            title: data.title,
-            owner: "621cb297a05f470851fa3f96",
-            formData: formData,
-          },
-        },
-      });
-      console.log(createdForm);
-      setFormId(createdForm.data.createForm.id);
-      localStorage.setItem("formId", createdForm.data.createForm.id);
-      if (createdForm) alert("form Created");
+            console.log("updatedForm:", updatedForm);
+        } else {
+            const createdForm = await create({
+                variables: {
+                    input: {
+                        title: data.title,
+                        owner: userId,
+                        formData: formData
+                    }
+                }
+            })
+            console.log(createdForm);
+            setFormId(createdForm.data.createForm.id);
+            localStorage.setItem("formId", createdForm.data.createForm.id)
+            if (createdForm) alert("form Created")
+        }
+    };
+
+
+
+
+
+    if (loading) console.log("loading...", loading);
+    if (error) console.error("error:", error);
+
+    const AddInput = (i: string) => {
+        setformData([...formData, { fieldType: i, option: [], Question: "" }])
+        setShowModal(false);
     }
   };
 
-  if (loading) console.log("loading...", loading);
-  if (error) console.error("error:", error);
-
-  const AddInput = (i: string) => {
-    setformData([...formData, { fieldType: i, option: [], Question: "" }]);
-    setShowModal(false);
-  };
+ 
 
   const saveQuestion = (que: string, index: number) => {
     const newData = [...formData];

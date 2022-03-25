@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
 background:rgb(250, 250, 250);
+min-height: 80vh;
 `
 
 
@@ -199,7 +200,23 @@ button{
 const Responses = styled.div`
 max-width: 900px;
 margin: 0 auto;
-overflow-x: scroll;
+margin-top: 10px;
+.con{
+    overflow-x: scroll;
+}
+.download{
+    width:30px;
+    height: 30px;
+    margin-left: auto;
+    display: block;
+    margin-bottom: 20px;
+    background: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #262627;
+}
 .block{
     min-width: 300px;
     border: 1px solid gray;
@@ -222,5 +239,7 @@ overflow-x: scroll;
     display: flex;
 }
 `
+
+
 
 export { Wrapper, Menu, Insights, Summary, Responses }
