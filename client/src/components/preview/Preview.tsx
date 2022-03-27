@@ -37,12 +37,33 @@ type propsType = {
 const Preview = ({ onClose, formId, isForm }: propsType) => {
     const [res, setRes] = useState<string[]>([]);
     const [isActive, setIsActive] = useState(false);
-
+    const [errors, setErrors] = useState<string[]>([]);
+    const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
     const { loading, error, data } = useQuery(GET_FORM, {
         variables: { input: formId },
     });
     const [create, { loading: l, error: e }] = useMutation(CREATE_SUBMISSION)
 
+    const validation = (index: number, fieldType: string, ans: string) => {
+
+        if (fieldType == "textArea") {
+            if (ans.length < 30)
+                errors[index] = "field should not be Less than 30 Character"
+            else errors[index] = "";
+        }
+
+        if (fieldType == "text") {
+            if (ans.length <= 1)
+                errors[index] = "Field Should not be empty"
+            else errors[index] = "";
+        }
+        if (fieldType == "email") {
+            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans)))
+                errors[index] = "Enter a valid Email Address"
+            else errors[index] = "";
+        }
+        setErrors([...errors])
+    }
 
     useEffect(() => {
         if (data) {
@@ -55,6 +76,9 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     }, [])
 
     const saveRes = (val: string, index: number) => {
+        if (isSubmittedOnce) {
+            validation(index, data.form.formData[index].fieldType, res[index])
+        }
 
         const listOfRes: string[] = [...res];
         listOfRes[index] = val;
@@ -62,13 +86,21 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     }
 
     const submitHandler = async () => {
-        let isCompletelyfilled = true
+        setIsSubmittedOnce(true)
+        let isValidated = false;
         for (let i = 0; i < res.length; i++) {
-            if (res[i] == "") {
-                isCompletelyfilled = false
+            validation(i, data.form.formData[i].fieldType, res[i])
+
+        }
+        for (let i = 0; i < errors.length; i++) {
+            if (errors[i] == "") {
+                isValidated = true
+            }
+            else {
+                isValidated = false
             }
         }
-        if (isCompletelyfilled) {
+        if (isValidated) {
             const savedRes: any = await create({
                 variables: {
                     input: {
@@ -81,11 +113,12 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
             if (savedRes) alert("form answer submitted")
             onClose();
         }
-        else {
-            alert("fill the ans for all question:")
-        }
+
     }
-    console.log(res)
+
+
+    console.log("res", res);
+    console.log("errors", errors);
 
     return (
         <PreviewContainer>
@@ -123,6 +156,8 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                                 onchange={saveRes}
                                 index={index}
                             /> */}
+
+                            <p className='error'>{errors && errors[index]}</p>
                         </>
                         }
                         {

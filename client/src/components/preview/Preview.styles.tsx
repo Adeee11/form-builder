@@ -65,6 +65,11 @@ header{
             margin-right: 5px;
         }
     }
+    .error{
+        color:red;
+        font-size: 14px;
+        padding: 10px 0;
+    }
     .answer{
         font-size: 16px;
         width:100%;
