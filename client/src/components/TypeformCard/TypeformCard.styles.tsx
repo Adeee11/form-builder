@@ -45,4 +45,28 @@ const ModalItems = styled.span`
   cursor: pointer;
 `;
 
-export { Card, ResponsesCounter, TypeFormName, ModalContainer, ModalItems };
+const ButtonContainer = styled.div`
+  border: 1px solid black;
+  font-size: 20px;
+  padding: 5px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-radius: 4px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export {
+  Card,
+  ResponsesCounter,
+  TypeFormName,
+  ModalContainer,
+  ModalItems,
+  ButtonContainer,
+  Container,
+};

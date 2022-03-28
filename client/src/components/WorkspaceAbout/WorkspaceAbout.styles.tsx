@@ -34,14 +34,14 @@ const FirstRow = styled(Row)`
 
 const SecondRow = styled(Row)`
   padding: 20px 10px;
-
+  gap: 1px;
   padding-top: 5px;
   justify-content: space-between;
   button {
     padding: 4px 8px;
     min-width: 130px;
   }
-  select{
+  select {
     min-width: 130px;
   }
 `;

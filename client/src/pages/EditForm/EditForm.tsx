@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
+import { Preview } from "../../components/preview";
 import { Results } from "../../components/results";
 import { Share } from "../../components/share";
 import { useAppSelector } from "../../providers/app/hooks";
@@ -112,6 +113,8 @@ const EditForm = () => {
   // id of form to be editted
   const editFormId = useAppSelector((state) => state.editFormId.editFormId);
 
+  const [preview, setPreview] = useState(false);
+
   // query was being called again and again and that led to appending of data to fields many
   // times. Thus previous data was loading. This will get set to true in useEffect and will
   // become false only after submitting. Also need to clear all fields after submitting.
@@ -130,7 +133,7 @@ const EditForm = () => {
   });
 
   // For choosing different options
-  const [menu, setMenu] = useState("create");
+  const [menu, setMenu] = useState("edit");
   // state for formTitle
   const [formTitle, setFormTitle] = useState("No form yet");
 
@@ -271,19 +274,27 @@ const EditForm = () => {
     update(fieldIndex, newValue);
   };
 
+  if (preview) {
+    return (
+      <Preview formId={String(editFormId)} onClose={() => setPreview(false)} />
+    );
+  }
+
   return (
     <>
       <Wrapper>
         <Header>
           <FormNameContainer>
             <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
-            <Heading>{watch("formTitle")}</Heading>
+            <Heading>
+              {watch("formTitle") === "" ? formTitle : watch("formTitle")}
+            </Heading>
           </FormNameContainer>
           {/* Links  */}
           <LinkContainer>
             <div>
               {/* <StyledLink to={"/"}>Create</StyledLink> */}
-              <span onClick={() => setMenu("create")}>Create</span>
+              <span onClick={() => setMenu("edit")}>Edit</span>
             </div>
             <div>
               {/* <StyledLink to={"/"}>Connect</StyledLink> */}
@@ -301,7 +312,7 @@ const EditForm = () => {
           {/* Publish buttons  */}
           <PublishContainer>
             <ItemContainer>
-              <Button text="Publish" />
+              <Button text="Preview" onClick={() => setPreview(true)} />
             </ItemContainer>
 
             <ItemContainer>
@@ -313,7 +324,7 @@ const EditForm = () => {
           {showModal && (
             <Modal setShowModal={setShowModal} AddInput={AddInput} />
           )}
-          {menu === "create" && (
+          {menu === "edit" && (
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormName
                 defaultValue={watch("formTitle")}
@@ -392,6 +403,7 @@ const EditForm = () => {
                               `formData.${index}.answer.value` as const
                             )}
                             placeholder={"Enter answer..."}
+                            rows={5}
                           />
                         </>
                       ) : (

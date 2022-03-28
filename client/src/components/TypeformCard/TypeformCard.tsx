@@ -1,13 +1,17 @@
 import {
+  ButtonContainer,
   Card,
   ModalContainer,
   ModalItems,
   ResponsesCounter,
   TypeFormName,
+  Container,
 } from "./TypeformCard.styles";
 import { BsThreeDots } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
 const TypeformCardModal = (props: {
   editForm: () => void;
@@ -43,12 +47,18 @@ const TypeformCard = (props: {
             ? `${responsesNumber} responses yet.`
             : `No response yet`}
         </ResponsesCounter>
-        <div>
-          <BsThreeDots onClick={() => setShowOptions(!showOptions)} />
+        <Container>
+          <ButtonContainer>
+            {/* <BsThreeDots onClick={() => setShowOptions(!showOptions)} />
           {showOptions && (
             <TypeformCardModal editForm={edit} deleteForm={delForm} />
-          )}
-        </div>
+          )} */}
+            <AiFillEdit onClick={edit} />
+          </ButtonContainer>
+          <ButtonContainer>
+            <MdDelete onClick={delForm} />
+          </ButtonContainer>
+        </Container>
       </Card>
     </>
   );

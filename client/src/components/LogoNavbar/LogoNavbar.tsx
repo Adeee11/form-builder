@@ -13,23 +13,23 @@ import {
 } from "./LogoNavbar.styles";
 
 const LogoNavbar = () => {
-
   const [toggle, setToggle] = useState(false);
-  const userName = useAppSelector(state => state.user.username); 
+  const userName = useAppSelector((state) => state.user.username);
   const email = "test@gmail.com";
-  // will implement first and last name one after confirming that there's a last name 
+  // will implement first and last name one after confirming that there's a last name
   // const [firstName, lastName] = userName.split(" ");
   return (
     <>
       <Wrapper>
         <Logo onClick={() => setToggle(!toggle)}>
-          {userName[0] + userName[userName.length -1] }
+          {userName[0].toUpperCase() +
+            userName[userName.length - 1].toUpperCase()}
         </Logo>
         <Email>{email}</Email>
 
         <ToggleContent toggle={toggle}>
           <NavbarHeader>
-            <Logo>{userName[0] + userName[userName.length -1]}</Logo>
+            <Logo>{userName[0] + userName[userName.length - 1]}</Logo>
             <Username>{userName}</Username>
             <MenuType>Settings</MenuType>
           </NavbarHeader>

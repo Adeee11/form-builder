@@ -199,7 +199,6 @@ const CreateForm = () => {
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-header">{watch("title")}</div>
-
           {formData.map(
             (
               a: { fieldType: string; Question: string; option: string[] },
@@ -267,11 +266,10 @@ const CreateForm = () => {
               </div>
             )
           )}
-
           <span className="chooseInput" onClick={() => setShowModal(true)}>
             <AiOutlinePlus />
           </span>
-
+          login
           {formData.length > 0 && (
             <button type="submit" className="sub">
               Save

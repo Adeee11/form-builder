@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 10px 3vw;
-  max-width: 600px;
   margin: 0 auto;
+  max-width: 600px;
 `;
 
 const Avatar = styled.span`
@@ -94,6 +94,12 @@ const Main = styled.main`
   border-radius: 6px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   max-width: 90vw;
+
+  @media (min-width: 768px) {
+    .popup {
+      transform: translate(-190px, -200px);
+    }
+  }
 `;
 
 const Form = styled.form`

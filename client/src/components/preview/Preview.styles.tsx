@@ -29,7 +29,7 @@ const PreviewHeader = styled.div`
     }
   }
 `;
-const Form = styled.form`
+const Form = styled.div`
   border-radius: 10px;
   max-width: 900px;
   margin: 0 auto;
