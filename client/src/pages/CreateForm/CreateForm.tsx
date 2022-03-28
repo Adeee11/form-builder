@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
-import { Wrapper, Header, Form } from "./CreateForm.styles";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Preview } from "../../components/preview";
 import Modal from "../../components/Modal/Modal";
@@ -9,6 +8,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Share } from "../../components/share";
 import { Results } from "../../components/results";
 import { useAppSelector } from "../../providers/app/hooks";
+import PublishModal from "../../components/PublishModal/PublishModal";
+import { Wrapper, Header, Form, LogoutMenu } from "./CreateForm.styles";
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -59,6 +60,9 @@ const CreateForm = () => {
   const [editQue, setEditQue] = useState(-1);
   const [formId, setFormId] = useState("");
   const [menu, setMenu] = useState("create");
+  const [showPublishModal, setShowPublishModal] = useState(false);
+  const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  const userName = useAppSelector((state) => state.user.username);
   const {
     register,
     handleSubmit,
@@ -71,8 +75,6 @@ const CreateForm = () => {
   const [create, { loading, error }] = useMutation(CREATE_FORM);
   const [update, state] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
-  const userName = useAppSelector((state) => state.user.username);
-  const AvatarLetter = userName[0];
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (formId) {
@@ -170,13 +172,30 @@ const CreateForm = () => {
               <BsFillEyeFill />
             </span>
           )}
-          <button className="publish">Publish</button>
-          <span className="avatar">{AvatarLetter}</span>
+          <button
+            className="publish"
+            onClick={() => setShowPublishModal(!showPublishModal)}
+          >
+            Publish
+          </button>
+          <span
+            className="avatar"
+            onClick={() => setShowLogoutMenu(!showLogoutMenu)}
+          >
+            {userName[0].toUpperCase()}
+          </span>
         </p>
       </Header>
 
+      {showPublishModal && formId && (
+        <PublishModal
+          formId={formId}
+          onClose={() => setShowPublishModal(false)}
+        />
+      )}
       {showModal && <Modal setShowModal={setShowModal} AddInput={AddInput} />}
 
+      {showLogoutMenu && <LogoutMenu>Logout Menu</LogoutMenu>}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-header">{watch("title")}</div>

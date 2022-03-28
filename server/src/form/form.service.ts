@@ -36,7 +36,7 @@ export class FormService {
 
   async sortByDateTitle(owner:string,  limit?:number, skip?:number, sortBy?:string){
     let sortAcc=sortBy
-    return  await this.formModel.find({owner}).sort(sortBy).skip(skip||0).limit(limit||20);
+    return  await this.formModel.find({owner}).sort(sortBy).skip(skip||0).limit(limit||50);
   }
  
   async findOne(id:string){

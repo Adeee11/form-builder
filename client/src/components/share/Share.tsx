@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
-import React from 'react'
+import React, { RefObject, useRef } from 'react'
 import { AiOutlineLink } from 'react-icons/ai'
 import { BsFacebook, BsFillEyeFill, BsLinkedin, BsTwitter } from 'react-icons/bs'
 import { FaFacebook, FaFacebookF, FaLinkedinIn } from 'react-icons/fa'
@@ -23,12 +23,17 @@ type propType = {
 }
 
 const Share = ({ formId }: propType) => {
-    // const formId = localStorage.getItem('formId');
+    const linkRef = useRef<any>('');
     const { loading, error, data } = useQuery(GET_TITLE, {
         variables: {
             input: formId
         },
     });
+    const myFunction = (copytext: string) => {
+        linkRef.current.select();
+        navigator.clipboard.writeText(copytext);
+
+    }
     return (
         < >
             <Container>
@@ -41,8 +46,8 @@ const Share = ({ formId }: propType) => {
                             Get the link or share on social
                         </div>
                         <div className='inputandbtn'>
-                            <input type="text" value={data && "http://localhost:3001/form/" + data.form.id} />
-                            <button>Copy Link</button>
+                            <input type="text" ref={linkRef} value={data && (window.location.origin + "/form/" + data.form.id)} />
+                            <button onClick={() => myFunction(data && window.location.origin + "/form/" + data.form.id)}>Copy Link</button>
                         </div>
                         <div className='socialmedia'>
                             <span><MdEmail /></span>
