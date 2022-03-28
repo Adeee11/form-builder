@@ -225,4 +225,18 @@ const Form = styled.form`
   }
 `;
 
+<<<<<<< HEAD
 export { Wrapper, Header, Form };
+=======
+`
+
+const LogoutMenu = styled.div`
+      border:1px solid black;
+      border-radius: 4px;
+`
+
+
+
+
+export { Wrapper, Header, Form, LogoutMenu };
+>>>>>>> 1cebb44412fbdc9a0ba3743cba699bd060039236

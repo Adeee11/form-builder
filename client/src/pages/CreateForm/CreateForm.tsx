@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { Wrapper, Header, Form } from "./CreateForm.styles";
@@ -5,10 +6,25 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Preview } from "../../components/preview";
 import Modal from "../../components/Modal/Modal";
+=======
+import { useState } from 'react'
+import { BsFillEyeFill } from 'react-icons/bs';
+import { gql, useMutation } from "@apollo/client";
+import { AiOutlinePlus } from 'react-icons/ai';
+import { Preview } from '../../components/preview';
+import Modal from '../../components/Modal/Modal';
+>>>>>>> 1cebb44412fbdc9a0ba3743cba699bd060039236
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Share } from "../../components/share";
 import { Results } from "../../components/results";
 import { useAppSelector } from "../../providers/app/hooks";
+import PublishModal from '../../components/PublishModal/PublishModal';
+import {
+    Wrapper,
+    Header,
+    Form,
+    LogoutMenu
+} from './CreateForm.styles';
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -53,6 +69,7 @@ type Inputs = {
 };
 
 const CreateForm = () => {
+<<<<<<< HEAD
   const [showModal, setShowModal] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [formData, setformData] = useState<formDataType[]>([]);
@@ -73,6 +90,23 @@ const CreateForm = () => {
   const userId = useAppSelector((state) => state.user.id);
   const userName = useAppSelector((state) => state.user.username);
   const AvatarLetter = userName[0];
+=======
+    const [showModal, setShowModal] = useState(false);
+    const [previewMode, setPreviewMode] = useState(false);
+    const [formData, setformData] = useState<formDataType[]>([]);
+    const [editQue, setEditQue] = useState(-1);
+    const [formId, setFormId] = useState('');
+    const [menu, setMenu] = useState('create');
+    const [showPublishModal, setShowPublishModal] = useState(false);
+    const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+    const userName = useAppSelector((state) => state.user.username);
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
+        defaultValues: { title: "my typeform" }
+    });
+    const [create, { loading, error }] = useMutation(CREATE_FORM);
+    const [update, state] = useMutation(UPDATE_FORM);
+    const userId = useAppSelector((state) => state.user.id);
+>>>>>>> 1cebb44412fbdc9a0ba3743cba699bd060039236
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (formId) {
@@ -225,12 +259,125 @@ const CreateForm = () => {
                         {...register("option")}
                       />
 
+<<<<<<< HEAD
                       <button
                         type="button"
                         onClick={() => saveOption(watch("option"), i)}
                       >
                         +
                       </button>
+=======
+                <p>
+                    {formId &&
+                        <span className='preview' onClick={() => setPreviewMode(true)}>
+                            <BsFillEyeFill />
+                        </span>
+                    }
+                    <button
+                        className='publish'
+                        onClick={() => setShowPublishModal(!showPublishModal)}>
+                        Publish
+                    </button>
+                    <span className='avatar'
+                        onClick={() => setShowLogoutMenu(!showLogoutMenu)}
+                    >{userName[0].toUpperCase()}</span>
+                </p>
+            </Header>
+
+            {showPublishModal && formId &&
+                <PublishModal
+                    formId={formId}
+                    onClose={() => setShowPublishModal(false)} />
+            }
+            {showModal &&
+                <Modal
+                    setShowModal={setShowModal}
+                    AddInput={AddInput}
+                />}
+
+            {showLogoutMenu &&
+                <LogoutMenu>
+                    Logout Menu
+                </LogoutMenu>
+            }
+            {menu === "create" &&
+                <Form onSubmit={handleSubmit(onSubmit)}>
+
+                    <div className='form-header'>
+                        {watch("title")}
+                    </div>
+
+                    {formData.map((a: { fieldType: string, Question: string, option: string[] }, i: number) =>
+                        <div key={i}>
+
+                            <div className='que' onClick={() => Onedit(i)}>
+
+                                <span>{i + 1}.</span>
+
+                                {i === editQue ?
+
+                                    <input
+                                        type="text"
+                                        placeholder='Your Question here?'
+                                        className="input"
+                                        id="input"
+                                        {...register("question")}
+                                        onBlur={() => saveQuestion(watch("question"), i)}
+                                    /> :
+                                    <p className='input'>
+                                        {a.Question || "Your Question Here?"}
+                                    </p>
+                                }
+
+                                <button
+                                    type="button"
+                                    className='delque'
+                                    onClick={(e) => delQue(i, e)}>
+                                    x
+                                </button>
+
+                            </div>
+
+                            {(a.fieldType !== "select" && a.fieldType !== "choice") ?
+
+                                <p className='ans'>Enter Your Answer here</p> :
+
+                                <div className='opt'>
+                                    <span>
+
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Options Here"
+                                            {...register("option")}
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() => saveOption(watch("option"), i)}>
+                                            +
+                                        </button>
+
+                                    </span>
+
+                                    {a.option.length > 0 && a.option.map((o: string, index: number) =>
+
+                                        <div key={index} className="optlist">
+
+                                            <p>{o}</p>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => del(i, index)}>
+                                                x</button>
+                                        </div>)}
+
+                                </div>}
+                        </div>
+                    )}
+
+                    <span className="chooseInput" onClick={() => setShowModal(true)}>
+                        <AiOutlinePlus />
+>>>>>>> 1cebb44412fbdc9a0ba3743cba699bd060039236
                     </span>
 
                     {a.option.length > 0 &&
