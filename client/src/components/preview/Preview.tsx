@@ -36,7 +36,7 @@ type propsType = {
 }
 const Preview = ({ onClose, formId, isForm }: propsType) => {
     const [res, setRes] = useState<string[]>([]);
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(-1);
     const [errors, setErrors] = useState<string[]>([]);
     const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
     const { loading, error, data } = useQuery(GET_FORM, {
@@ -75,7 +75,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
         }
     }, [])
 
-    const saveRes = (val: string, index: number) => {
+    const saveRes = (val: string, index: number, optid?: number) => {
         if (isSubmittedOnce) {
             validation(index, data.form.formData[index].fieldType, res[index])
         }
@@ -83,6 +83,11 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
         const listOfRes: string[] = [...res];
         listOfRes[index] = val;
         setRes([...listOfRes]);
+        if (optid !== undefined) {
+            setIsActive(optid);
+            console.log("Optid", optid)
+        }
+
     }
 
     const submitHandler = async () => {
@@ -162,14 +167,14 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                         }
                         {
                             item.fieldType == "choice" &&
-                            item.option.map((opt: string) =>
-                                <div onClick={() => { saveRes(opt, index); }} className={isActive ? "opt act" : "opt"}>
+                            item.option.map((opt: string, num: number) =>
+                                <div onClick={() => { saveRes(opt, index, num); }} className={opt === res[index] ? "opt act" : "opt"}>
                                     {opt}
                                 </div>)
                         }
                     </div>)}
 
-                <button className='sub' onClick={submitHandler} type="button">Submit</button>
+                <button className='sub' onClick={submitHandler}>Submit</button>
             </Form>
         </PreviewContainer>
     )

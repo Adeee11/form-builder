@@ -241,7 +241,12 @@ const Form = styled.form`
 
 `
 
+const LogoutMenu = styled.div`
+      border:1px solid black;
+      border-radius: 4px;
+`
 
 
 
-export { Wrapper, Header, Form };
+
+export { Wrapper, Header, Form, LogoutMenu };

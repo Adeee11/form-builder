@@ -12,7 +12,8 @@ import PublishModal from '../../components/PublishModal/PublishModal';
 import {
     Wrapper,
     Header,
-    Form
+    Form,
+    LogoutMenu
 } from './CreateForm.styles';
 
 const CREATE_FORM = gql`
@@ -69,6 +70,8 @@ const CreateForm = () => {
     const [formId, setFormId] = useState('');
     const [menu, setMenu] = useState('create');
     const [showPublishModal, setShowPublishModal] = useState(false);
+    const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+    const userName = useAppSelector((state) => state.user.username);
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Inputs>({
         defaultValues: { title: "my typeform" }
     });
@@ -193,7 +196,9 @@ const CreateForm = () => {
                         onClick={() => setShowPublishModal(!showPublishModal)}>
                         Publish
                     </button>
-                    <span className='avatar'>P</span>
+                    <span className='avatar'
+                        onClick={() => setShowLogoutMenu(!showLogoutMenu)}
+                    >{userName[0].toUpperCase()}</span>
                 </p>
             </Header>
 
@@ -208,6 +213,11 @@ const CreateForm = () => {
                     AddInput={AddInput}
                 />}
 
+            {showLogoutMenu &&
+                <LogoutMenu>
+                    Logout Menu
+                </LogoutMenu>
+            }
             {menu === "create" &&
                 <Form onSubmit={handleSubmit(onSubmit)}>
 
