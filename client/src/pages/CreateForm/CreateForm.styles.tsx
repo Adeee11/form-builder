@@ -131,12 +131,14 @@ const Form = styled.form`
     margin-top: 20px;
     span {
       margin-right: 4px;
+      flex:0;
     }
     .input {
       width: 100%;
       border: none;
       outline: none;
       flex: 1;
+      margin-bottom: 0;
     }
   }
 
@@ -206,6 +208,7 @@ const Form = styled.form`
       padding: 6px;
       border-radius: 6px;
       width: 100%;
+      margin-bottom: 0;
     }
     button {
       color: blue;
@@ -214,6 +217,8 @@ const Form = styled.form`
       height: 32px;
       cursor: pointer;
       border: none;
+      display: flex;
+      align-items: center;
     }
   }
   .delque {
@@ -226,8 +231,59 @@ const Form = styled.form`
 `;
 
 const LogoutMenu = styled.div`
-  border: 1px solid black;
+  padding: 10px;
   border-radius: 4px;
-`;
+  position: fixed;
+  margin-top: 2px;
+  right: 10px;
+  width:250px;
+  z-index: 9999999;
+  background: white;
+  box-shadow:  0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  .logout-header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    margin-bottom: 0px;
+    p{
+
+      font-size: 14px;
+      display: inline-block;
+    }
+    .avatar {
+      margin-right: 10px;
+      border-radius: 50%;
+      background: blue;
+      width:27px;
+      height: 27px;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+  }
+  ul{
+    list-style: none;
+    font-size: 14px;
+    width: 100%;
+    
+    li{
+      padding-top: 8px;
+      width: 100%;
+      margin-left: 0px;
+      padding-left: 0px;
+    }
+    
+    .bold{
+      font-weight: 700;
+    }
+    .danger{
+      color:red;
+    }
+     }
+ 
+  `;
 
 export { Wrapper, Header, Form, LogoutMenu };

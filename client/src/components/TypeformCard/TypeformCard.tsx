@@ -17,8 +17,9 @@ const TypeformCardModal = (props: {
   return (
     <>
       <ModalContainer>
-        <ModalItems onClick={editForm}>Edit Form</ModalItems>
-        <ModalItems onClick={deleteForm}>Delete Form</ModalItems>
+        <ModalItems onClick={editForm}>Edit </ModalItems>
+        <ModalItems onClick={deleteForm}>Delete </ModalItems>
+        <ModalItems >View </ModalItems>
       </ModalContainer>
     </>
   );
@@ -38,12 +39,11 @@ const TypeformCard = (props: {
       <Card>
         <TypeFormName>{typeformName}</TypeFormName>
         <hr />
+       
+        <div className="bottom">
         <ResponsesCounter>
-          {responsesNumber
-            ? `${responsesNumber} responses yet.`
-            : `No response yet`}
+          {responsesNumber?responsesNumber+" responses":"No responses"} 
         </ResponsesCounter>
-        <div>
           <BsThreeDots onClick={() => setShowOptions(!showOptions)} />
           {showOptions && (
             <TypeformCardModal editForm={edit} deleteForm={delForm} />

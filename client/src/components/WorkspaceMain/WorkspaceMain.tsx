@@ -92,7 +92,6 @@ const WorkspaceMain = (props: { filter: string }) => {
 
   return (
     <>
-      <hr />
       <Wrapper>
         {TypeformNames.map(({ title, id, noOfResponses }, index: number) => (
           <TypeformCard

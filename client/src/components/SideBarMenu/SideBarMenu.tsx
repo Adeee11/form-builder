@@ -46,7 +46,7 @@ const Item = (props: { icon: React.ReactNode; linkText: string }) => {
 
 const SideBarMenu = (props: { showMenu: boolean }) => {
   const workspaceType = "PRIVATE";
-  const workSpaceName = "First";
+  const workSpaceName = "My WorkSpace";
   const noOfTypeform = 3;
   const userName = useAppSelector((state) => state.user.username);
   const dropdownItems = [

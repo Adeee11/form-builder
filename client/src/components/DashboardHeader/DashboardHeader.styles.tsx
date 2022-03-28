@@ -10,6 +10,7 @@ const Header = styled.header`
     h1{
         font-size: 16px;
         font-family: 'Poppins', sans-serif;
+        margin-left: 16px;
     }
 
     button{

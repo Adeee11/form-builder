@@ -10,6 +10,7 @@ import { Results } from "../../components/results";
 import { useAppSelector } from "../../providers/app/hooks";
 import PublishModal from "../../components/PublishModal/PublishModal";
 import { Wrapper, Header, Form, LogoutMenu } from "./CreateForm.styles";
+import { Avatar } from "../EditForm/EditForm.styles";
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -195,7 +196,25 @@ const CreateForm = () => {
       )}
       {showModal && <Modal setShowModal={setShowModal} AddInput={AddInput} />}
 
-      {showLogoutMenu && <LogoutMenu>Logout Menu</LogoutMenu>}
+      {showLogoutMenu && <LogoutMenu>
+        <div className="logout-header">
+           <span className="avatar">{userName[0].toUpperCase()}</span>
+            <p>{userName}</p>
+        </div>
+
+        <ul className="list">
+          <li className="bold">Profile</li>
+          <li>Setting</li>
+          <li>Resources</li>
+          <li>Quick help</li>
+          <li>Help Center</li>
+          <li>Ask the community</li>
+          <li>Apps & Integration</li>
+          <li>What's New</li>
+          <li className="danger">Log out</li>
+        </ul>
+
+        </LogoutMenu>}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-header">{watch("title")}</div>

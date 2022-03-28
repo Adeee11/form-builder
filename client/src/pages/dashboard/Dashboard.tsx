@@ -14,9 +14,10 @@ import {
 } from "./Dashboard.styles";
 
 const Dashboard = () => {
-  const [isSideMenuCollapsed, setIsSideMenuCollapsed] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
   const onClick = () => {
-    setIsSideMenuCollapsed(!isSideMenuCollapsed);
+    console.log(showSideBar)
+    setShowSideBar(!showSideBar);
   };
   const [filter, setFilter] = useState("date");
   return (
@@ -24,28 +25,30 @@ const Dashboard = () => {
       <Wrapper>
         <DashboardHeader />
         <hr />
-        <Main $isCollapsed={isSideMenuCollapsed}>
-          <Header>
-            {/* Workspace Header */}
-            <WorkspaceHeader onClick={onClick} />
-            <hr />
-          </Header>
-
+        <Header>
+          
+          <WorkspaceHeader onClick={onClick} />
+          <hr />
+        </Header> 
+         <Main>
+         <Aside $isCollapsed={showSideBar}>
+            {/* Side menu */}
+            <SideBarMenu showMenu={showSideBar} />
+          </Aside>
+          <div className="main">
           <Section>
             {/* Workspace about */}
             <WorkspaceAbout changeFilter={setFilter} filter={filter} />
-            <hr />
-          </Section>
-          <Container $isCollapsed={isSideMenuCollapsed}>
+          </Section>  
+          <Container $isCollapsed={showSideBar}>
             {/* Workspace main */}
             <WorkspaceMain filter={filter} />
             <hr />
           </Container>
-          <Aside $isCollapsed={isSideMenuCollapsed}>
-            {/* Side menu */}
-            <SideBarMenu showMenu={!isSideMenuCollapsed} />
-          </Aside>
-        </Main>
+          </div>
+       </Main>
+       
+   
       </Wrapper>
     </>
   );

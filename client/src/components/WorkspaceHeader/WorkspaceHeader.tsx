@@ -8,7 +8,7 @@ const WorkspaceHeader = (props: { onClick: () => void }) => {
     <>
       <Header>
         <MenuTopBar>
-          <span onClick={onClick}>
+          <span onClick={onClick} className="menu">
             <CgMenuGridR />
             Workspaces
           </span>

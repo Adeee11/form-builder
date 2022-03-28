@@ -24,9 +24,10 @@ const WorkspaceAbout = (props: {
   const { changeFilter, filter } = props;
   return (
     <>
+  
       <Wrapper>
         <FirstRow>
-          <WorkspaceName type={"text"} defaultValue={workspaceName} />
+          <WorkspaceName >My Workspace</WorkspaceName>
           <PipeSymbol>|</PipeSymbol>
           <FaUserPlus />
           <ImLoop />
@@ -44,6 +45,7 @@ const WorkspaceAbout = (props: {
             label={""}
           />
         </SecondRow>
+        <hr/>
       </Wrapper>
     </>
   );

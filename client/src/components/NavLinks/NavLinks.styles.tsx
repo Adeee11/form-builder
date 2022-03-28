@@ -10,7 +10,7 @@ const List = styled.ul`
   overflow-y: scroll;
   @media (min-width: 1024px) {
     flex-direction: row;
-    align-items: center;
+    /* align-items: center; */
     padding: 0;
     overflow-y: auto;
   }
