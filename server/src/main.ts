@@ -8,6 +8,6 @@ async function bootstrap() {
   app.enableCors();
   app.use(graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 1000 }));
   app.useGlobalPipes(new ValidationPipe())
-  await app.listen(3000);
+  await app.listen(7000);
 }
 bootstrap();
