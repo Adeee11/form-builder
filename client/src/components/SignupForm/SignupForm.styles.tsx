@@ -16,8 +16,12 @@ const Field = styled.div`
   padding: 5px 10px;
   text-align: left;
   margin-bottom: 20px;
-  input{
-    max-width: 80vw;
+  input,
+  label {
+    margin-left: 0;
+  }
+  input[type="submit"] {
+    margin: 0 auto;
   }
 `;
 
@@ -47,8 +51,7 @@ const Submit = styled.input`
   color: white;
   background: #262627;
   font-size: 18px;
-  max-width: 80vw;
-  min-width: 300px;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: 20px;
 `;
@@ -77,13 +80,12 @@ const DropdownContainer = styled.div`
     padding: 5px 10px;
     margin: 20px auto;
   }
-  span{
+  span {
     font-size: 18px;
   }
 `;
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 export {
   Form,

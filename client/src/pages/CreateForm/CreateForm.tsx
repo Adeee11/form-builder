@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { gql, useMutation } from "@apollo/client";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -7,10 +7,17 @@ import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Share } from "../../components/share";
 import { Results } from "../../components/results";
-import { useAppSelector } from "../../providers/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
 import PublishModal from "../../components/PublishModal/PublishModal";
-import { Wrapper, Header, Form, LogoutMenu } from "./CreateForm.styles";
+import { Wrapper, Header, Form, LogoutMenu, Logout } from "./CreateForm.styles";
 import { Avatar } from "../EditForm/EditForm.styles";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { Token } from "graphql";
+import { EditFormState } from "../../providers/features/editFormIdSlice";
+import { LoginState, loggedOut } from "../../providers/features/loginSlice";
+import { changeToken } from "../../providers/features/tokenSlice";
+import { User, changeUser } from "../../providers/features/userSlice";
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -54,6 +61,31 @@ type Inputs = {
   title: string;
 };
 
+const logout = async (
+  dispatch: ThunkDispatch<
+    {
+      login: LoginState;
+      user: User;
+      token: Token;
+      editFormId: EditFormState;
+    },
+    undefined,
+    AnyAction
+  > &
+    Dispatch<AnyAction>,
+  navigate: NavigateFunction
+) => {
+  await dispatch(loggedOut());
+  await dispatch(changeToken(""));
+  await dispatch(
+    changeUser({
+      username: "Logged out",
+      id: "",
+    })
+  );
+  navigate("/");
+};
+
 const CreateForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
@@ -76,6 +108,8 @@ const CreateForm = () => {
   const [create, { loading, error }] = useMutation(CREATE_FORM);
   const [update, state] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (formId) {
@@ -148,6 +182,16 @@ const CreateForm = () => {
     document.getElementById("input")?.focus();
   };
 
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+  if (!isLoggedIn) {
+    return (
+      <>
+        <h1>Please Log in first</h1>
+        <Link to={"/login"}>To login page</Link>
+      </>
+    );
+  }
+
   if (previewMode) {
     return <Preview formId={formId} onClose={() => setPreviewMode(false)} />;
   }
@@ -196,25 +240,30 @@ const CreateForm = () => {
       )}
       {showModal && <Modal setShowModal={setShowModal} AddInput={AddInput} />}
 
-      {showLogoutMenu && <LogoutMenu>
-        <div className="logout-header">
-           <span className="avatar">{userName[0].toUpperCase()}</span>
+      {showLogoutMenu && (
+        <LogoutMenu>
+          <div className="logout-header">
+            <span className="avatar">{userName[0].toUpperCase()}</span>
             <p>{userName}</p>
-        </div>
+          </div>
 
-        <ul className="list">
-          <li className="bold">Profile</li>
-          <li>Setting</li>
-          <li>Resources</li>
-          <li>Quick help</li>
-          <li>Help Center</li>
-          <li>Ask the community</li>
-          <li>Apps & Integration</li>
-          <li>What's New</li>
-          <li className="danger">Log out</li>
-        </ul>
-
-        </LogoutMenu>}
+          <ul className="list">
+            <li className="bold">Profile</li>
+            <li>Setting</li>
+            <li>Resources</li>
+            <li>Quick help</li>
+            <li>Help Center</li>
+            <li>Ask the community</li>
+            <li>Apps & Integration</li>
+            <li>What's New</li>
+            <li className="danger">
+              <Logout onClick={() => logout(dispatch, navigate)}>
+                Log out
+              </Logout>
+            </li>
+          </ul>
+        </LogoutMenu>
+      )}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-header">{watch("title")}</div>

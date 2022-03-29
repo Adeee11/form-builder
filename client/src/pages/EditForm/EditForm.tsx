@@ -1,12 +1,14 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
 import { Preview } from "../../components/preview";
 import { Results } from "../../components/results";
 import { Share } from "../../components/share";
 import { useAppSelector } from "../../providers/app/hooks";
+import { Dashboard } from "../dashboard";
 import {
   Avatar,
   FormName,
@@ -34,6 +36,8 @@ import {
   AddNewOption,
   OptionsContainer,
   NewOptionContainer,
+  DashboardLink,
+  Container,
 } from "./EditForm.styles";
 import { GET_FORM_BY_ID, UPDATE_FORM } from "./queries";
 
@@ -206,7 +210,9 @@ const EditForm = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
-    setFormTitle(data.formTitle);
+
+    // setFormTitle(data.formTitle);
+
     const formData: FieldData[] = data.formData.map((ele) => {
       const obj = {
         fieldType: ele.answer.fieldType,
@@ -218,7 +224,7 @@ const EditForm = () => {
     const updatedForm = await updateForm({
       variables: {
         input: {
-          title: data.formTitle,
+          title: data.formTitle !== "" ? data.formTitle : formTitle,
           formData: formData,
         },
         id: editFormId,
@@ -273,6 +279,15 @@ const EditForm = () => {
     };
     update(fieldIndex, newValue);
   };
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+  if (!isLoggedIn) {
+    return (
+      <>
+        <h1>Please Log in first</h1>
+        <Link to={"/login"}>To login page</Link>
+      </>
+    );
+  }
 
   if (preview) {
     return (
@@ -284,12 +299,15 @@ const EditForm = () => {
     <>
       <Wrapper>
         <Header>
-          <FormNameContainer>
-            <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
-            <Heading>
-              {watch("formTitle") === "" ? formTitle : watch("formTitle")}
-            </Heading>
-          </FormNameContainer>
+          <Container>
+            <FormNameContainer>
+              <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
+              <Heading>
+                {watch("formTitle") === "" ? formTitle : watch("formTitle")}
+              </Heading>
+            </FormNameContainer>
+            <DashboardLink to={"/dashboard"}>Back to dashboard</DashboardLink>
+          </Container>
           {/* Links  */}
           <LinkContainer>
             <div>

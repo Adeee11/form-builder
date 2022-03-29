@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
 import { changeToken } from "../../providers/features/tokenSlice";
 import { changeUser } from "../../providers/features/userSlice";
+import { loggedIn } from "../../providers/features/loginSlice";
 
 type FormFields = {
   userName?: string;
@@ -55,7 +56,7 @@ const LoginForm = () => {
       };
       await dispatch(changeUser(newUser));
       await dispatch(changeToken(user.data.login.access_token));
-
+      await dispatch(loggedIn());
       navigate("/dashboard");
     }
     // console.log("User error", user.errors);
@@ -64,7 +65,7 @@ const LoginForm = () => {
   // graphql
   const [logIn, { loading, error }] = useMutation(LOG_IN);
   if (loading) console.log("loading...", loading);
-  if (error) console.error(JSON.stringify(error, null, 2) );
+  if (error) console.error(JSON.stringify(error, null, 2));
 
   return (
     <>

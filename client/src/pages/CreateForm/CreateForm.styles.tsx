@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const Wrapper = styled.div`
@@ -131,7 +132,7 @@ const Form = styled.form`
     margin-top: 20px;
     span {
       margin-right: 4px;
-      flex:0;
+      flex: 0;
     }
     .input {
       width: 100%;
@@ -236,16 +237,15 @@ const LogoutMenu = styled.div`
   position: fixed;
   margin-top: 2px;
   right: 10px;
-  width:250px;
+  width: 250px;
   z-index: 9999999;
   background: white;
-  box-shadow:  0 8px 8px 0 rgba(0, 0, 0, 0.2);
-  .logout-header{
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  .logout-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0px;
     margin-bottom: 0px;
-    p{
-
+    p {
       font-size: 14px;
       display: inline-block;
     }
@@ -253,7 +253,7 @@ const LogoutMenu = styled.div`
       margin-right: 10px;
       border-radius: 50%;
       background: blue;
-      width:27px;
+      width: 27px;
       height: 27px;
       color: white;
       display: inline-flex;
@@ -262,28 +262,35 @@ const LogoutMenu = styled.div`
       text-transform: uppercase;
       font-size: 14px;
     }
-
   }
-  ul{
+  ul {
     list-style: none;
     font-size: 14px;
     width: 100%;
-    
-    li{
+
+    li {
       padding-top: 8px;
       width: 100%;
       margin-left: 0px;
       padding-left: 0px;
     }
-    
-    .bold{
+
+    .bold {
       font-weight: 700;
     }
-    .danger{
-      color:red;
+    .danger {
+      color: red;
     }
-     }
- 
-  `;
+  }
+`;
 
-export { Wrapper, Header, Form, LogoutMenu };
+const Logout = styled.button`
+  color: red;
+  text-decoration: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border: transparent;
+  background: transparent;
+`;
+
+export { Wrapper, Header, Form, LogoutMenu, Logout };

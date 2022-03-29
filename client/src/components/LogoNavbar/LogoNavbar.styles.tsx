@@ -64,11 +64,13 @@ const MenuType = styled.span`
   grid-column: 2/3;
   grid-row: 2;
 `;
-const Logout = styled(Link)`
+const Logout = styled.button`
   color: red;
   text-decoration: none;
   padding: 5px 10px;
   font-size: 12px;
+  border: transparent;
+  background: transparent;
 `;
 
 const Email = styled.span`

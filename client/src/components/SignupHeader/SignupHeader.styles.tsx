@@ -6,8 +6,6 @@ const Container = styled.header`
   padding: 20px 5px;
 `;
 
-
-
 const LoginButton = styled(Link)`
   text-decoration: none;
   font-size: 12px;
@@ -24,7 +22,7 @@ const LoginButton = styled(Link)`
 `;
 
 const Text = styled.span`
-font-size: 14px;
+  font-size: 14px;
   color: #4c4c4c;
 `;
 export { Container, LoginButton, Text };

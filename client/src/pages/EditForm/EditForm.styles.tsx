@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   padding: 10px 3vw;
   margin: 0 auto;
-  max-width: 600px;
+  /* max-width: 900px; */
 `;
 
 const Avatar = styled.span`
@@ -28,8 +28,8 @@ const Header = styled.header`
 
 const FormNameContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid gray;
   padding: 10px 0;
+  align-items: center;
 `;
 
 const LinkContainer = styled.div`
@@ -93,7 +93,7 @@ const Main = styled.main`
   border-top: 8px solid blue;
   border-radius: 6px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  max-width: 90vw;
+  max-width: 900px;
 
   @media (min-width: 768px) {
     .popup {
@@ -222,6 +222,21 @@ const NewOptionContainer = styled.div`
   justify-content: space-between;
 `;
 
+const DashboardLink = styled(Link)`
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 8px;
+  justify-self: flex-end;
+  color: tomato;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  align-content: center;
+`;
+
 export {
   Wrapper,
   Avatar,
@@ -249,4 +264,6 @@ export {
   AddNewOption,
   OptionsContainer,
   NewOptionContainer,
+  DashboardLink,
+  Container,
 };
