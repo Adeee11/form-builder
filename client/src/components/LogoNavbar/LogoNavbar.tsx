@@ -11,27 +11,24 @@ import {
   Logout,
   Email,
 } from "./LogoNavbar.styles";
-
+type propTypes = {
+  userName?: string;
+};
 const LogoNavbar = () => {
-  const [toggle, setToggle] = useState(false);
   const userName = useAppSelector((state) => state.user.username);
-  const email = "test@gmail.com";
-  // will implement first and last name one after confirming that there's a last name
-  // const [firstName, lastName] = userName.split(" ");
+
+  const [toggle, setToggle] = useState(false);
+
   return (
     <>
       <Wrapper>
-        <Logo onClick={() => setToggle(!toggle)}>
-          {userName[0].toUpperCase() +
-            userName[userName.length - 1].toUpperCase()}
-        </Logo>
-        <Email>{email}</Email>
+        <Logo onClick={() => setToggle(!toggle)}>{userName[0]}</Logo>
+        <Email>{userName}</Email>
 
         <ToggleContent toggle={toggle}>
           <NavbarHeader>
-            <Logo>{userName[0] + userName[userName.length - 1]}</Logo>
+            <Logo>{userName[0]}</Logo>
             <Username>{userName}</Username>
-            <MenuType>Settings</MenuType>
           </NavbarHeader>
           <hr />
           <NavLinks

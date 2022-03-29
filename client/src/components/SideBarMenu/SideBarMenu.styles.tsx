@@ -7,28 +7,29 @@ const MenuTopBar = styled.div`
   justify-content: space-between;
   padding: 20px 10px;
   font-size: 20px;
-  min-height: 100%;
+  
 `;
 const Container = styled.div`
   display: flex;
   align-items: center;
-
+  
   svg {
     margin-right: 10px;
   }
 `;
-const Text = styled.span``;
+const Text = styled.span`
+font-size:14px;
+`;
+
 type ToggleProp = {
   showMenu: boolean;
 };
 const Menu = styled.div<ToggleProp>`
-  display: ${({ showMenu }) => (showMenu ? "grid" : "none")};
+  display: grid;
   grid-template-rows: 1fr 1fr 1fr auto;
   min-width: 200px;
-  height: 100%;
   background: white;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
+  
 `;
 
 const Workspaces = styled.div`
@@ -68,9 +69,15 @@ const Button = styled.button`
   background: rgba(120, 120, 120, 0.3);
   flex-basis: auto;
 `;
-const Username = styled.h4``;
-const Heading = styled.h5``;
-const BlueLink = styled(Link)``;
+const Username = styled.h4`
+font-size: 14px;
+`;
+const Heading = styled.h5`
+font-size: 14px;
+`;
+const BlueLink = styled(Link)`
+font-size: 14px;
+`;
 const FAQLink = styled(Link)`
   text-decoration: none;
   color: rgba(120,120,120, 0.7);

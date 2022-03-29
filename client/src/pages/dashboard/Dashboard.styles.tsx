@@ -1,33 +1,34 @@
 import styled, { css } from "styled-components";
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100vw;
-  padding: 1vw;
+ 
+  hr{
+    margin:0px
+  }
 `;
 
-const Header = styled.header``;
+const Header = styled.header`
+@media (min-width:900px){
+   display: none;
+ }
+`;
 
 const Container = styled.div<Collapsed>`
-  ${({ $isCollapsed }) =>
-    $isCollapsed
-      ? ""
-      : css`
-          grid-column: 2;
-        `}
+ 
 `;
 
 const Main = styled.main<Collapsed>`
-  display: grid;
+display:flex;
+flex-direction  :row ;
 
-  ${({ $isCollapsed }) =>
-    $isCollapsed
-      ? ""
-      : css`
-          grid-template-columns: auto 1fr;
-          grid-gap: 4px;
-        `}
+.main{
+  width:100%;
+  min-height:calc(100vh-64px);
+  align-items: stretch;
+}
+
+
+
 `;
 
 type Collapsed = {
@@ -35,15 +36,21 @@ type Collapsed = {
 };
 
 const Aside = styled.aside<Collapsed>`
+ width:100%;
+ flex-basis: 20%;
+ height: calc(100vh-64px);
+ border:1px solid lightgray;
+ @media (max-width:900px){
+
   ${({ $isCollapsed }) =>
     $isCollapsed
       ? css`
-          display: none;
+          display: block;
         `
       : css`
-          grid-row: 1/4;
-          grid-column: 1/2;
+          display:none;       
         `}
+ }
 `;
 const Section = styled.section<Collapsed>``;
 

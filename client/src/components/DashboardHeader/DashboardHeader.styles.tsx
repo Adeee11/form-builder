@@ -10,6 +10,7 @@ const Header = styled.header`
   h1 {
     font-size: 16px;
     font-family: "Poppins", sans-serif;
+    margin-left: 16px;
   }
 
   button {
@@ -21,9 +22,6 @@ const Header = styled.header`
     margin-right: 10px;
     padding: 6px 8px;
     justify-self: flex-end;
-    @media (max-width: 390px) {
-      padding: 4px 2px;
-    }
   }
 `;
 

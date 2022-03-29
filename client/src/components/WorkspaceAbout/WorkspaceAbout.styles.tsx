@@ -3,17 +3,27 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  background: #fafafa;
+  padding:10px;
+  hr{
+    margin:0px;
+  }
+  svg{
+    font-size:16px;
+    color:gray;
+  }
 `;
 
-const WorkspaceName = styled.input`
-  font-size: 20px;
-  padding: 5px 10px;
-  max-width: 40vw;
-  outline: none;
-  border: none;
+const WorkspaceName = styled.p`
+  font-size: 18px;
+  margin-bottom:0px;
+  margin-left:0px;
+  margin-right:30px;
 `;
-const PipeSymbol = styled.span``;
+const PipeSymbol = styled.span`
+font-weight: 100;
+color:gray;
+`;
 
 const Row = styled.div`
   display: flex;
@@ -24,6 +34,8 @@ const FirstRow = styled(Row)`
   align-items: center;
   padding: 20px 10px;
   padding-bottom: 5px;
+  display:flex;
+  align-items:center;
   span {
     margin-right: 10px;
   }

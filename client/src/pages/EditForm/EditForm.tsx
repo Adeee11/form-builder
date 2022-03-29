@@ -218,7 +218,7 @@ const EditForm = () => {
     const updatedForm = await updateForm({
       variables: {
         input: {
-          title: formTitle,
+          title: data.formTitle,
           formData: formData,
         },
         id: editFormId,

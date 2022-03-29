@@ -5,9 +5,15 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 const Logo = styled.span`
-  border: 1px solid black;
   border-radius: 50%;
-  padding: 4px;
+  width: 32px;
+  height: 32px;
+  background-color: blue;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
 `;
 
 type ToggleProp = {
@@ -15,15 +21,19 @@ type ToggleProp = {
 };
 
 const ToggleContent = styled.div<ToggleProp>`
-    position: absolute;
-    top: 60px;
-    background: white;
-    border: 1px solid black;
-    padding: 10px;
-    display: ${({toggle}) => toggle?'block':'none'};
-    @media (max-width: 1000px) {
-      right: 0px;
-    }
+  padding: 10px;
+  border-radius: 4px;
+  position: fixed;
+  margin-top: 2px;
+  right: 10px;
+  width: 250px;
+  z-index: 9999999;
+  background: white;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  display: ${({ toggle }) => (toggle ? "block" : "none")};
+  @media (max-width: 1000px) {
+    right: 0px;
+  }
   ul {
     display: flex;
     flex-direction: column;
@@ -38,7 +48,6 @@ const ToggleContent = styled.div<ToggleProp>`
     color: black;
     font-size: 12px;
   }
-  
 `;
 
 const NavbarHeader = styled.div`
@@ -49,6 +58,7 @@ const NavbarHeader = styled.div`
 const Username = styled.span`
   grid-column: 2/3;
   grid-row: 1;
+  font-size: 14px;
 `;
 const MenuType = styled.span`
   grid-column: 2/3;
@@ -65,10 +75,11 @@ const Email = styled.span`
   display: none;
   margin-left: 2px;
   margin-right: 2px;
+  font-size: 14px;
   @media (min-width: 1000px) {
     display: inline-block;
   }
-`
+`;
 
 export {
   Wrapper,
@@ -78,5 +89,5 @@ export {
   Username,
   MenuType,
   Logout,
-  Email
+  Email,
 };

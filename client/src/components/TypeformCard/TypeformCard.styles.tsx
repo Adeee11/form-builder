@@ -1,46 +1,62 @@
 import styled from "styled-components";
 
 const Card = styled.div`
-  border: 1px solid grey;
-  border-radius: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 3fr 0.1fr 1fr;
-  max-width: 200px;
-  justify-content: center;
+  
+  margin-top:20px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow:  0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width:150px;
+  max-height:150px;
+  margin-right: 30px;
+  display:flex;
+  flex-direction: column;
   svg {
-    grid-row: 3;
-    justify-self: center;
+   cursor: pointer;
   }
   hr {
-    grid-row: 2;
-    grid-column: 1/3;
+  margin: 5px;
+  }
+  .bottom{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* height: 50px; */
+    padding: 4px;
+    justify-content: space-between;
+    position: relative;
   }
 `;
 const TypeFormName = styled.h3`
-  grid-row: 1;
-  grid-column: 1/3;
-  font-family: "Poppins", sans-serif;
-  min-height: 70%;
+ font-size: 14px;
+ width:100%;
+ height: 100px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin-bottom: 0px;
 `;
 
 const ResponsesCounter = styled.span`
-  grid-row: 3;
+ font-size: 12px;
 `;
 
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: left;
-  border: 1px solid black;
   background: white;
-  position: relative;
-  left: 40px;
+  position: absolute;
+  left:100px;
+  bottom: 30px;
+  width:150px;
+  box-shadow:  2px 4px 4px 2px rgba(0, 0, 0, 0.2);
 `;
 const ModalItems = styled.span`
   text-align: left;
-  border-bottom: 1px solid gray;
-  padding: 5px 10px;
+  border-bottom: 1px solid lightgray;
+  padding: 10px 10px;
   font-size: 11px;
   cursor: pointer;
 `;

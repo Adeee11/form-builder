@@ -25,7 +25,7 @@ const WorkspaceMain = (props: { filter: string }) => {
   //     body: "Nothing yet",
   //   },
   // ]);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const { loading, error, data, refetch } = useQuery(GET_FORMS, {
     variables: { userId, sortBy: filter },
   });
@@ -127,7 +127,6 @@ const WorkspaceMain = (props: { filter: string }) => {
 
   return (
     <>
-      <hr />
       <Wrapper>
         {CurrentTypeformNames.map(
           ({ title, id, noOfResponses }, index: number) => (
