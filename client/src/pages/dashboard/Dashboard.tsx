@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { DashboardHeader } from "../../components/DashboardHeader";
+import { Preview } from "../../components/preview";
 import { SideBarMenu } from "../../components/SideBarMenu";
 import { WorkspaceAbout } from "../../components/WorkspaceAbout";
 import { WorkspaceHeader } from "../../components/WorkspaceHeader";
@@ -23,12 +24,21 @@ const Dashboard = () => {
   };
   const [filter, setFilter] = useState("date");
   const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+  const editFormId = useAppSelector((state) => state.editFormId.editFormId);
+  const [preview, setPreview] = useState(false);
   if (!isLoggedIn) {
     return (
       <>
         <h1>Please Log in first</h1>
         <Link to={"/login"}>To login page</Link>
       </>
+    );
+  }
+
+  if (preview) {
+    // console.log("Inside if preview is true")
+    return (
+      <Preview formId={String(editFormId)} onClose={() => setPreview(false)} />
     );
   }
   return (
@@ -52,7 +62,7 @@ const Dashboard = () => {
             </Section>
             <Container $isCollapsed={showSideBar}>
               {/* Workspace main */}
-              <WorkspaceMain filter={filter} />
+              <WorkspaceMain filter={filter} setPreview={setPreview} />
               <hr />
             </Container>
           </div>

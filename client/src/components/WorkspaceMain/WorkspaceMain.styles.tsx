@@ -13,6 +13,7 @@ const PaginationContainer = styled.div`
   overflow-x: auto;
   max-width: 80vw;
   margin: 0 auto;
+  margin-top: 20px;
 `;
 
 export { Wrapper, PaginationContainer };

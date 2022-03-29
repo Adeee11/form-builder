@@ -9,10 +9,14 @@ import { TypeformCard } from "../TypeformCard";
 import { DEL_FORM, GET_FORMS } from "./queries";
 import { PaginationContainer, Wrapper } from "./WorkspaceMain.styles";
 
-const WorkspaceMain = (props: { filter: string }) => {
-  const { filter } = props;
+const WorkspaceMain = (props: {
+  filter: string;
+  setPreview: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { filter, setPreview } = props;
 
   const userId = useAppSelector((state) => state.user.id);
+
   const [TypeformNames, setTypeformNames] = useState([
     { title: "Data didn't arrive yet", id: "", noOfResponses: 0 },
   ]);
@@ -97,6 +101,12 @@ const WorkspaceMain = (props: { filter: string }) => {
     refetch();
   };
 
+  const viewForm = async (id: string) => {
+    console.log(`View form with ${id}`);
+    await dispatch(changeEditFormId(id));
+    setPreview(true);
+  };
+
   // pagination
   const noOfPosts = TypeformNames.length;
   // const noOfPosts = posts.length;
@@ -128,16 +138,21 @@ const WorkspaceMain = (props: { filter: string }) => {
   return (
     <>
       <Wrapper>
-        {CurrentTypeformNames.map(
-          ({ title, id, noOfResponses }, index: number) => (
-            <TypeformCard
-              key={"tfc" + index.toString()}
-              typeformName={title}
-              responsesNumber={noOfResponses}
-              edit={() => editForm(id)}
-              delForm={() => deleteForm(id)}
-            />
+        {CurrentTypeformNames[0].id !== "" ? (
+          CurrentTypeformNames.map(
+            ({ title, id, noOfResponses }, index: number) => (
+              <TypeformCard
+                key={"tfc" + index.toString()}
+                typeformName={title}
+                responsesNumber={noOfResponses}
+                edit={() => editForm(id)}
+                delForm={() => deleteForm(id)}
+                viewForm={() => viewForm(id)}
+              />
+            )
           )
+        ) : (
+          <></>
         )}
 
         {/*  dummmy test
