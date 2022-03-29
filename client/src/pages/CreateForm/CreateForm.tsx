@@ -1,7 +1,7 @@
 import { Dispatch, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { gql, useMutation } from "@apollo/client";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
 import { Preview } from "../../components/preview";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -9,7 +9,15 @@ import { Share } from "../../components/share";
 import { Results } from "../../components/results";
 import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
 import PublishModal from "../../components/PublishModal/PublishModal";
-import { Wrapper, Header, Form, LogoutMenu, Logout } from "./CreateForm.styles";
+import {
+  Wrapper,
+  Header,
+  Form,
+  LogoutMenu,
+  Logout,
+  DashboardLink,
+  Container,
+} from "./CreateForm.styles";
 import { Avatar } from "../EditForm/EditForm.styles";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
@@ -95,6 +103,7 @@ const CreateForm = () => {
   const [menu, setMenu] = useState("create");
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  const [opt, setOpt] = useState("");
   const userName = useAppSelector((state) => state.user.username);
   const {
     register,
@@ -111,7 +120,8 @@ const CreateForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
+    e?.preventDefault();
     if (formId) {
       const updatedForm = await update({
         variables: {
@@ -124,6 +134,7 @@ const CreateForm = () => {
       });
 
       console.log("updatedForm:", updatedForm);
+      alert("Form updated ");
     } else {
       const createdForm = await create({
         variables: {
@@ -167,7 +178,11 @@ const CreateForm = () => {
     const list = [...formData];
     list[i].option[formData[i].option.length] = opt;
     setformData([...list]);
-    setValue("option", "");
+    setOpt("");
+    const el: any = document.getElementsByClassName("typedOption");
+    for (let i = 0; i < el.length; i++) {
+      el[i].value = "";
+    }
   };
 
   const del = (i: number, index: number) => {
@@ -195,13 +210,18 @@ const CreateForm = () => {
   if (previewMode) {
     return <Preview formId={formId} onClose={() => setPreviewMode(false)} />;
   }
-
+  console.log(editQue);
   return (
     <Wrapper>
       <Header>
         <div className="first">
-          <span>my Work space /</span>
-          <input type="text" placeholder="Title Here" {...register("title")} />
+          <Container>
+            <span>my Work space / </span>
+            <span>{watch("title")}</span>
+          </Container>
+          <DashboardLink to={"/dashboard"}>
+            <AiOutlineClose />
+          </DashboardLink>
         </div>
 
         <ul>
@@ -266,7 +286,13 @@ const CreateForm = () => {
       )}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-header">{watch("title")}</div>
+          <div className="form-header">
+            <input
+              type="text"
+              placeholder="Title Here"
+              {...register("title")}
+            />
+          </div>
           {formData.map(
             (
               a: { fieldType: string; Question: string; option: string[] },
@@ -308,12 +334,18 @@ const CreateForm = () => {
                       <input
                         type="text"
                         placeholder="Enter Options Here"
-                        {...register("option")}
+                        onChange={(e) => {
+                          setOpt(e.target.value);
+                          setEditQue(i);
+                        }}
+                        className="typedOption"
                       />
 
                       <button
                         type="button"
-                        onClick={() => saveOption(watch("option"), i)}
+                        onClick={() => {
+                          saveOption(opt, i);
+                        }}
                       >
                         +
                       </button>
@@ -337,7 +369,7 @@ const CreateForm = () => {
           <span className="chooseInput" onClick={() => setShowModal(true)}>
             <AiOutlinePlus />
           </span>
-          login
+
           {formData.length > 0 && (
             <button type="submit" className="sub">
               Save

@@ -3,7 +3,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { Form, PreviewContainer, PreviewHeader } from "./Preview.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import InputType from "../InputType/InputType";
+
 
 const GET_FORM = gql`
   query form($input: ID!) {
@@ -130,6 +130,16 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
 
   return (
     <PreviewContainer>
+      {!isForm&&<PreviewHeader>
+        <span className="back" onClick={()=>onClose()}>
+          <BsArrowLeft/>
+        </span>
+        <span>Preview</span>
+        <button>
+          Reload
+          <span><AiOutlineReload/></span>
+        </button>
+      </PreviewHeader>}
       <Form>
         <header>{data && <p>{data.form.title}</p>}</header>
         {data &&
@@ -147,12 +157,6 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                     placeholder="Enter Your answer here"
                     onChange={(e) => saveRes(e.target.value, index)}
                   />
-                  {/* <InputType
-                                fieldType={item.fieldType}
-                                onchange={saveRes}
-                                index={index}
-                            /> */}
-
                   <p className="error">{errors && errors[index]}</p>
                 </>
               )}

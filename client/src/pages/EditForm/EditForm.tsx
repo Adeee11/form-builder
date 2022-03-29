@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
@@ -306,7 +307,9 @@ const EditForm = () => {
                 {watch("formTitle") === "" ? formTitle : watch("formTitle")}
               </Heading>
             </FormNameContainer>
-            <DashboardLink to={"/dashboard"}>Back to dashboard</DashboardLink>
+            <DashboardLink to={"/dashboard"}>
+              <AiOutlineClose />{" "}
+            </DashboardLink>
           </Container>
           {/* Links  */}
           <LinkContainer>

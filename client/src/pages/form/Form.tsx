@@ -8,8 +8,7 @@ const Form = () => {
     const [previewMode, setPreviewMode] = useState(true)
     console.log("params:", params)
     return (<>
-
-        {previewMode && <Preview
+  {previewMode && <Preview
             formId={params.id || ""}
             onClose={() => setPreviewMode(false)}
             isForm

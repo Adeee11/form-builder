@@ -224,10 +224,10 @@ const NewOptionContainer = styled.div`
 
 const DashboardLink = styled(Link)`
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
   margin-bottom: 8px;
   justify-self: flex-end;
-  color: tomato;
+  color: grey;
 `;
 
 const Container = styled.div`

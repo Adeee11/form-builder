@@ -21,6 +21,8 @@ background: white;
      @media(max-width:768px){
          /* justify-content:space-between */
          width:100%;
+         background-color: green;
+         padding-left: 0px;
      }
      
 

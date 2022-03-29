@@ -13,13 +13,21 @@ const TypeformCardModal = (props: {
   editForm: () => void;
   deleteForm: () => void;
   viewForm: () => void;
+  show: () => void;
 }) => {
-  const { editForm, deleteForm, viewForm } = props;
+  const { editForm, deleteForm, viewForm, show } = props;
   return (
     <>
       <ModalContainer>
         <ModalItems onClick={editForm}>Edit </ModalItems>
-        <ModalItems onClick={deleteForm}>Delete </ModalItems>
+        <ModalItems
+          onClick={() => {
+            deleteForm();
+            show();
+          }}
+        >
+          Delete{" "}
+        </ModalItems>
         <ModalItems onClick={viewForm}>View </ModalItems>
       </ModalContainer>
     </>
@@ -35,6 +43,9 @@ const TypeformCard = (props: {
 }) => {
   const { typeformName, responsesNumber, edit, delForm, viewForm } = props;
   const [showOptions, setShowOptions] = useState(false);
+  const show = () => {
+    setShowOptions(false);
+  };
   return (
     <>
       {/* <Card onClick={onClick}> */}
@@ -52,6 +63,7 @@ const TypeformCard = (props: {
               editForm={edit}
               deleteForm={delForm}
               viewForm={viewForm}
+              show={show}
             />
           )}
         </div>
