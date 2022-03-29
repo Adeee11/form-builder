@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const PreviewContainer = styled.div``;
 
 const PreviewHeader = styled.div`
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,8 +12,9 @@ const PreviewHeader = styled.div`
   padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   .back {
+    cursor:pointer;
   }
-  p {
+  span {
     color: #262627;
     font-size: 14px;
   }

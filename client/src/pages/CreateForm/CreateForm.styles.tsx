@@ -21,12 +21,14 @@ const Header = styled.div`
   justify-content: space-between;
   font-size: 14px;
   background: white;
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     flex-direction: column;
     overflow: hidden;
+    
     ul,
     p {
       justify-content: space-evenly;
+      
     }
   }
   .first {
@@ -35,8 +37,15 @@ const Header = styled.div`
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
+    flex-basis:33%;
+    max-width:33%;
+    overflow:hidden;
+    @media (max-width:900px){
+      flex-basis:100%;
+      max-width:100vw;
+    }
     span {
-      min-width: 104px;
+      min-width: 120px;
     }
     input {
       outline: none;
@@ -54,10 +63,19 @@ const Header = styled.div`
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
+    margin-bottom: 0px;
+    flex-basis:33%;
 
     li {
-      margin-right: 10px;
+      margin-right: 30px;
       cursor: pointer;
+      padding-left: 10px;
+      @media (max-width:900px){
+        margin-right: 0px;
+      }
+    }
+    li :hover{
+      color: blue;
     }
   }
   p {
@@ -65,6 +83,8 @@ const Header = styled.div`
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
+    margin-bottom: 0px;
+    flex-basis:33%;
     .publish {
       background: black;
       color: white;
@@ -114,6 +134,7 @@ const Form = styled.form`
   border-radius: 10px;
   margin-top: 20px;
   overflow-x: hidden;
+  
   .form-header {
     border-radius: 10px;
     font-size: 25px;
@@ -122,6 +143,11 @@ const Form = styled.form`
     width: 100%;
     padding: 10px;
     border-top: 10px solid blue;
+    input{
+      outline:none;
+      border:none;
+      width:100%;
+    }
   }
   .que {
     width: 100%;
@@ -148,7 +174,7 @@ const Form = styled.form`
     border-bottom: 2px solid lightblue;
     padding: 10px;
     margin-left: 10px;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       min-width: 0;
       width: 80vw;
     }
@@ -169,7 +195,7 @@ const Form = styled.form`
   .opt {
     min-width: 600px;
     padding: 10px;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       min-width: 0;
       width: 80vw;
     }
@@ -198,7 +224,7 @@ const Form = styled.form`
     background: lightblue;
     margin-top: 10px;
     border-radius: 4px;
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       min-width: 0;
       width: 80vw;
     }

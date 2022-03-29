@@ -12,13 +12,14 @@ import { Link } from "react-router-dom";
 const TypeformCardModal = (props: {
   editForm: () => void;
   deleteForm: () => void;
+  show:()=>void
 }) => {
-  const { editForm, deleteForm } = props;
+  const { editForm, deleteForm , show} = props;
   return (
     <>
       <ModalContainer>
         <ModalItems onClick={editForm}>Edit </ModalItems>
-        <ModalItems onClick={deleteForm}>Delete </ModalItems>
+        <ModalItems onClick={()=>{deleteForm(); show()}}>Delete </ModalItems>
         <ModalItems>View </ModalItems>
       </ModalContainer>
     </>
@@ -33,6 +34,9 @@ const TypeformCard = (props: {
 }) => {
   const { typeformName, responsesNumber, edit, delForm } = props;
   const [showOptions, setShowOptions] = useState(false);
+  const show=()=>{
+    setShowOptions(false);
+  }
   return (
     <>
       {/* <Card onClick={onClick}> */}
@@ -46,7 +50,7 @@ const TypeformCard = (props: {
           </ResponsesCounter>
           <BsThreeDots onClick={() => setShowOptions(!showOptions)} />
           {showOptions && (
-            <TypeformCardModal editForm={edit} deleteForm={delForm} />
+            <TypeformCardModal editForm={edit} deleteForm={delForm} show={show} />
           )}
         </div>
       </Card>

@@ -63,6 +63,7 @@ const CreateForm = () => {
   const [menu, setMenu] = useState("create");
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  const [opt, setOpt]= useState('');
   const userName = useAppSelector((state) => state.user.username);
   const {
     register,
@@ -77,7 +78,8 @@ const CreateForm = () => {
   const [update, state] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
+    e?.preventDefault();
     if (formId) {
       const updatedForm = await update({
         variables: {
@@ -90,6 +92,7 @@ const CreateForm = () => {
       });
 
       console.log("updatedForm:", updatedForm);
+      alert("Form updated ");
     } else {
       const createdForm = await create({
         variables: {
@@ -133,7 +136,12 @@ const CreateForm = () => {
     const list = [...formData];
     list[i].option[formData[i].option.length] = opt;
     setformData([...list]);
-    setValue("option", "");
+    setOpt('');
+    const el:any=document.getElementsByClassName('typedOption');
+    for(let i=0; i<el.length; i++){
+      el[i].value=""
+    }
+     
   };
 
   const del = (i: number, index: number) => {
@@ -151,13 +159,13 @@ const CreateForm = () => {
   if (previewMode) {
     return <Preview formId={formId} onClose={() => setPreviewMode(false)} />;
   }
-
+console.log(editQue)
   return (
     <Wrapper>
       <Header>
         <div className="first">
-          <span>my Work space /</span>
-          <input type="text" placeholder="Title Here" {...register("title")} />
+          <span>my Work space / </span>
+          <span>{watch("title")}</span>
         </div>
 
         <ul>
@@ -217,7 +225,7 @@ const CreateForm = () => {
         </LogoutMenu>}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-header">{watch("title")}</div>
+          <div className="form-header"><input type="text" placeholder="Title Here" {...register("title")} /></div>
           {formData.map(
             (
               a: { fieldType: string; Question: string; option: string[] },
@@ -256,15 +264,18 @@ const CreateForm = () => {
                 ) : (
                   <div className="opt">
                     <span>
+                    
+                      
                       <input
                         type="text"
                         placeholder="Enter Options Here"
-                        {...register("option")}
+                        onChange={(e)=>{setOpt(e.target.value);setEditQue(i)}}
+                        className="typedOption"
                       />
 
                       <button
                         type="button"
-                        onClick={() => saveOption(watch("option"), i)}
+                        onClick={() => {saveOption(opt, i)}}
                       >
                         +
                       </button>
@@ -288,7 +299,7 @@ const CreateForm = () => {
           <span className="chooseInput" onClick={() => setShowModal(true)}>
             <AiOutlinePlus />
           </span>
-          login
+       
           {formData.length > 0 && (
             <button type="submit" className="sub">
               Save

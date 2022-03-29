@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@apollo/client";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
@@ -36,6 +35,8 @@ const WorkspaceMain = (props: { filter: string }) => {
 
   if (delLoad) console.log("Loading...");
   if (delErr) console.log(JSON.stringify(delErr, null, 2));
+  
+
 
   useEffect(() => {
     console.log("Filter boi", filter);
