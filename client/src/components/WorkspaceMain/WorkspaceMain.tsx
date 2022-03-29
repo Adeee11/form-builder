@@ -17,14 +17,14 @@ const WorkspaceMain = (props: { filter: string }) => {
     { title: "Data didn't arrive yet", id: "", noOfResponses: 0 },
   ]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState([
-    {
-      userId: 0,
-      id: 0,
-      title: "Nothing yet",
-      body: "Nothing yet",
-    },
-  ]);
+  // const [posts, setPosts] = useState([
+  //   {
+  //     userId: 0,
+  //     id: 0,
+  //     title: "Nothing yet",
+  //     body: "Nothing yet",
+  //   },
+  // ]);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const { loading, error, data, refetch } = useQuery(GET_FORMS, {
     variables: { userId, sortBy: filter },
