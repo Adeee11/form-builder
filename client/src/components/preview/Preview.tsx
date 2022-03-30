@@ -3,6 +3,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { Form, PreviewContainer, PreviewHeader } from "./Preview.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
 
 const GET_FORM = gql`
@@ -36,98 +37,129 @@ type propsType = {
 };
 const Preview = ({ onClose, formId, isForm }: propsType) => {
   const [res, setRes] = useState<string[]>([]);
-  const [isActive, setIsActive] = useState(-1);
-  const [errors, setErrors] = useState<string[]>([]);
+  // const [errors, setErrors] = useState<string[]>([]);
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
+  const [a, setA]= useState('');
   const { loading, error, data } = useQuery(GET_FORM, {
     variables: { input: formId },
   });
   const [create, { loading: l, error: e }] = useMutation(CREATE_SUBMISSION);
+  
+  interface FormValues {
+  formData: {
+   Question:string;
+   fieldType:string;
+   option:string[];
+   ans:string;
+    }[];
+  }
 
-  const validation = (index: number, fieldType: string, ans: string) => {
-    if (fieldType == "textArea") {
-      if (ans.length < 30)
-        errors[index] = "field should not be Less than 30 Character";
-      else errors[index] = "";
-    }
+  const { register, control, handleSubmit, watch, formState: { errors }} = useForm<FormValues>();
+  // for dynamic fields in form
+  const { fields, append, remove, update } = useFieldArray({
+    name: `formData`,
+    control,
+  });
 
-    if (fieldType == "text") {
-      if (ans.length <= 1) errors[index] = "Field Should not be empty";
-      else errors[index] = "";
+  
+  const onSubmit: SubmitHandler<FormValues> = (data) =>{
+    console.log("data:",data)
+    for(let i=0; i<data.formData.length;i++){
+      if(data.formData[i].fieldType!=="choice"){
+        res[i]=data.formData[i].ans
+        setRes([...res])
+      }   
     }
-    if (fieldType == "email") {
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans))
-        errors[index] = "Enter a valid Email Address";
-      else errors[index] = "";
-    }
-    setErrors([...errors]);
-  };
+    console.log(res);
 
-  useEffect(() => {
-    if (data) {
-      const list = [];
-      for (let i = 0; i < data.form.formData.length; i++) {
-        list.push("");
-      }
-      setRes([...list]);
-    }
-  }, []);
 
-  const saveRes = (val: string, index: number, optid?: number) => {
-    if (isSubmittedOnce) {
-      validation(index, data.form.formData[index].fieldType, res[index]);
-    }
+  } ;
 
-    const listOfRes: string[] = [...res];
-    listOfRes[index] = val;
-    setRes([...listOfRes]);
-    if (optid !== undefined) {
-      setIsActive(optid);
-      console.log("Optid", optid);
-    }
-  };
+  // const validation = (index: number, fieldType: string, ans: string) => {
+  //   console.log("validation function called....", errors)
+  //   const answer= ans.trim();
+  //   const listerrors= [...errors];
+  //   if (fieldType =="textArea") {
+  //     if (answer.length < 30)
+  //       listerrors[index] = "field should not be Less than 30 Character";
+  //     if(ans=="") listerrors[index] = ""
+  //       else listerrors[index] = "" 
+  //   }
+  //   if (fieldType == "email") {
+  //     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(answer))
+  //       listerrors[index] = "";
+  //       else listerrors[index] = "Enter a valid Email Address" 
+  //   }
+  //   setErrors([...listerrors]);
+  // };
 
-  const submitHandler = async () => {
-    setIsSubmittedOnce(true);
-    let isValidated = false;
-    for (let i = 0; i < res.length; i++) {
-      validation(i, data.form.formData[i].fieldType, res[i]);
-    }
-    for (let i = 0; i < errors.length; i++) {
-      if (errors[i] == "") {
-        isValidated = true;
-      } else {
-        isValidated = false;
-      }
-    }
-    if (isValidated) {
-      const savedRes: any = await create({
-        variables: {
-          input: {
-            formId: formId,
-            res: res,
-          },
-        },
-      });
-      console.log(savedRes);
-      if (savedRes) alert("form answer submitted");
-      onClose();
-    }
-  };
+
+
+  // const saveRes = (val: string, index: number, optid?: number) => {
+  //   if(isSubmittedOnce){
+  //     validation(index, data.form.formData[index].fieldType, res[index]);
+  //   }
+      
+  
+  //   const listOfRes: string[] = [...res];
+  //   listOfRes[index] = val;
+  //   setRes([...listOfRes]);
+    
+    
+  // };
+
+  // const submitHandler = async () => {
+  //   setIsSubmittedOnce(true);
+
+    
+    
+  //   if(!isSubmittedOnce){
+  //     for (let i = 0; i < res.length; i++) {
+  //       validation(i, data.form.formData[i].fieldType, res[i]);
+  //     }
+  //   }
+  //   let isValidated = false;
+
+  //   for (let i = 0; i < errors.length; i++) {
+  //     if (errors[i] =="") {
+  //       isValidated = true;
+  //     } else {
+  //       isValidated = false;
+  //     }
+  //   }
+  //   console.log("isvalidated", isValidated)
+    // if (isValidated) {
+    //   const savedRes: any = await create({
+    //     variables: {
+    //       input: {
+    //         formId: formId,
+    //         res: res,
+    //       },
+    //     },
+    //   });
+    //   console.log(savedRes);
+    //   if (savedRes) alert("form answer submitted");
+    //   onClose();
+    // }
+  // };
 
   console.log("res", res);
   console.log("errors", errors);
-
+  
   useEffect(() => {
+    console.log("data", data);
     if (data) {
       const list = [];
       for (let i = 0; i < data.form.formData.length; i++) {
         list.push("");
       }
       setRes([...list]);
+      append(data.form.formData);
     }
-  }, []);
+  }, [data]);
 
+
+  
   return (
     <PreviewContainer>
       {!isForm&&<PreviewHeader>
@@ -140,7 +172,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
           <span><AiOutlineReload/></span>
         </button>
       </PreviewHeader>}
-      <Form>
+      {/* <Form>
         <header>{data && <p>{data.form.title}</p>}</header>
         {data &&
           data.form.formData.map((item: any, index: number) => (
@@ -155,7 +187,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                     type="text"
                     className="answer"
                     placeholder="Enter Your answer here"
-                    onChange={(e) => saveRes(e.target.value, index)}
+                    onChange={(e) => {setA(e.target.value);saveRes(e.target.value, index);}}
                   />
                   <p className="error">{errors && errors[index]}</p>
                 </>
@@ -177,6 +209,44 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
         <button className="sub" onClick={submitHandler}>
           Submit
         </button>
+      </Form> */}
+      <Form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <header>{data && <p>{data.form.title}</p>}</header>
+        
+        {fields.map((field, index) => {
+          return (
+            <>
+              <div key={field.id} className="section">
+              <p className="question">
+                <span>{index + 1}</span>
+                {field.Question}
+              </p>
+                { field.fieldType!=="choice"&&
+                <input
+                  className="answer"
+                  type={field.fieldType}
+                  {...register(`formData.${index}.ans` as const, { required: true })}
+                />}
+                {
+                  field.fieldType=="choice"&&
+                  <>
+                  {field.option.map((item)=><div className="opt"
+                  onClick={()=>{res[index]=item;setRes([...res])}}
+                  >{item}</div> )}
+              
+              </>
+                }
+              </div>
+            </>
+          );
+        })}
+    
+        
+        <button className="sub" type="submit">
+          Submit
+        </button>
+      </form>
       </Form>
     </PreviewContainer>
   );
