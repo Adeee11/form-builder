@@ -8,7 +8,7 @@ const NavbarContainer = styled.header`
   align-items: center;
   padding: 16px 24px;
   background: white;
-  @media (min-width: 1024px){
+  @media (min-width: 1024px) {
     padding: 10px 20px;
     background: #f8f5f3;
   }
@@ -40,9 +40,8 @@ const NavLinksContainer = styled.nav<ToggleProps>`
     color: white;
     display: ${({ toggle }) => (toggle ? "flex" : "none")};
     flex-direction: column;
-    z-index: 1000; 
+    z-index: 1000;
   }
-  
 
   @media (min-width: 1024px) {
     display: flex;

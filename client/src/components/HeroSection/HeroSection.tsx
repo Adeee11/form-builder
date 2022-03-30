@@ -3,7 +3,6 @@ import { Description } from "../Description";
 import { Video } from "../Video";
 import {
   Wrapper,
-  Container,
   ListContainer,
   VideoContainer,
   ButtonContainer,
@@ -38,7 +37,7 @@ const HeroSection = () => {
         <VideoContainer>
           {/* Video */}
           <Video url={heroVideo} />
-          </VideoContainer>
+        </VideoContainer>
         <ListContainer>
           {/* List */}
           <CheckedList

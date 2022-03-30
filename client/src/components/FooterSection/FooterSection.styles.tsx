@@ -29,7 +29,7 @@ const IconContainer = styled.div`
   margin-bottom: 20px;
   font-size: 20px;
   margin-left: 5vw;
-  svg{
+  svg {
     padding-right: 5px;
     font-size: 25px;
   }

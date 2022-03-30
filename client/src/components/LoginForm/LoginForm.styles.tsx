@@ -9,11 +9,16 @@ const Field = styled.div`
   max-width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 5px 10px;
   text-align: left;
   margin-bottom: 20px;
-  input{
-    max-width: 80%;
+  input,
+  label {
+    margin-left: 0;
+  }
+  input[type="submit"] {
+    margin: 0 auto;
   }
 `;
 
@@ -22,8 +27,7 @@ const Submit = styled.input`
   color: white;
   background: #262627;
   font-size: 18px;
-  max-width: 80vw;
-  min-width: 300px;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: 20px;
 `;
@@ -44,15 +48,6 @@ const Or = styled.span`
   display: inline-block;
 `;
 
-const Container = styled.div`
-`
+const Container = styled.div``;
 
-export {
-  Container,
-  Form,
-  Or,
-  Field,
-  Submit,
-  HorizontalLine,
-  GrayLink,
-};
+export { Container, Form, Or, Field, Submit, HorizontalLine, GrayLink };

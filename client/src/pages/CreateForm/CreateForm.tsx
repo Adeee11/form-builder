@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { gql, useMutation } from "@apollo/client";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
 import { Preview } from "../../components/preview";
 import Modal from "../../components/Modal/Modal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Share } from "../../components/share";
 import { Results } from "../../components/results";
-import { useAppSelector } from "../../providers/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
 import PublishModal from "../../components/PublishModal/PublishModal";
-import { Wrapper, Header, Form, LogoutMenu } from "./CreateForm.styles";
-import { Avatar } from "../EditForm/EditForm.styles";
+import {
+  Wrapper,
+  Header,
+  Form,
+  LogoutMenu,
+  Logout,
+  DashboardLink,
+  Container,
+} from "./CreateForm.styles";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { Token } from "graphql";
+import { EditFormState } from "../../providers/features/editFormIdSlice";
+import { LoginState, loggedOut } from "../../providers/features/loginSlice";
+import { changeToken } from "../../providers/features/tokenSlice";
+import { User, changeUser } from "../../providers/features/userSlice";
 
 const CREATE_FORM = gql`
   mutation createForm($input: CreateFormInput!) {
@@ -54,6 +68,31 @@ type Inputs = {
   title: string;
 };
 
+const logout = async (
+  dispatch: ThunkDispatch<
+    {
+      login: LoginState;
+      user: User;
+      token: Token;
+      editFormId: EditFormState;
+    },
+    undefined,
+    AnyAction
+  > &
+    Dispatch<AnyAction>,
+  navigate: NavigateFunction
+) => {
+  await dispatch(loggedOut());
+  await dispatch(changeToken(""));
+  await dispatch(
+    changeUser({
+      username: "Logged out",
+      id: "",
+    })
+  );
+  navigate("/");
+};
+
 const CreateForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
@@ -63,20 +102,16 @@ const CreateForm = () => {
   const [menu, setMenu] = useState("create");
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
-  const [opt, setOpt]= useState('');
+  const [opt, setOpt] = useState("");
   const userName = useAppSelector((state) => state.user.username);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { register, handleSubmit, setValue, watch } = useForm<Inputs>({
     defaultValues: { title: "my typeform" },
   });
   const [create, { loading, error }] = useMutation(CREATE_FORM);
-  const [update, state] = useMutation(UPDATE_FORM);
+  const [update] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
     e?.preventDefault();
@@ -136,12 +171,11 @@ const CreateForm = () => {
     const list = [...formData];
     list[i].option[formData[i].option.length] = opt;
     setformData([...list]);
-    setOpt('');
-    const el:any=document.getElementsByClassName('typedOption');
-    for(let i=0; i<el.length; i++){
-      el[i].value=""
+    setOpt("");
+    const el: any = document.getElementsByClassName("typedOption");
+    for (let i = 0; i < el.length; i++) {
+      el[i].value = "";
     }
-     
   };
 
   const del = (i: number, index: number) => {
@@ -156,16 +190,31 @@ const CreateForm = () => {
     document.getElementById("input")?.focus();
   };
 
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+  if (!isLoggedIn) {
+    return (
+      <>
+        <h1>Please Log in first</h1>
+        <Link to={"/login"}>To login page</Link>
+      </>
+    );
+  }
+
   if (previewMode) {
     return <Preview formId={formId} onClose={() => setPreviewMode(false)} />;
   }
-console.log(editQue)
+  console.log(editQue);
   return (
     <Wrapper>
       <Header>
         <div className="first">
-          <span>my Work space / </span>
-          <span>{watch("title")}</span>
+          <Container>
+            <span>my Work space / </span>
+            <span>{watch("title")}</span>
+          </Container>
+          <DashboardLink to={"/dashboard"}>
+            <AiOutlineClose />
+          </DashboardLink>
         </div>
 
         <ul>
@@ -204,28 +253,39 @@ console.log(editQue)
       )}
       {showModal && <Modal setShowModal={setShowModal} AddInput={AddInput} />}
 
-      {showLogoutMenu && <LogoutMenu>
-        <div className="logout-header">
-           <span className="avatar">{userName[0].toUpperCase()}</span>
+      {showLogoutMenu && (
+        <LogoutMenu>
+          <div className="logout-header">
+            <span className="avatar">{userName[0].toUpperCase()}</span>
             <p>{userName}</p>
-        </div>
+          </div>
 
-        <ul className="list">
-          <li className="bold">Profile</li>
-          <li>Setting</li>
-          <li>Resources</li>
-          <li>Quick help</li>
-          <li>Help Center</li>
-          <li>Ask the community</li>
-          <li>Apps & Integration</li>
-          <li>What's New</li>
-          <li className="danger">Log out</li>
-        </ul>
-
-        </LogoutMenu>}
+          <ul className="list">
+            <li className="bold">Profile</li>
+            <li>Setting</li>
+            <li>Resources</li>
+            <li>Quick help</li>
+            <li>Help Center</li>
+            <li>Ask the community</li>
+            <li>Apps & Integration</li>
+            <li>What's New</li>
+            <li className="danger">
+              <Logout onClick={() => logout(dispatch, navigate)}>
+                Log out
+              </Logout>
+            </li>
+          </ul>
+        </LogoutMenu>
+      )}
       {menu === "create" && (
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-header"><input type="text" placeholder="Title Here" {...register("title")} /></div>
+          <div className="form-header">
+            <input
+              type="text"
+              placeholder="Title Here"
+              {...register("title")}
+            />
+          </div>
           {formData.map(
             (
               a: { fieldType: string; Question: string; option: string[] },
@@ -264,18 +324,21 @@ console.log(editQue)
                 ) : (
                   <div className="opt">
                     <span>
-                    
-                      
                       <input
                         type="text"
                         placeholder="Enter Options Here"
-                        onChange={(e)=>{setOpt(e.target.value);setEditQue(i)}}
+                        onChange={(e) => {
+                          setOpt(e.target.value);
+                          setEditQue(i);
+                        }}
                         className="typedOption"
                       />
 
                       <button
                         type="button"
-                        onClick={() => {saveOption(opt, i)}}
+                        onClick={() => {
+                          saveOption(opt, i);
+                        }}
                       >
                         +
                       </button>
@@ -299,7 +362,7 @@ console.log(editQue)
           <span className="chooseInput" onClick={() => setShowModal(true)}>
             <AiOutlinePlus />
           </span>
-       
+
           {formData.length > 0 && (
             <button type="submit" className="sub">
               Save
@@ -309,7 +372,7 @@ console.log(editQue)
       )}
       {menu === "share" && <Share formId={formId} />}
 
-      {menu == "result" && <Results formId={formId} />}
+      {menu === "result" && <Results formId={formId} />}
     </Wrapper>
   );
 };

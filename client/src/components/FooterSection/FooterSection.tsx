@@ -15,7 +15,6 @@ import {
   AiOutlineLinkedin,
 } from "react-icons/ai";
 import { RiFacebookCircleLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
 
 const FooterSection = () => {
   const headings = ["Heading1", "Heading2", "Heading3", "Heading4"];

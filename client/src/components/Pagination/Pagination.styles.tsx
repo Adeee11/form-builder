@@ -4,6 +4,7 @@ const PageNumberList = styled.ul`
   list-style: none;
   display: flex;
   justify-content: center;
+  padding-left: 0;
 `;
 const PageNumber = styled.button`
   display: flex;

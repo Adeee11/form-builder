@@ -1,4 +1,3 @@
-import React from "react";
 import { PageNumber, PageNumberList } from "./Pagination.styles";
 
 const Pagination = (props: {
@@ -17,8 +16,10 @@ const Pagination = (props: {
     <>
       <PageNumberList>
         <PageNumber onClick={prevPage}>{"<"}</PageNumber>
-        {items.map((item) => (
-          <PageNumber onClick={() => paginate(item)}>{item}</PageNumber>
+        {items.map((item, index) => (
+          <PageNumber key={`pg${index}`} onClick={() => paginate(item)}>
+            {item}
+          </PageNumber>
         ))}
         <PageNumber onClick={nextPage}>{">"}</PageNumber>
       </PageNumberList>

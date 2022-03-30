@@ -1,24 +1,23 @@
 import styled from "styled-components";
 
 const Card = styled.div`
-  
-  margin-top:20px;
+  margin-top: 20px;
   border-radius: 4px;
   background-color: white;
-  box-shadow:  0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 10px;
-  width:150px;
-  max-height:150px;
+  width: 150px;
+  max-height: 150px;
   margin-right: 30px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   svg {
-   cursor: pointer;
+    cursor: pointer;
   }
   hr {
-  margin: 5px;
+    margin: 5px;
   }
-  .bottom{
+  .bottom {
     width: 100%;
     display: flex;
     align-items: center;
@@ -29,17 +28,17 @@ const Card = styled.div`
   }
 `;
 const TypeFormName = styled.h3`
- font-size: 14px;
- width:100%;
- height: 100px;
- display: flex;
- align-items: center;
- justify-content: center;
- margin-bottom: 0px;
+  font-size: 14px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
 `;
 
 const ResponsesCounter = styled.span`
- font-size: 12px;
+  font-size: 12px;
 `;
 
 const ModalContainer = styled.div`
@@ -48,10 +47,10 @@ const ModalContainer = styled.div`
   justify-content: left;
   background: white;
   position: absolute;
-  left:100px;
+  left: 100px;
   bottom: 30px;
-  width:150px;
-  box-shadow:  2px 4px 4px 2px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  box-shadow: 2px 4px 4px 2px rgba(0, 0, 0, 0.2);
 `;
 const ModalItems = styled.span`
   text-align: left;

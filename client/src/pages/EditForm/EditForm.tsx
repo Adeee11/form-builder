@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
 import { Preview } from "../../components/preview";
@@ -14,7 +16,6 @@ import {
   Header,
   LinkContainer,
   PublishContainer,
-  StyledLink,
   ItemContainer,
   WorkspaceName,
   Wrapper,
@@ -34,20 +35,10 @@ import {
   AddNewOption,
   OptionsContainer,
   NewOptionContainer,
+  DashboardLink,
+  Container,
 } from "./EditForm.styles";
 import { GET_FORM_BY_ID, UPDATE_FORM } from "./queries";
-
-// Form_data Interface
-interface Form_Data {
-  data: {
-    form: {
-      id: string;
-      title: string;
-      owner: string;
-      formData: FieldData[];
-    };
-  };
-}
 
 // Field Data Interface
 interface FieldData {
@@ -70,34 +61,6 @@ type FormValues = {
   }[];
   formTitle: string;
 };
-
-// Sample Data
-// const SAMPLE_DATA: Form_Data = {
-//   data: {
-//     form: {
-//       id: "62399c3b72d0b98a7184422b",
-//       title: "myrm",
-//       owner: "62397013e3a4f86fafa0f26f",
-//       formData: [
-//         {
-//           fieldType: "text",
-//           Question: "q1?",
-//           option: [],
-//         },
-//         {
-//           fieldType: "text",
-//           Question: "q2?",
-//           option: [],
-//         },
-//         {
-//           fieldType: "select",
-//           Question: "gender?",
-//           option: ["male", "female", "other"],
-//         },
-//       ],
-//     },
-//   },
-// };
 
 // for removing __typename field from formData
 const removeTypename = (object: any) => {
@@ -151,7 +114,7 @@ const EditForm = () => {
 
   if (loading) console.log("Loading....");
   if (error) console.log(JSON.stringify(error, null, 2));
-  // if (data) console.log(data);
+
   const AvatarLetter = userName[0];
   console.log("Form Data", watch("formData"));
   // UseEffect hook
@@ -181,32 +144,11 @@ const EditForm = () => {
         : console.log(`FirstLoad: ${firstLoad}`);
       setFirstLoad(false);
     }
-    //  else {
-    //   // firstLoad &&
-    //   append(
-    //     SAMPLE_DATA.data.form.formData.map((field) => {
-    //       const formField = {
-    //         question: {
-    //           value: field.Question,
-    //         },
-    //         answer: {
-    //           value: "",
-    //           fieldType: field.fieldType,
-    //           option: field.option,
-    //         },
-    //       };
-    //       return formField;
-    //     })
-    //   );
-    // }
   }, [data, append, firstLoad]);
-
-  // let watchFormTitle = watch("formTitle");
-  // watchFormTitle = formTitle;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     console.log(data);
-    setFormTitle(data.formTitle);
+
     const formData: FieldData[] = data.formData.map((ele) => {
       const obj = {
         fieldType: ele.answer.fieldType,
@@ -218,7 +160,7 @@ const EditForm = () => {
     const updatedForm = await updateForm({
       variables: {
         input: {
-          title: data.formTitle,
+          title: data.formTitle !== "" ? data.formTitle : formTitle,
           formData: formData,
         },
         id: editFormId,
@@ -261,7 +203,7 @@ const EditForm = () => {
 
   const removeOption = (option: string, fieldIndex: number) => {
     const options = fields[fieldIndex].answer.option.filter(
-      (value) => value != option
+      (value) => value !== option
     );
     const newValue = {
       question: fields[fieldIndex].question,
@@ -273,6 +215,15 @@ const EditForm = () => {
     };
     update(fieldIndex, newValue);
   };
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+  if (!isLoggedIn) {
+    return (
+      <>
+        <h1>Please Log in first</h1>
+        <Link to={"/login"}>To login page</Link>
+      </>
+    );
+  }
 
   if (preview) {
     return (
@@ -284,12 +235,17 @@ const EditForm = () => {
     <>
       <Wrapper>
         <Header>
-          <FormNameContainer>
-            <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
-            <Heading>
-              {watch("formTitle") === "" ? formTitle : watch("formTitle")}
-            </Heading>
-          </FormNameContainer>
+          <Container>
+            <FormNameContainer>
+              <WorkspaceName>{workspaceName + " / "}</WorkspaceName>
+              <Heading>
+                {watch("formTitle") === "" ? formTitle : watch("formTitle")}
+              </Heading>
+            </FormNameContainer>
+            <DashboardLink to={"/dashboard"}>
+              <AiOutlineClose />{" "}
+            </DashboardLink>
+          </Container>
           {/* Links  */}
           <LinkContainer>
             <div>
@@ -335,9 +291,6 @@ const EditForm = () => {
                 {fields.map((field, index) => {
                   return (
                     <FormFields key={field.id}>
-                      {/* <label>
-                      {index + 1}. {field.Question}
-                    </label> */}
                       <QuestionContainer>
                         {index + 1}.{" "}
                         <Question
@@ -346,7 +299,6 @@ const EditForm = () => {
                             `formData.${index}.question.value` as const
                           )}
                           placeholder={"Write your question..."}
-                          // defaultValue={(index + 1).toString() + field.Question}
                         />
                         <PlusButtonContainer>
                           <PlusButton
@@ -433,7 +385,7 @@ const EditForm = () => {
           )}
           {menu === "share" && <Share formId={String(editFormId)} />}
 
-          {menu == "result" && <Results formId={String(editFormId)} />}
+          {menu === "result" && <Results formId={String(editFormId)} />}
         </Main>
       </Wrapper>
     </>

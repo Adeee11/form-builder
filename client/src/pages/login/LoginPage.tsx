@@ -10,8 +10,8 @@ const LoginPage = () => {
   return (
     <>
       {" "}
+      <LoginHeader />
       <Container>
-        <LoginHeader />
         <Description
           heading={heading}
           text={text}

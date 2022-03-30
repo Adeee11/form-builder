@@ -5,7 +5,6 @@ import { Form, PreviewContainer, PreviewHeader } from "./Preview.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
-
 const GET_FORM = gql`
   query form($input: ID!) {
     form(formId: $input) {
@@ -39,6 +38,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
   const [res, setRes] = useState<string[]>([]);
   // const [errors, setErrors] = useState<string[]>([]);
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
+<<<<<<< HEAD
   const [a, setA]= useState('');
   const { loading, error, data } = useQuery(GET_FORM, {
     variables: { input: formId },
@@ -72,6 +72,41 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     }
     console.log(res);
 
+=======
+  const { data } = useQuery(GET_FORM, {
+    variables: { input: formId },
+  });
+  const [create] = useMutation(CREATE_SUBMISSION);
+
+  const validation = (index: number, fieldType: string, ans: string) => {
+    if (fieldType === "textArea") {
+      if (ans.length < 30)
+        errors[index] = "field should not be Less than 30 Character";
+      else errors[index] = "";
+    }
+
+    if (fieldType === "text") {
+      if (ans.length <= 1) errors[index] = "Field Should not be empty";
+      else errors[index] = "";
+    }
+    if (fieldType === "email") {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans.trim()))
+        errors[index] = "";
+      else errors[index] = "Enter a valid Email Address";
+    }
+    setErrors([...errors]);
+  };
+
+  useEffect(() => {
+    if (data) {
+      const list = [];
+      for (let i = 0; i < data.form.formData.length; i++) {
+        list.push("");
+      }
+      setRes([...list]);
+    }
+  }, [data]);
+>>>>>>> e7436e584cd241a9d8227c7876ce69a9c5e87d4c
 
   } ;
 
@@ -93,6 +128,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
   //   setErrors([...listerrors]);
   // };
 
+<<<<<<< HEAD
 
 
   // const saveRes = (val: string, index: number, optid?: number) => {
@@ -158,10 +194,53 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     }
   }, [data]);
 
+=======
+  const submitHandler = async () => {
+    setIsSubmittedOnce(true);
+    let isValidated = false;
+    for (let i = 0; i < res.length; i++) {
+      validation(i, data.form.formData[i].fieldType, res[i]);
+    }
+    for (let i = 0; i < errors.length; i++) {
+      if (errors[i] === "") {
+        isValidated = true;
+      } else {
+        isValidated = false;
+      }
+    }
+    if (isValidated) {
+      const savedRes: any = await create({
+        variables: {
+          input: {
+            formId: formId,
+            res: res,
+          },
+        },
+      });
+      console.log(savedRes);
+      if (savedRes) alert("form answer submitted");
+      onClose();
+    }
+  };
+
+  console.log("res", res);
+  console.log("errors", errors);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     const list = [];
+  //     for (let i = 0; i < data.form.formData.length; i++) {
+  //       list.push("");
+  //     }
+  //     setRes([...list]);
+  //   }
+  // }, []);
+>>>>>>> e7436e584cd241a9d8227c7876ce69a9c5e87d4c
 
   
   return (
     <PreviewContainer>
+<<<<<<< HEAD
       {!isForm&&<PreviewHeader>
         <span className="back" onClick={()=>onClose()}>
           <BsArrowLeft/>
@@ -173,6 +252,23 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
         </button>
       </PreviewHeader>}
       {/* <Form>
+=======
+      {!isForm && (
+        <PreviewHeader>
+          <span className="back" onClick={() => onClose()}>
+            <BsArrowLeft />
+          </span>
+          <span>Preview</span>
+          <button>
+            Reload
+            <span>
+              <AiOutlineReload />
+            </span>
+          </button>
+        </PreviewHeader>
+      )}
+      <Form>
+>>>>>>> e7436e584cd241a9d8227c7876ce69a9c5e87d4c
         <header>{data && <p>{data.form.title}</p>}</header>
         {data &&
           data.form.formData.map((item: any, index: number) => (
@@ -192,7 +288,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                   <p className="error">{errors && errors[index]}</p>
                 </>
               )}
-              {item.fieldType == "choice" &&
+              {item.fieldType === "choice" &&
                 item.option.map((opt: string, num: number) => (
                   <div
                     onClick={() => {

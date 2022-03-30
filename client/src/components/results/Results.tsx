@@ -57,7 +57,7 @@ const Results = ({ formId }: propType) => {
     },
   });
 
-  const [remove, { loading: l, error: e }] = useMutation(REMOVE_SUBMISSION);
+  const [remove] = useMutation(REMOVE_SUBMISSION);
 
   if (loading) console.log("loading..", data);
   if (error) console.log("error", error);
@@ -198,7 +198,7 @@ const Results = ({ formId }: propType) => {
                 data.form.formData.map((item: any, index: number) => (
                   <div className="block" key={index}>
                     <div className="question">
-                      <span>{index + 1}</span>
+                      <span>{index + 1}. </span>
                       <span>{item.Question}</span>
                     </div>
                   </div>

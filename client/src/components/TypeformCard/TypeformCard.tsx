@@ -7,20 +7,27 @@ import {
 } from "./TypeformCard.styles";
 import { BsThreeDots } from "react-icons/bs";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const TypeformCardModal = (props: {
   editForm: () => void;
   deleteForm: () => void;
-  show:()=>void
+  viewForm: () => void;
+  show: () => void;
 }) => {
-  const { editForm, deleteForm , show} = props;
+  const { editForm, deleteForm, viewForm, show } = props;
   return (
     <>
       <ModalContainer>
         <ModalItems onClick={editForm}>Edit </ModalItems>
-        <ModalItems onClick={()=>{deleteForm(); show()}}>Delete </ModalItems>
-        <ModalItems>View </ModalItems>
+        <ModalItems
+          onClick={() => {
+            deleteForm();
+            show();
+          }}
+        >
+          Delete{" "}
+        </ModalItems>
+        <ModalItems onClick={viewForm}>View </ModalItems>
       </ModalContainer>
     </>
   );
@@ -31,12 +38,13 @@ const TypeformCard = (props: {
   responsesNumber: number;
   edit: () => void;
   delForm: () => void;
+  viewForm: () => void;
 }) => {
-  const { typeformName, responsesNumber, edit, delForm } = props;
+  const { typeformName, responsesNumber, edit, delForm, viewForm } = props;
   const [showOptions, setShowOptions] = useState(false);
-  const show=()=>{
+  const show = () => {
     setShowOptions(false);
-  }
+  };
   return (
     <>
       {/* <Card onClick={onClick}> */}
@@ -50,7 +58,12 @@ const TypeformCard = (props: {
           </ResponsesCounter>
           <BsThreeDots onClick={() => setShowOptions(!showOptions)} />
           {showOptions && (
-            <TypeformCardModal editForm={edit} deleteForm={delForm} show={show} />
+            <TypeformCardModal
+              editForm={edit}
+              deleteForm={delForm}
+              viewForm={viewForm}
+              show={show}
+            />
           )}
         </div>
       </Card>

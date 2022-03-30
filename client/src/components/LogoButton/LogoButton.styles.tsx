@@ -11,13 +11,13 @@ const LogoButtonContainer = styled(Link)`
   font-size: 20px;
   margin: 0 auto;
   margin-top: 15px;
-  min-width: 300px;
+  width: calc(100% - 18px);
   justify-content: center;
 `;
 
 const LogoText = styled.span`
-    padding-left: 20px;
-    font-size: 15px;
-`
+  padding-left: 20px;
+  font-size: 15px;
+`;
 
 export { LogoButtonContainer, LogoText };

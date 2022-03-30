@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   text-align: center;
   grid-row-gap: 20px;
   padding-top: 50px;
- 
+
   @media (min-width: 1024px) {
     grid-template-rows: auto 1fr 2fr;
     grid-template-columns: repeat(2, 1fr);

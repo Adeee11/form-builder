@@ -1,16 +1,16 @@
 import React from "react";
 import { Item, List, NavLink } from "./NavLinks.styles";
 
-type Item = string | React.ReactNode;
+type ItemType = string | React.ReactNode;
 
-const NavLinks = (props: { items: Item[] }) => {
+const NavLinks = (props: { items: ItemType[] }) => {
   const { items } = props;
   return (
     <>
       <List>
         {items.map((item, index) => {
           return typeof item === typeof "" ? (
-            // Need to change the key to be unique id later on 
+            // Need to change the key to be unique id later on
             <Item key={index}>
               <NavLink to="/">{item}</NavLink>
             </Item>

@@ -1,9 +1,7 @@
 import {
   FirstRow,
   SecondRow,
-  IconContainer,
   PipeSymbol,
-  Row,
   WorkspaceName,
   Wrapper,
 } from "./WorkspaceAbout.styles";
@@ -24,10 +22,9 @@ const WorkspaceAbout = (props: {
   const { changeFilter, filter } = props;
   return (
     <>
-  
       <Wrapper>
         <FirstRow>
-          <WorkspaceName >My Workspace</WorkspaceName>
+          <WorkspaceName>{workspaceName}</WorkspaceName>
           <PipeSymbol>|</PipeSymbol>
           <FaUserPlus />
           <ImLoop />
@@ -45,7 +42,7 @@ const WorkspaceAbout = (props: {
             label={""}
           />
         </SecondRow>
-        <hr/>
+        <hr />
       </Wrapper>
     </>
   );

@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   background: #fafafa;
@@ -24,11 +25,10 @@ const Header = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     overflow: hidden;
-    
+
     ul,
     p {
       justify-content: space-evenly;
-      
     }
   }
   .first {
@@ -37,12 +37,13 @@ const Header = styled.div`
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
-    flex-basis:33%;
-    max-width:33%;
-    overflow:hidden;
-    @media (max-width:900px){
-      flex-basis:100%;
-      max-width:100vw;
+    flex-basis: 33%;
+    max-width: 33%;
+    overflow: hidden;
+    justify-content: space-between;
+    @media (max-width: 900px) {
+      flex-basis: 100%;
+      max-width: 100vw;
     }
     span {
       min-width: 120px;
@@ -64,17 +65,17 @@ const Header = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
     margin-bottom: 0px;
-    flex-basis:33%;
+    flex-basis: 33%;
 
     li {
       margin-right: 30px;
       cursor: pointer;
       padding-left: 10px;
-      @media (max-width:900px){
+      @media (max-width: 900px) {
         margin-right: 0px;
       }
     }
-    li :hover{
+    li :hover {
       color: blue;
     }
   }
@@ -84,7 +85,12 @@ const Header = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 10px;
     margin-bottom: 0px;
-    flex-basis:33%;
+    flex-basis: 33%;
+
+    @media (min-width: 900px) {
+      justify-content: flex-end;
+    }
+
     .publish {
       background: black;
       color: white;
@@ -134,7 +140,7 @@ const Form = styled.form`
   border-radius: 10px;
   margin-top: 20px;
   overflow-x: hidden;
-  
+
   .form-header {
     border-radius: 10px;
     font-size: 25px;
@@ -143,10 +149,10 @@ const Form = styled.form`
     width: 100%;
     padding: 10px;
     border-top: 10px solid blue;
-    input{
-      outline:none;
-      border:none;
-      width:100%;
+    input {
+      outline: none;
+      border: none;
+      width: 100%;
     }
   }
   .que {
@@ -157,7 +163,7 @@ const Form = styled.form`
     margin-top: 20px;
     span {
       margin-right: 4px;
-      flex:0;
+      flex: 0;
     }
     .input {
       width: 100%;
@@ -262,16 +268,15 @@ const LogoutMenu = styled.div`
   position: fixed;
   margin-top: 2px;
   right: 10px;
-  width:250px;
+  width: 250px;
   z-index: 9999999;
   background: white;
-  box-shadow:  0 8px 8px 0 rgba(0, 0, 0, 0.2);
-  .logout-header{
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+  .logout-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0px;
     margin-bottom: 0px;
-    p{
-
+    p {
       font-size: 14px;
       display: inline-block;
     }
@@ -279,7 +284,7 @@ const LogoutMenu = styled.div`
       margin-right: 10px;
       border-radius: 50%;
       background: blue;
-      width:27px;
+      width: 27px;
       height: 27px;
       color: white;
       display: inline-flex;
@@ -288,28 +293,50 @@ const LogoutMenu = styled.div`
       text-transform: uppercase;
       font-size: 14px;
     }
-
   }
-  ul{
+  ul {
     list-style: none;
     font-size: 14px;
     width: 100%;
-    
-    li{
+
+    li {
       padding-top: 8px;
       width: 100%;
       margin-left: 0px;
       padding-left: 0px;
     }
-    
-    .bold{
+
+    .bold {
       font-weight: 700;
     }
-    .danger{
-      color:red;
+    .danger {
+      color: red;
     }
-     }
- 
-  `;
+  }
+`;
 
-export { Wrapper, Header, Form, LogoutMenu };
+const Logout = styled.button`
+  color: red;
+  text-decoration: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border: transparent;
+  background: transparent;
+`;
+
+const DashboardLink = styled(Link)`
+  text-decoration: none;
+  font-size: 20px;
+  margin-bottom: 8px;
+  justify-self: flex-end;
+  color: grey;
+  @media (min-width: 900px) {
+    display: none;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+`;
+
+export { Wrapper, Header, Form, LogoutMenu, Logout, DashboardLink, Container };
