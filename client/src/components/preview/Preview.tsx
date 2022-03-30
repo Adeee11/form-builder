@@ -4,7 +4,6 @@ import { BsArrowLeft } from "react-icons/bs";
 import { Form, PreviewContainer, PreviewHeader } from "./Preview.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-
 const GET_FORM = gql`
   query form($input: ID!) {
     form(formId: $input) {
@@ -39,23 +38,23 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
   const [isActive, setIsActive] = useState(-1);
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
-  const { loading, error, data } = useQuery(GET_FORM, {
+  const { data } = useQuery(GET_FORM, {
     variables: { input: formId },
   });
-  const [create, { loading: l, error: e }] = useMutation(CREATE_SUBMISSION);
+  const [create] = useMutation(CREATE_SUBMISSION);
 
   const validation = (index: number, fieldType: string, ans: string) => {
-    if (fieldType == "textArea") {
+    if (fieldType === "textArea") {
       if (ans.length < 30)
         errors[index] = "field should not be Less than 30 Character";
       else errors[index] = "";
     }
 
-    if (fieldType == "text") {
+    if (fieldType === "text") {
       if (ans.length <= 1) errors[index] = "Field Should not be empty";
       else errors[index] = "";
     }
-    if (fieldType == "email") {
+    if (fieldType === "email") {
       if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans))
         errors[index] = "Enter a valid Email Address";
       else errors[index] = "";
@@ -94,7 +93,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
       validation(i, data.form.formData[i].fieldType, res[i]);
     }
     for (let i = 0; i < errors.length; i++) {
-      if (errors[i] == "") {
+      if (errors[i] === "") {
         isValidated = true;
       } else {
         isValidated = false;
@@ -130,16 +129,20 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
 
   return (
     <PreviewContainer>
-      {!isForm&&<PreviewHeader>
-        <span className="back" onClick={()=>onClose()}>
-          <BsArrowLeft/>
-        </span>
-        <span>Preview</span>
-        <button>
-          Reload
-          <span><AiOutlineReload/></span>
-        </button>
-      </PreviewHeader>}
+      {!isForm && (
+        <PreviewHeader>
+          <span className="back" onClick={() => onClose()}>
+            <BsArrowLeft />
+          </span>
+          <span>Preview</span>
+          <button>
+            Reload
+            <span>
+              <AiOutlineReload />
+            </span>
+          </button>
+        </PreviewHeader>
+      )}
       <Form>
         <header>{data && <p>{data.form.title}</p>}</header>
         {data &&
@@ -160,7 +163,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
                   <p className="error">{errors && errors[index]}</p>
                 </>
               )}
-              {item.fieldType == "choice" &&
+              {item.fieldType === "choice" &&
                 item.option.map((opt: string, num: number) => (
                   <div
                     onClick={() => {

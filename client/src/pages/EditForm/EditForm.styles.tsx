@@ -99,6 +99,7 @@ const Main = styled.main`
     .popup {
       transform: translate(-190px, -200px);
     }
+    padding: 10px 5vw;
   }
 `;
 

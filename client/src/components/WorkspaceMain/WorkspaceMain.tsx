@@ -19,16 +19,11 @@ const WorkspaceMain = (props: {
   const [TypeformNames, setTypeformNames] = useState([
     { title: "Data didn't arrive yet", id: "", noOfResponses: 0 },
   ]);
+
+  // for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  // const [posts, setPosts] = useState([
-  //   {
-  //     userId: 0,
-  //     id: 0,
-  //     title: "Nothing yet",
-  //     body: "Nothing yet",
-  //   },
-  // ]);
-  const [postsPerPage, setPostsPerPage] = useState(5);
+  const [postsPerPage] = useState(5);
+
   const { loading, error, data, refetch } = useQuery(GET_FORMS, {
     variables: { userId, sortBy: filter },
   });
@@ -39,8 +34,11 @@ const WorkspaceMain = (props: {
 
   if (delLoad) console.log("Loading...");
   if (delErr) console.log(JSON.stringify(delErr, null, 2));
-  
 
+  // for refetching the query when the page loads
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     console.log("Filter boi", filter);
@@ -68,15 +66,6 @@ const WorkspaceMain = (props: {
             { title: "No typeform", id: "", noOfResponses: 0 },
           ]);
     }
-
-    // for testing pagination
-    // const fetchRandomData = async () => {
-    //   const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-    //   console.log("Result", res);
-    //   setPosts(res.data);
-    // };
-
-    // fetchRandomData();
   }, [data, filter]);
 
   const dispatch = useAppDispatch();
@@ -110,7 +99,6 @@ const WorkspaceMain = (props: {
 
   // pagination
   const noOfPosts = TypeformNames.length;
-  // const noOfPosts = posts.length;
 
   const prevPage = () => {
     console.log("Previous Page Clicked");
@@ -120,7 +108,7 @@ const WorkspaceMain = (props: {
   };
   const nextPage = () => {
     console.log("Next Page Clicked");
-    currentPage < TypeformNames.length
+    currentPage < Math.ceil(TypeformNames.length / postsPerPage)
       ? setCurrentPage(currentPage + 1)
       : alert("Can't go right anymore");
   };
@@ -132,9 +120,10 @@ const WorkspaceMain = (props: {
   // Choosing current display items
   const lastIndex = currentPage * postsPerPage;
   const firstIndex = lastIndex - postsPerPage;
+  console.log("First Index", firstIndex);
+  console.log("Last Index", lastIndex);
 
   const CurrentTypeformNames = TypeformNames.slice(firstIndex, lastIndex);
-  // const CurrentData = posts.slice(firstIndex, lastIndex);
 
   return (
     <>
@@ -155,11 +144,6 @@ const WorkspaceMain = (props: {
         ) : (
           <></>
         )}
-
-        {/*  dummmy test
-           CurrentData.map((item) => (
-             <p>{item.title}</p>
-           )) */}
       </Wrapper>
       <PaginationContainer>
         <Pagination

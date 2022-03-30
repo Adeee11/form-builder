@@ -4,25 +4,25 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: #fafafa;
-  padding:10px;
-  hr{
-    margin:0px;
+  padding: 10px;
+  hr {
+    margin: 0px;
   }
-  svg{
-    font-size:16px;
-    color:gray;
+  svg {
+    font-size: 16px;
+    color: gray;
   }
 `;
 
 const WorkspaceName = styled.p`
   font-size: 18px;
-  margin-bottom:0px;
-  margin-left:0px;
-  margin-right:30px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 30px;
 `;
 const PipeSymbol = styled.span`
-font-weight: 100;
-color:gray;
+  font-weight: 100;
+  color: gray;
 `;
 
 const Row = styled.div`
@@ -34,8 +34,8 @@ const FirstRow = styled(Row)`
   align-items: center;
   padding: 20px 10px;
   padding-bottom: 5px;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   span {
     margin-right: 10px;
   }

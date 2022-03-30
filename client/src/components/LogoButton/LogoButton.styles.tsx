@@ -13,7 +13,6 @@ const LogoButtonContainer = styled(Link)`
   margin-top: 15px;
   width: calc(100% - 18px);
   justify-content: center;
-  /* max-width: calc(350px - 30px); */
 `;
 
 const LogoText = styled.span`

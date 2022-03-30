@@ -18,7 +18,6 @@ import {
   DashboardLink,
   Container,
 } from "./CreateForm.styles";
-import { Avatar } from "../EditForm/EditForm.styles";
 import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import { Token } from "graphql";
@@ -105,17 +104,11 @@ const CreateForm = () => {
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
   const [opt, setOpt] = useState("");
   const userName = useAppSelector((state) => state.user.username);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { register, handleSubmit, setValue, watch } = useForm<Inputs>({
     defaultValues: { title: "my typeform" },
   });
   const [create, { loading, error }] = useMutation(CREATE_FORM);
-  const [update, state] = useMutation(UPDATE_FORM);
+  const [update] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -379,7 +372,7 @@ const CreateForm = () => {
       )}
       {menu === "share" && <Share formId={formId} />}
 
-      {menu == "result" && <Results formId={formId} />}
+      {menu === "result" && <Results formId={formId} />}
     </Wrapper>
   );
 };

@@ -1,8 +1,7 @@
-
 import { UseFormRegister, Path } from "react-hook-form";
 import { Container, Heading, Label, Option } from "./RadioButton.styles";
 
-type Option = {
+type OptionType = {
   value: string;
   label: string;
   register: UseFormRegister<FormFields>;
@@ -19,10 +18,7 @@ type FormFields = {
   shareData?: boolean;
 };
 
-const RadioButton = (props: {
-  heading: string;
-  options: Option[];
-}) => {
+const RadioButton = (props: { heading: string; options: OptionType[] }) => {
   const { heading, options } = props;
 
   return (
@@ -32,10 +28,8 @@ const RadioButton = (props: {
         {options.map((option, index) => (
           <Container key={index}>
             <Option
-            
               {...option.register(option.registerValue)}
               value={option.value}
-
             />
             <Label>{option.label}</Label>
           </Container>

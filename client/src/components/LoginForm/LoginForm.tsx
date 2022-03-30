@@ -15,7 +15,7 @@ import {
 import { useMutation } from "@apollo/client";
 import { LOG_IN } from "./queries";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../providers/app/hooks";
+import { useAppDispatch } from "../../providers/app/hooks";
 import { changeToken } from "../../providers/features/tokenSlice";
 import { changeUser } from "../../providers/features/userSlice";
 import { loggedIn } from "../../providers/features/loginSlice";
@@ -26,16 +26,9 @@ type FormFields = {
 };
 
 const LoginForm = () => {
-  // redux
-  const accessToken = useAppSelector((state) => state.token.token);
   const dispatch = useAppDispatch();
   //use form hook
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormFields>();
+  const { register, handleSubmit } = useForm<FormFields>();
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormFields> = async (formData) => {
     const user = await logIn({
@@ -59,8 +52,6 @@ const LoginForm = () => {
       await dispatch(loggedIn());
       navigate("/dashboard");
     }
-    // console.log("User error", user.errors);
-    // console.log("TEST",user.data.login.access_token )
   };
   // graphql
   const [logIn, { loading, error }] = useMutation(LOG_IN);

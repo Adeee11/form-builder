@@ -13,13 +13,9 @@ import {
   ToggleContent,
   NavbarHeader,
   Username,
-  MenuType,
   Logout,
   Email,
 } from "./LogoNavbar.styles";
-type propTypes = {
-  userName?: string;
-};
 
 const logout = async (
   dispatch: ThunkDispatch<

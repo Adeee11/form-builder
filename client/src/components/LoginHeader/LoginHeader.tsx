@@ -1,14 +1,14 @@
-import { Container, SignupButton, Text } from "./LoginHeader.styles"
+import { Container, SignupButton, Text } from "./LoginHeader.styles";
 
 const LoginHeader = () => {
   return (
     <>
       <Container>
-          <Text>Don't have an account yet?</Text>
-          <SignupButton to={'/signup'} >Sign up</SignupButton>
+        <Text>Don't have an account yet?</Text>
+        <SignupButton to={"/signup"}>Sign up</SignupButton>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default LoginHeader
+export default LoginHeader;
