@@ -55,9 +55,9 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
       else errors[index] = "";
     }
     if (fieldType === "email") {
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans))
-        errors[index] = "Enter a valid Email Address";
-      else errors[index] = "";
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans.trim()))
+        errors[index] = "";
+      else errors[index] = "Enter a valid Email Address";
     }
     setErrors([...errors]);
   };
@@ -70,7 +70,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
       }
       setRes([...list]);
     }
-  }, []);
+  }, [data]);
 
   const saveRes = (val: string, index: number, optid?: number) => {
     if (isSubmittedOnce) {
@@ -117,15 +117,15 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
   console.log("res", res);
   console.log("errors", errors);
 
-  useEffect(() => {
-    if (data) {
-      const list = [];
-      for (let i = 0; i < data.form.formData.length; i++) {
-        list.push("");
-      }
-      setRes([...list]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (data) {
+  //     const list = [];
+  //     for (let i = 0; i < data.form.formData.length; i++) {
+  //       list.push("");
+  //     }
+  //     setRes([...list]);
+  //   }
+  // }, []);
 
   return (
     <PreviewContainer>

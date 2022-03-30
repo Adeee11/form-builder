@@ -223,6 +223,7 @@ const Responses = styled.div`
   }
   .block {
     display: flex;
+    overflow-x: auto;
   }
 `;
 
