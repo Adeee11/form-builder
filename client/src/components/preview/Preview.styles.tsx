@@ -113,4 +113,9 @@ const LinkComponent = styled(Link)`
   font-size: 14px;
 `;
 
-export { PreviewContainer, PreviewHeader, Form, LinkComponent };
+const ErrorStyle = styled.p`
+  color: red;
+  font-size: 12px;
+`;
+
+export { PreviewContainer, PreviewHeader, Form, LinkComponent, ErrorStyle };

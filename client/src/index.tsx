@@ -17,15 +17,13 @@ import {
 import { Dashboard } from "./pages/dashboard";
 import { CreateForm } from "./pages/CreateForm";
 import { setContext } from "@apollo/client/link/context";
-import { Preview } from "./components/preview";
 import { Results } from "./components/results";
 import EditForm from "./pages/EditForm";
 import { Form } from "./pages/form";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
-// import { useAppSelector } from "./providers/app/hooks";
-// React hooks can't be called at top level. So, add header when calling query through
-// context and modifying header
-// const token = useAppSelector((state)=> state.token.token)
+let persistor = persistStore(store);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:7000/graphql",
@@ -52,20 +50,22 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/createForm" element={<CreateForm />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/editForm" element={<EditForm />} />
-            <Route path="form/:id" element={<Form />} />
-          </Routes>
-        </BrowserRouter>
-      </ApolloProvider>
+      <PersistGate persistor={persistor}>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/createForm" element={<CreateForm />} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/editForm" element={<EditForm />} />
+              <Route path="form/:id" element={<Form />} />
+            </Routes>
+          </BrowserRouter>
+        </ApolloProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

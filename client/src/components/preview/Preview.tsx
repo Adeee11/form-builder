@@ -1,8 +1,21 @@
 import { useState, useEffect } from "react";
 import { AiOutlineReload } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
-import { Form, PreviewContainer, PreviewHeader } from "./Preview.styles";
+import {
+  ErrorStyle,
+  Form,
+  PreviewContainer,
+  PreviewHeader,
+} from "./Preview.styles";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import {
+  FieldError,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
+import { ValidationContext } from "graphql";
+import clsx from "clsx";
 
 const GET_FORM = gql`
   query form($input: ID!) {
@@ -35,97 +48,78 @@ type propsType = {
 };
 const Preview = ({ onClose, formId, isForm }: propsType) => {
   const [res, setRes] = useState<string[]>([]);
-  const [isActive, setIsActive] = useState(-1);
-  const [errors, setErrors] = useState<string[]>([]);
-  const [isSubmittedOnce, setIsSubmittedOnce] = useState(false);
   const { data } = useQuery(GET_FORM, {
     variables: { input: formId },
   });
   const [create] = useMutation(CREATE_SUBMISSION);
+  const [firstLoad, setFirstLoad] = useState(false);
 
-  const validation = (index: number, fieldType: string, ans: string) => {
-    if (fieldType === "textArea") {
-      if (ans.length < 30)
-        errors[index] = "field should not be Less than 30 Character";
-      else errors[index] = "";
-    }
+  interface FormValues {
+    formData: {
+      Question: string;
+      fieldType: string;
+      option: string[];
+      ans: string;
+    }[];
+  }
 
-    if (fieldType === "text") {
-      if (ans.length <= 1) errors[index] = "Field Should not be empty";
-      else errors[index] = "";
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
+  // for dynamic fields in form
+  const { fields, append, remove, update } = useFieldArray({
+    name: `formData`,
+    control,
+  });
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    console.log("data:", data);
+    for (let i = 0; i < data.formData.length; i++) {
+      if (data.formData[i].fieldType !== "choice") {
+        res[i] = data.formData[i].ans;
+        setRes([...res]);
+      }
     }
-    if (fieldType === "email") {
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ans.trim()))
-        errors[index] = "";
-      else errors[index] = "Enter a valid Email Address";
-    }
-    setErrors([...errors]);
+    const savedRes: any = await create({
+      variables: {
+        input: {
+          formId: formId,
+          res: res,
+        },
+      },
+    });
+
+    console.log("Response", savedRes);
   };
 
+  const validation = (value: string, fieldType: string, index: number) => {
+    if (fieldType === "email") {
+      const emailRegEX = new RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+      return emailRegEX.test(value);
+    } else if (fieldType === "textArea") {
+      const minChar = 30;
+      return value.length > minChar;
+    }
+  };
+
+  console.log("res", res);
+  console.log("Form Data errors", errors);
+
   useEffect(() => {
-    if (data) {
+    if (data && firstLoad) {
       const list = [];
       for (let i = 0; i < data.form.formData.length; i++) {
         list.push("");
       }
       setRes([...list]);
+      append(data.form.formData);
+      setFirstLoad(true);
     }
   }, [data]);
-
-  const saveRes = (val: string, index: number, optid?: number) => {
-    if (isSubmittedOnce) {
-      validation(index, data.form.formData[index].fieldType, res[index]);
-    }
-
-    const listOfRes: string[] = [...res];
-    listOfRes[index] = val;
-    setRes([...listOfRes]);
-    if (optid !== undefined) {
-      setIsActive(optid);
-      console.log("Optid", optid);
-    }
-  };
-
-  const submitHandler = async () => {
-    setIsSubmittedOnce(true);
-    let isValidated = false;
-    for (let i = 0; i < res.length; i++) {
-      validation(i, data.form.formData[i].fieldType, res[i]);
-    }
-    for (let i = 0; i < errors.length; i++) {
-      if (errors[i] === "") {
-        isValidated = true;
-      } else {
-        isValidated = false;
-      }
-    }
-    if (isValidated) {
-      const savedRes: any = await create({
-        variables: {
-          input: {
-            formId: formId,
-            res: res,
-          },
-        },
-      });
-      console.log(savedRes);
-      if (savedRes) alert("form answer submitted");
-      onClose();
-    }
-  };
-
-  console.log("res", res);
-  console.log("errors", errors);
-
-  // useEffect(() => {
-  //   if (data) {
-  //     const list = [];
-  //     for (let i = 0; i < data.form.formData.length; i++) {
-  //       list.push("");
-  //     }
-  //     setRes([...list]);
-  //   }
-  // }, []);
 
   return (
     <PreviewContainer>
@@ -143,43 +137,73 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
           </button>
         </PreviewHeader>
       )}
-      <Form>
-        <header>{data && <p>{data.form.title}</p>}</header>
-        {data &&
-          data.form.formData.map((item: any, index: number) => (
-            <div className="section" key={index}>
-              <p className="question">
-                <span>{index + 1}</span>
-                {item.Question}
-              </p>
-              {item.fieldType !== "choice" && (
-                <>
-                  <input
-                    type="text"
-                    className="answer"
-                    placeholder="Enter Your answer here"
-                    onChange={(e) => saveRes(e.target.value, index)}
-                  />
-                  <p className="error">{errors && errors[index]}</p>
-                </>
-              )}
-              {item.fieldType === "choice" &&
-                item.option.map((opt: string, num: number) => (
-                  <div
-                    onClick={() => {
-                      saveRes(opt, index, num);
-                    }}
-                    className={opt === res[index] ? "opt act" : "opt"}
-                  >
-                    {opt}
-                  </div>
-                ))}
-            </div>
-          ))}
 
-        <button className="sub" onClick={submitHandler}>
-          Submit
-        </button>
+      <Form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <header>{data && <p>{data.form.title}</p>}</header>
+
+          {fields.map((field, index) => {
+            return (
+              <>
+                <div key={field.id} className="section">
+                  <p className="question">
+                    <span>{index + 1}</span>
+                    {field.Question}
+                  </p>
+                  {field.fieldType !== "choice" && (
+                    <>
+                      <input
+                        className="answer"
+                        type={field.fieldType}
+                        {...register(`formData.${index}.ans` as const, {
+                          required: true,
+                          validate: {
+                            checking: (value) =>
+                              validation(value, field.fieldType, index),
+                          },
+                        })}
+                      />
+                    </>
+                  )}
+                  {field.fieldType == "choice" && (
+                    <>
+                      {field.option.map((item, indx) => (
+                        <div
+                          key={field.id + indx.toString()}
+                          className={clsx("opt", { act: item === res[index] })}
+                          onClick={() => {
+                            res[index] = item;
+                            // removeOtherItems(index, res);
+                            setRes([...res]);
+                          }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                  <ErrorStyle>
+                    {field.fieldType === "textArea"
+                      ? errors.formData && errors.formData[index]
+                        ? "Enter minimum 30 chars"
+                        : ""
+                      : field.fieldType === "email"
+                      ? errors.formData && errors.formData[index]
+                        ? "Enter valid email"
+                        : ""
+                      : errors.formData && errors.formData[index]
+                      ? "This field is required"
+                      : ""}
+                  </ErrorStyle>
+                </div>
+              </>
+            );
+          })}
+
+          <button className="sub" type="submit">
+            Submit
+          </button>
+        </form>
       </Form>
     </PreviewContainer>
   );

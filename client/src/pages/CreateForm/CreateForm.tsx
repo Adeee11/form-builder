@@ -303,6 +303,7 @@ const CreateForm = () => {
                       id="input"
                       {...register("question")}
                       onBlur={() => saveQuestion(watch("question"), i)}
+                      onClick={(e) => e.stopPropagation()}
                     />
                   ) : (
                     <p className="input">
