@@ -95,26 +95,34 @@ const logout = async (
 
 const CreateForm = () => {
   const [showModal, setShowModal] = useState(false);
-  const [previewMode, setPreviewMode] = useState(false);
+  const [showState, setShowState] = useState({
+    previewMode:false,
+    showPublishModal:false,
+    showLogoutMenu:false,   
+  })
   const [formData, setformData] = useState<formDataType[]>([]);
   const [editQue, setEditQue] = useState(-1);
   const [formId, setFormId] = useState("");
   const [menu, setMenu] = useState("create");
-  const [showPublishModal, setShowPublishModal] = useState(false);
-  const [showLogoutMenu, setShowLogoutMenu] = useState(false);
   const [opt, setOpt] = useState("");
+   
   const userName = useAppSelector((state) => state.user.username);
+  
   const { register, handleSubmit, setValue, watch } = useForm<Inputs>({
     defaultValues: { title: "my typeform" },
   });
+  
   const [create, { loading, error }] = useMutation(CREATE_FORM);
+  
   const [update] = useMutation(UPDATE_FORM);
+  
   const userId = useAppSelector((state) => state.user.id);
+  
   const dispatch = useAppDispatch();
+  
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data, e) => {
-    e?.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (formId) {
       const updatedForm = await update({
         variables: {
@@ -127,7 +135,7 @@ const CreateForm = () => {
       });
 
       console.log("updatedForm:", updatedForm);
-      alert("Form updated ");
+      if (updatedForm) alert("Form updated ");
     } else {
       const createdForm = await create({
         variables: {
@@ -138,7 +146,7 @@ const CreateForm = () => {
           },
         },
       });
-      console.log(createdForm);
+      console.log("created form",createdForm);
       setFormId(createdForm.data.createForm.id);
       localStorage.setItem("formId", createdForm.data.createForm.id);
       if (createdForm) alert("form Created");
@@ -160,6 +168,7 @@ const CreateForm = () => {
     setEditQue(-1);
     console.log(formData);
   };
+
   const delQue = (i: number, e: any) => {
     e.stopPropagation();
     const list = formData;
@@ -185,6 +194,7 @@ const CreateForm = () => {
   };
 
   const Onedit = async (i: number) => {
+    console.log("on edit called");
     await setEditQue(i);
     setValue("question", formData[i].Question);
     document.getElementById("input")?.focus();
@@ -200,10 +210,12 @@ const CreateForm = () => {
     );
   }
 
-  if (previewMode) {
-    return <Preview formId={formId} onClose={() => setPreviewMode(false)} />;
+  if (showState.previewMode) {
+    return <Preview 
+    formId={formId} 
+    onClose={() =>setShowState({...showState,previewMode:false})} />;
   }
-  console.log(editQue);
+
   return (
     <Wrapper>
       <Header>
@@ -226,34 +238,34 @@ const CreateForm = () => {
 
         <p>
           {formId && (
-            <span className="preview" onClick={() => setPreviewMode(true)}>
+            <span className="preview" onClick={() =>setShowState({...showState, previewMode:true})}>
               <BsFillEyeFill />
             </span>
           )}
           <button
             className="publish"
-            onClick={() => setShowPublishModal(!showPublishModal)}
+            onClick={() => setShowState({...showState, showPublishModal:!showState.showPublishModal})}
           >
             Publish
           </button>
           <span
             className="avatar"
-            onClick={() => setShowLogoutMenu(!showLogoutMenu)}
+            onClick={() => setShowState({...showState,showLogoutMenu:!showState.showLogoutMenu})}
           >
             {userName[0].toUpperCase()}
           </span>
         </p>
       </Header>
 
-      {showPublishModal && formId && (
+      {showState.showPublishModal && formId && (
         <PublishModal
           formId={formId}
-          onClose={() => setShowPublishModal(false)}
+          onClose={() =>setShowState({...showState, showPublishModal:false})}
         />
       )}
       {showModal && <Modal setShowModal={setShowModal} AddInput={AddInput} />}
 
-      {showLogoutMenu && (
+      {showState.showLogoutMenu && (
         <LogoutMenu>
           <div className="logout-header">
             <span className="avatar">{userName[0].toUpperCase()}</span>
@@ -303,6 +315,7 @@ const CreateForm = () => {
                       id="input"
                       {...register("question")}
                       onBlur={() => saveQuestion(watch("question"), i)}
+                      onClick={(e)=>{e.stopPropagation()}}
                     />
                   ) : (
                     <p className="input">
@@ -363,11 +376,11 @@ const CreateForm = () => {
             <AiOutlinePlus />
           </span>
 
-          {formData.length > 0 && (
+          
             <button type="submit" className="sub">
               Save
             </button>
-          )}
+          
         </Form>
       )}
       {menu === "share" && <Share formId={formId} />}
