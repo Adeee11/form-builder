@@ -132,7 +132,7 @@ const CreateForm = () => {
       const createdForm = await create({
         variables: {
           input: {
-            title: data.title,
+            title: data.title.toUpperCase(),
             owner: userId,
             formData: formData,
           },

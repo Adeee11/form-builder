@@ -177,7 +177,10 @@ const EditForm = () => {
     const updatedForm = await updateForm({
       variables: {
         input: {
-          title: data.formTitle !== "" ? data.formTitle : formTitle,
+          title:
+            data.formTitle !== ""
+              ? data.formTitle.toUpperCase()
+              : formTitle.toUpperCase(),
           formData: formData,
         },
         id: editFormId,

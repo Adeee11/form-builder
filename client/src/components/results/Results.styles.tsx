@@ -100,6 +100,7 @@ const Insights = styled.div`
 `;
 
 const Summary = styled.div`
+  padding: 0px 5vw;
   max-width: 900px;
   margin: 0 auto;
   display: flex;
@@ -190,6 +191,7 @@ const Responses = styled.div`
   max-width: 900px;
   margin: 0 auto;
   margin-top: 10px;
+  padding: 0px 5vw;
   .con {
     overflow-x: scroll;
   }
@@ -211,6 +213,7 @@ const Responses = styled.div`
     border: 1px solid gray;
     font-size: 14px;
     padding: 10px;
+    max-width: 300px;
   }
 
   .flex {

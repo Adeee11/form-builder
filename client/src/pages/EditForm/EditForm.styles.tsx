@@ -100,6 +100,12 @@ const Main = styled.main`
       transform: translate(-190px, -200px);
     }
     padding: 10px 5vw;
+    .first {
+      max-width: 70%;
+    }
+    .second {
+      max-width: 20%;
+    }
   }
 `;
 

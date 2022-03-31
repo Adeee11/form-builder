@@ -141,15 +141,15 @@ const Results = ({ formId }: propType) => {
                         <span className="index">{index + 1}.</span>
                       </span>
                     )}
-                    {item.fieldType === "choice span" && (
-                      <span className="choice">
+                    {item.fieldType === "choice" && (
+                      <span className="choice span">
                         <BsCheckLg />
                         <span className="index">{index + 1}.</span>
                       </span>
                     )}
 
                     {item.fieldType === "textArea" && (
-                      <span className="long">
+                      <span className="long span">
                         <BsTextParagraph />
                         <span className="index">{index + 1}.</span>
                       </span>

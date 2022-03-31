@@ -13,7 +13,7 @@ const SelectField = (props: {
       <Label>{label}</Label>
       <Select value={filter} onChange={(e) => changeFilter(e.target.value)}>
         {options.map((option, index) => (
-          <Option key={index}>{option}</Option>
+          <Option key={index}>{option.toUpperCase()}</Option>
         ))}
       </Select>
     </>
