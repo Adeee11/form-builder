@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Modal = styled.div`
+const ResModal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -8,16 +8,24 @@ const Modal = styled.div`
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
 
-  .popup {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    top: 0px;
-    width: 40%;
-    background: white;
+  .popups {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    position: fixed;
+    width:50%;
     border-radius: 7px;
-
+    top:0;
+    bottom: 0;
+    margin-left: 25%;
+    background-color: white;
+    padding: 10px;
+    @media (max-width:768px){
+        
+             width: 100%;
+             margin-left: 0%;
+    }
     header {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -25,6 +33,10 @@ const Modal = styled.div`
       .col1 {
         display: flex;
         align-items: center;
+        .close{
+         font-size :20px ;
+         margin-right: 10px;
+        }
         .btn-group {
           display: flex;
           border-radius: 4px;
@@ -60,6 +72,7 @@ const Modal = styled.div`
           color: brown;
           background: lightpink;
         }
+        
       }
     }
   }
@@ -73,7 +86,11 @@ const Modal = styled.div`
     border: 1px solid lightgray;
     display: flex;
     flex-direction: column;
-
+    @media(max-width:768px){
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px 5px;
+    }
     p {
       margin-left: 70px;
     }
@@ -111,4 +128,4 @@ const Modal = styled.div`
   }
 `;
 
-export { Modal };
+export { ResModal };

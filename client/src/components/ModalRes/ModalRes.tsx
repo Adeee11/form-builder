@@ -1,13 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
 import { AiFillEye, AiTwotonePrinter } from "react-icons/ai";
 import {
+  BsArrowLeft,
   BsCheckLg,
   BsLink,
   BsTelephoneFill,
   BsTextParagraph,
 } from "react-icons/bs";
-import { MdDelete, MdEmail, MdShortText } from "react-icons/md";
-import { Modal as Mo } from "./Modal.styles";
+import { MdArrowLeft, MdClose, MdDelete, MdEmail, MdShortText } from "react-icons/md";
+import { LeftArrow } from "../Carousel/Carousel.styles";
+import { ResModal } from "./ModalRes.styles";
 type propTypes = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
   date: string;
@@ -23,14 +25,13 @@ const ModalRes = ({
   submission,
 }: propTypes) => {
   return (
-    <Mo onClick={() => setShowModal(false)}>
-      <div className="popup">
-        <header>
+    <ResModal onClick={() => setShowModal(false)}>
+      <div className="popups" onClick={(e) => e.stopPropagation()}>
+        <header >
           <div className="col1">
-            {/* <div className='btn-group'>
-                                            <span><BsChevronLeft /></span>
-                                            <span><BsChevronRight /></span>
-                                        </div> */}
+            <span className="close" onClick={() => setShowModal(false)}>
+              <BsArrowLeft />
+            </span>
             <div className="date">{date}</div>
           </div>
           <div className="col2">
@@ -40,7 +41,7 @@ const ModalRes = ({
             <span>
               <AiTwotonePrinter />
             </span>
-            <span className="del" onClick={deleteRes}>
+            <span className="del" onClick={() => { deleteRes(); setShowModal(false) }}>
               <MdDelete />
             </span>
           </div>
@@ -94,7 +95,7 @@ const ModalRes = ({
             </div>
           ))}
       </div>
-    </Mo>
+    </ResModal>
   );
 };
 

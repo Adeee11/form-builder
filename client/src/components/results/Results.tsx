@@ -98,6 +98,7 @@ const Results = ({ formId }: propType) => {
       },
     });
     console.log(data);
+    if (data) alert("deleted 1 response");
     refetch();
   };
 
