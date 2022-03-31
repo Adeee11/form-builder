@@ -52,7 +52,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     variables: { input: formId },
   });
   const [create] = useMutation(CREATE_SUBMISSION);
-  const [firstLoad, setFirstLoad] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true);
 
   interface FormValues {
     formData: {
@@ -117,7 +117,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
       }
       setRes([...list]);
       append(data.form.formData);
-      setFirstLoad(true);
+      setFirstLoad(false);
     }
   }, [data]);
 

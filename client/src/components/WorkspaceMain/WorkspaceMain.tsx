@@ -23,12 +23,25 @@ const WorkspaceMain = (props: {
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
-
+  //navigate hook from react-router-dom
+  const navigate = useNavigate();
   const { loading, error, data, refetch } = useQuery(GET_FORMS, {
     variables: { userId, sortBy: filter },
   });
   if (loading) console.log("Loading ...");
-  if (error) console.log(JSON.stringify(error, null, 2));
+
+  if (error) {
+    // checking if JWT token has expired or not
+    const errorMessage = error.message.toLowerCase();
+    if (errorMessage.includes("unauthorized")) {
+      alert("Token expired. Please log in again");
+      navigate("/login");
+    } else {
+      console.log("Error Message: ", errorMessage);
+    }
+
+    console.error(JSON.stringify(error, null, 2));
+  }
 
   const [delForm, { loading: delLoad, error: delErr }] = useMutation(DEL_FORM);
 
@@ -41,7 +54,6 @@ const WorkspaceMain = (props: {
   }, []);
 
   useEffect(() => {
-    console.log("Filter boi", filter);
     if (data) {
       const Names: { title: string; id: string; noOfResponses: number }[] =
         data.sortedForms.map(
@@ -69,9 +81,6 @@ const WorkspaceMain = (props: {
   }, [data, filter]);
 
   const dispatch = useAppDispatch();
-
-  //navigate hook from react-router-dom
-  const navigate = useNavigate();
 
   // function for setting the editFormId for the form to be editted
   const editForm = async (id: string) => {
@@ -132,7 +141,7 @@ const WorkspaceMain = (props: {
           CurrentTypeformNames.map(
             ({ title, id, noOfResponses }, index: number) => (
               <TypeformCard
-                key={"tfc" + index.toString()}
+                key={id}
                 typeformName={title}
                 responsesNumber={noOfResponses}
                 edit={() => editForm(id)}

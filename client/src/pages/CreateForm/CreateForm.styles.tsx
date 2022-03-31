@@ -155,10 +155,14 @@ const Form = styled.form`
       width: 100%;
     }
   }
+  .fiels-container {
+    max-width: 100%;
+    padding: 5px 10px;
+  }
   .que {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 7px;
     margin-top: 20px;
     span {

@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal/Modal";
 import { Preview } from "../../components/preview";
@@ -99,12 +99,21 @@ const EditForm = () => {
   const [menu, setMenu] = useState("edit");
   // state for formTitle
   const [formTitle, setFormTitle] = useState("No form yet");
-
+  const navigate = useNavigate();
   // update form hook
   const [updateForm, { loading: load, error: err }] = useMutation(UPDATE_FORM);
 
   if (load) console.log("Modify data hook Loading ...");
-  if (err) console.log(JSON.stringify(err, null, 2));
+  if (err) {
+    // checking if JWT token has expired or not
+    const errorMessage = err.message.toLowerCase();
+    if (errorMessage.includes("unauthorized")) {
+      alert("Token expired. Please log in again");
+      navigate("/login");
+    } else {
+      console.log("Error Message: ", errorMessage);
+    }
+  }
   // query for fetching formData
   const { loading, error, data } = useQuery(GET_FORM_BY_ID, {
     variables: {
@@ -113,8 +122,16 @@ const EditForm = () => {
   });
 
   if (loading) console.log("Loading....");
-  if (error) console.log(JSON.stringify(error, null, 2));
-
+  if (error) {
+    // checking if JWT token has expired or not
+    const errorMessage = error.message.toLowerCase();
+    if (errorMessage.includes("unauthorized")) {
+      alert("Token expired. Please log in again");
+      navigate("/login");
+    } else {
+      console.log("Error Message: ", errorMessage);
+    }
+  }
   const AvatarLetter = userName[0];
   console.log("Form Data", watch("formData"));
   // UseEffect hook

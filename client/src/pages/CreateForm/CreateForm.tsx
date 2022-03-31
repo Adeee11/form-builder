@@ -108,7 +108,7 @@ const CreateForm = () => {
     defaultValues: { title: "my typeform" },
   });
   const [create, { loading, error }] = useMutation(CREATE_FORM);
-  const [update] = useMutation(UPDATE_FORM);
+  const [update, { error: err }] = useMutation(UPDATE_FORM);
   const userId = useAppSelector((state) => state.user.id);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -146,7 +146,26 @@ const CreateForm = () => {
   };
 
   if (loading) console.log("loading...", loading);
-  if (error) console.error("error:", error);
+  if (error) {
+    // checking if JWT token has expired or not
+    const errorMessage = error.message.toLowerCase();
+    if (errorMessage.includes("unauthorized")) {
+      alert("Token expired. Please log in again");
+      navigate("/login");
+    } else {
+      console.log("Error Message: ", errorMessage);
+    }
+  }
+  if (err) {
+    // checking if JWT token has expired or not
+    const errorMessage = err.message.toLowerCase();
+    if (errorMessage.includes("unauthorized")) {
+      alert("Token expired. Please log in again");
+      navigate("/login");
+    } else {
+      console.log("Error Message: ", errorMessage);
+    }
+  }
 
   const AddInput = (i: string) => {
     setformData([...formData, { fieldType: i, option: [], Question: "" }]);
@@ -291,7 +310,7 @@ const CreateForm = () => {
               a: { fieldType: string; Question: string; option: string[] },
               i: number
             ) => (
-              <div key={i}>
+              <div key={i} className="field-container">
                 <div className="que" onClick={() => Onedit(i)}>
                   <span>{i + 1}.</span>
 
