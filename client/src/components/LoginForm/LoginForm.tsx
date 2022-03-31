@@ -56,7 +56,14 @@ const LoginForm = () => {
   // graphql
   const [logIn, { loading, error }] = useMutation(LOG_IN);
   if (loading) console.log("loading...", loading);
-  if (error) console.error(JSON.stringify(error, null, 2));
+  if (error) {
+    // checking if JWT token has expired or not
+    const errorMessage = error.message.toLowerCase();
+    errorMessage.includes("unauthenticated")
+      ? alert("Token expired. Please log in again")
+      : console.log("Error Message: ", errorMessage);
+    console.error(JSON.stringify(error, null, 2));
+  }
 
   return (
     <>
