@@ -160,6 +160,7 @@ const Summary = styled.div`
         margin-left: 54px;
         padding: 12px 20px;
         font-size: 14px;
+        overflow-x: auto;
       }
     }
   }

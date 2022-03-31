@@ -92,7 +92,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
         },
       },
     });
-
+    alert("Response saved");
     console.log("Response", savedRes);
   };
 
