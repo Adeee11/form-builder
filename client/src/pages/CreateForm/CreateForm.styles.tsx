@@ -175,7 +175,13 @@ const Form = styled.form`
       flex: 1;
       margin-bottom: 0;
       overflow-x: auto;
-      max-width: 80vw;
+      width: 80vw;
+      max-width: calc(900px * 0.8);
+    }
+    .questionInput {
+      width: 80vw;
+      max-width: calc(900px * 0.8);
+      overflow-x: auto;
     }
   }
 

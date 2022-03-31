@@ -325,7 +325,7 @@ const CreateForm = () => {
                       onClick={(e) => e.stopPropagation()}
                     />
                   ) : (
-                    <p className="input">
+                    <p className="questionInput">
                       {a.Question || "Your Question Here?"}
                     </p>
                   )}
