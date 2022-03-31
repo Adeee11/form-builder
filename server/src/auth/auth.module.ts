@@ -10,7 +10,7 @@ import { JwtStrategy } from './jwt.startegy';
 @Module({
    imports:[PassportModule,
            JwtModule.register({
-                 signOptions:{expiresIn:'2400s'},
+                 signOptions:{expiresIn:'3600s'},
                  secret:'hide-me',
                 }),
            UsersModule

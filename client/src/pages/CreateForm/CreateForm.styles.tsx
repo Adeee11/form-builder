@@ -160,7 +160,7 @@ const Form = styled.form`
     padding: 5px 10px;
   }
   .que {
-    width: 100%;
+    max-width: 100%;
     display: flex;
     align-items: flex-start;
     padding: 7px;
@@ -170,11 +170,12 @@ const Form = styled.form`
       flex: 0;
     }
     .input {
-      width: 100%;
       border: none;
       outline: none;
       flex: 1;
       margin-bottom: 0;
+      overflow-x: auto;
+      max-width: 80vw;
     }
   }
 
