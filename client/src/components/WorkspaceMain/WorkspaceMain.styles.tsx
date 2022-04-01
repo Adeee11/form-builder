@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   background: #fafafa;
   overflow-x: hidden;
+  gap: 20px;
   min-height: 65vh;
 `;
 const PaginationContainer = styled.div`

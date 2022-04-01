@@ -16,6 +16,9 @@ import {
 } from "react-hook-form";
 import { ValidationContext } from "graphql";
 import clsx from "clsx";
+import { useRef } from "react";
+import React from "react";
+import { type } from "os";
 
 const GET_FORM = gql`
   query form($input: ID!) {
@@ -53,8 +56,10 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
   });
   const [create] = useMutation(CREATE_SUBMISSION);
   const [firstLoad, setFirstLoad] = useState(true);
+  const titleRef = useRef<any>();
 
   interface FormValues {
+    formTitle: string;
     formData: {
       Question: string;
       fieldType: string;
@@ -69,6 +74,7 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
     handleSubmit,
     watch,
     formState: { errors },
+    setFocus,
   } = useForm<FormValues>();
   // for dynamic fields in form
   const { fields, append, remove, update } = useFieldArray({
@@ -120,7 +126,12 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
       append(data.form.formData);
       setFirstLoad(false);
     }
+    // setFocus("formTitle", { shouldSelect: true });
   }, [data]);
+
+  useEffect(() => {
+    setFocus("formTitle");
+  }, [fields]);
 
   return (
     <PreviewContainer>
@@ -141,7 +152,18 @@ const Preview = ({ onClose, formId, isForm }: propsType) => {
 
       <Form>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <header>{data && <p>{data.form.title}</p>}</header>
+          <header>
+            {data && (
+              <>
+                <input
+                  {...register("formTitle")}
+                  defaultValue={data.form.title}
+                  readOnly
+                  className="title"
+                />
+              </>
+            )}
+          </header>
 
           {fields.map((field, index) => {
             return (

@@ -51,6 +51,11 @@ const Form = styled.div`
     border-top: 10px solid blue;
     color: #262627;
   }
+  .title {
+    font-weight: 400;
+    border: none;
+    outline: none;
+  }
   .section {
     padding: 10px;
     margin: 0 auto;

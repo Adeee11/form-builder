@@ -8,7 +8,6 @@ const Card = styled.div`
   padding: 10px;
   width: 150px;
   max-height: 150px;
-  margin-right: 30px;
   display: flex;
   flex-direction: column;
   svg {
